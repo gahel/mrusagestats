@@ -331,7 +331,7 @@ html += """
                         <th class="sortable" data-sort="thermal">Thermal Status</th>
                         <th class="sortable" data-sort="power">Avg Power (W)</th>
                         <th class="sortable" data-sort="gpu">Avg GPU Usage (%)</th>
-                        <th class="sortable" data-sort="cpu">Avg CPU Freq (GHz)</th>
+                        <th class="sortable" data-sort="diskio">Avg Disk IOPS</th>
                         <th class="sortable" data-sort="records">Data Points</th>
                         <th class="sortable" data-sort="lastseen">Last Seen</th>
                     </tr>
@@ -345,11 +345,13 @@ for hostname in machine_list:
     machine_records = machines[hostname]
     watts = [r.get('package_watts', 0) for r in machine_records if isinstance(r.get('package_watts'), (int, float))]
     gpu_busy = [r.get('gpu_busy', 0) for r in machine_records if isinstance(r.get('gpu_busy'), (int, float))]
-    cpu_freq = [r.get('freq_hz', 0) / 1e9 for r in machine_records if isinstance(r.get('freq_hz'), (int, float))]
+    # Disk IOPS calculation (operations per second)
+    read_ops = [r.get('rops_per_s', 0) for r in machine_records if isinstance(r.get('rops_per_s'), (int, float))]
+    write_ops = [r.get('wops_per_s', 0) for r in machine_records if isinstance(r.get('wops_per_s'), (int, float))]
     
     avg_watts = sum(watts) / len(watts) if watts else 0
     avg_gpu = sum(gpu_busy) / len(gpu_busy) if gpu_busy else 0
-    avg_cpu_freq = sum(cpu_freq) / len(cpu_freq) if cpu_freq else 0
+    avg_diskio = (sum(read_ops) + sum(write_ops)) / max(len(read_ops), len(write_ops)) if read_ops or write_ops else 0
     
     # Get most common thermal status
     thermal_states = [r.get('thermal_pressure', 'Unknown') for r in machine_records]
@@ -375,7 +377,7 @@ for hostname in machine_list:
         'status_class': status_class,
         'avg_watts': avg_watts,
         'avg_gpu': avg_gpu,
-        'avg_cpu_freq': avg_cpu_freq,
+        'avg_diskio': avg_diskio,
         'record_count': len(machine_records),
         'last_seen': last_seen
     })
@@ -395,7 +397,7 @@ for machine in machine_data:
                     <td class="{machine['status_class']}">{machine['thermal_status']}</td>
                     <td>{machine['avg_watts']:.2f}</td>
                     <td>{machine['avg_gpu']:.1f}%</td>
-                    <td>{machine['avg_cpu_freq']:.2f}</td>
+                    <td>{int(machine['avg_diskio'])}</td>
                     <td>{machine['record_count']}</td>
                     <td>{machine['last_seen']}</td>
                 </tr>
@@ -445,7 +447,7 @@ function sortTable(column) {
         const aVal = getCellValue(a, column);
         const bVal = getCellValue(b, column);
         
-        if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'records') {
+        if (column === 'power' || column === 'gpu' || column === 'diskio' || column === 'records') {
             return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
         } else if (column === 'thermal') {
             const thermalOrder = {'Critical': 3, 'Warning': 2, 'High': 2, 'Nominal': 1, 'Unknown': 0};
@@ -466,7 +468,7 @@ function sortTable(column) {
 function getCellValue(row, column) {
     const columnMap = {
         'hostname': 0, 'thermal': 1, 'power': 2, 
-        'gpu': 3, 'cpu': 4, 'records': 5, 'lastseen': 6
+        'gpu': 3, 'diskio': 4, 'records': 5, 'lastseen': 6
     };
     const cell = row.cells[columnMap[column]];
     
