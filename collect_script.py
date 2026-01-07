@@ -158,12 +158,18 @@ html = f"""<!DOCTYPE html>
         
         .machines-table {{ background: #161b22; border-radius: 12px; overflow: hidden; margin-bottom: 30px; }}
         table {{ width: 100%; border-collapse: collapse; }}
-        th {{ background: #0d1117; color: #58a6ff; padding: 18px; text-align: left; font-weight: 600; border-bottom: 2px solid #30363d; }}
+        th {{ background: #0d1117; color: #58a6ff; padding: 18px; text-align: left; font-weight: 600; border-bottom: 2px solid #30363d; cursor: pointer; user-select: none; position: relative; }}
+        th:hover {{ background: #161b22; }}
+        th.sortable:after {{ content: ' ↕️'; opacity: 0.5; }}
+        th.sort-asc:after {{ content: ' ⬆️'; opacity: 1; }}
+        th.sort-desc:after {{ content: ' ⬇️'; opacity: 1; }}
         td {{ padding: 15px 18px; border-bottom: 1px solid #30363d; }}
         tr:hover {{ background: #0d1117; }}
         .status-nominal {{ color: #3fb950; }}
         .status-warning {{ color: #ffd43b; }}
         .status-critical {{ color: #f85149; }}
+        .high-power {{ background: rgba(248, 181, 73, 0.15); }}
+        .high-gpu {{ background: rgba(124, 58, 237, 0.15); }}
         
         .footer {{ text-align: center; padding: 40px; color: #8b949e; border-top: 1px solid #30363d; margin-top: 40px; }}
         .update-frequency {{ color: #7c3aed; font-weight: 600; }}
@@ -318,21 +324,23 @@ html += """
         
         <div class="machines-table">
             <h2 class="section-title">💻 Machine Performance Overview</h2>
-            <table>
+            <table id="machinesTable">
                 <thead>
                     <tr>
-                        <th>Machine</th>
-                        <th>Thermal Status</th>
-                        <th>Avg Power (W)</th>
-                        <th>Avg GPU Usage (%)</th>
-                        <th>Avg CPU Freq (GHz)</th>
-                        <th>Data Points</th>
-                        <th>Last Seen</th>
+                        <th class="sortable" data-sort="hostname">Machine</th>
+                        <th class="sortable" data-sort="thermal">Thermal Status</th>
+                        <th class="sortable" data-sort="power">Avg Power (W)</th>
+                        <th class="sortable" data-sort="gpu">Avg GPU Usage (%)</th>
+                        <th class="sortable" data-sort="cpu">Avg CPU Freq (GHz)</th>
+                        <th class="sortable" data-sort="records">Data Points</th>
+                        <th class="sortable" data-sort="lastseen">Last Seen</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="machinesTableBody">
 """
 
+# Create machine data for sorting
+machine_data = []
 for hostname in machine_list:
     machine_records = machines[hostname]
     watts = [r.get('package_watts', 0) for r in machine_records if isinstance(r.get('package_watts'), (int, float))]
@@ -348,21 +356,48 @@ for hostname in machine_list:
     thermal_status = max(set(thermal_states), key=thermal_states.count)
     
     status_class = 'status-nominal'
+    thermal_priority = 0
     if thermal_status in ['Critical']:
         status_class = 'status-critical'
+        thermal_priority = 3
     elif thermal_status in ['Warning', 'High']:
         status_class = 'status-warning'
+        thermal_priority = 2
+    else:
+        thermal_priority = 1
     
     last_seen = machine_records[-1].get('collected_at', 'Unknown')[:16] if machine_records else 'Unknown'
     
-    html += f"""                <tr>
-                    <td><strong>{hostname}</strong></td>
-                    <td class="{status_class}">{thermal_status}</td>
-                    <td>{avg_watts:.2f}</td>
-                    <td>{avg_gpu:.1f}%</td>
-                    <td>{avg_cpu_freq:.2f}</td>
-                    <td>{len(machine_records)}</td>
-                    <td>{last_seen}</td>
+    machine_data.append({
+        'hostname': hostname,
+        'thermal_status': thermal_status,
+        'thermal_priority': thermal_priority,
+        'status_class': status_class,
+        'avg_watts': avg_watts,
+        'avg_gpu': avg_gpu,
+        'avg_cpu_freq': avg_cpu_freq,
+        'record_count': len(machine_records),
+        'last_seen': last_seen
+    })
+
+# Sort by: 1) Thermal priority (critical first), 2) Power consumption (highest first), 3) GPU usage
+machine_data.sort(key=lambda x: (-x['thermal_priority'], -x['avg_watts'], -x['avg_gpu']))
+
+for machine in machine_data:
+    row_class = ''
+    if machine['avg_watts'] > 8:
+        row_class += ' high-power'
+    if machine['avg_gpu'] > 50:
+        row_class += ' high-gpu'
+    
+    html += f"""                <tr{' class="' + row_class.strip() + '"' if row_class else ''}>
+                    <td><strong>{machine['hostname']}</strong></td>
+                    <td class="{machine['status_class']}">{machine['thermal_status']}</td>
+                    <td>{machine['avg_watts']:.2f}</td>
+                    <td>{machine['avg_gpu']:.1f}%</td>
+                    <td>{machine['avg_cpu_freq']:.2f}</td>
+                    <td>{machine['record_count']}</td>
+                    <td>{machine['last_seen']}</td>
                 </tr>
 """
 
@@ -381,6 +416,72 @@ html += """            </tbody>
 Chart.defaults.color = '#8b949e';
 Chart.defaults.borderColor = '#30363d';
 Chart.defaults.backgroundColor = 'rgba(88, 166, 255, 0.1)';
+
+// Table sorting functionality
+let currentSort = { column: 'thermal', direction: 'desc' };
+
+function sortTable(column) {
+    const table = document.getElementById('machinesTable');
+    const tbody = document.getElementById('machinesTableBody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    
+    // Toggle direction if clicking same column
+    if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+        currentSort.direction = 'desc';
+        currentSort.column = column;
+    }
+    
+    // Update header indicators
+    document.querySelectorAll('th').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+    });
+    document.querySelector(`th[data-sort="${column}"]`).classList.add(
+        currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc'
+    );
+    
+    rows.sort((a, b) => {
+        const aVal = getCellValue(a, column);
+        const bVal = getCellValue(b, column);
+        
+        if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'records') {
+            return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+        } else if (column === 'thermal') {
+            const thermalOrder = {'Critical': 3, 'Warning': 2, 'High': 2, 'Nominal': 1, 'Unknown': 0};
+            return currentSort.direction === 'asc' ? 
+                (thermalOrder[aVal] || 0) - (thermalOrder[bVal] || 0) :
+                (thermalOrder[bVal] || 0) - (thermalOrder[aVal] || 0);
+        } else {
+            return currentSort.direction === 'asc' ? 
+                aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        }
+    });
+    
+    // Rebuild table
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+function getCellValue(row, column) {
+    const columnMap = {
+        'hostname': 0, 'thermal': 1, 'power': 2, 
+        'gpu': 3, 'cpu': 4, 'records': 5, 'lastseen': 6
+    };
+    const cell = row.cells[columnMap[column]];
+    
+    if (column === 'power' || column === 'gpu' || column === 'cpu') {
+        return parseFloat(cell.textContent);
+    } else if (column === 'records') {
+        return parseInt(cell.textContent);
+    }
+    return cell.textContent.trim();
+}
+
+// Add click listeners to headers
+document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => sortTable(th.dataset.sort));
+});
 
 // Time series data
 const timeSeriesData = """ + json.dumps(time_series_data) + """;
