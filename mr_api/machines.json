@@ -1,0 +1,1714 @@
+[
+  {
+    "serial_number": "C3W0FX49WN",
+    "hostname": "MBP-12418",
+    "description": "MacBook Air (15-inch, M4, 2025)",
+    "console_user": "gaute",
+    "last_report": {
+      "timestamp": 1766314676,
+      "age_seconds": 1435,
+      "age_human": "23m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 53.37,
+      "load_percent": 46.63
+    }
+  },
+  {
+    "serial_number": "CF6RFYQ03F",
+    "hostname": "MBP-27348",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "gaute.helfjord",
+    "last_report": {
+      "timestamp": 1764245714,
+      "age_seconds": 2070397,
+      "age_human": "3w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 23.28,
+      "load_percent": 76.72
+    }
+  },
+  {
+    "serial_number": "LX7HKH9QTT",
+    "hostname": "MBP-06817",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "mathiasberntsen",
+    "last_report": {
+      "timestamp": 1766313238,
+      "age_seconds": 2873,
+      "age_human": "47m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 90.84,
+      "load_percent": 9.159999999999997
+    }
+  },
+  {
+    "serial_number": "QQW6150XCX",
+    "hostname": "MBP-28208",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "mike.lind",
+    "last_report": {
+      "timestamp": 1766302274,
+      "age_seconds": 13837,
+      "age_human": "3h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 84.69,
+      "load_percent": 15.310000000000002
+    }
+  },
+  {
+    "serial_number": "WTW46QGPVP",
+    "hostname": "MBP-20380",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "sofiefinnoyvestol",
+    "last_report": {
+      "timestamp": 1765873856,
+      "age_seconds": 442255,
+      "age_human": "5d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 80.46,
+      "load_percent": 19.540000000000006
+    }
+  },
+  {
+    "serial_number": "V26XYWP739",
+    "hostname": "MBP-15658",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "rry",
+    "last_report": {
+      "timestamp": 1766143173,
+      "age_seconds": 172938,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 74.33,
+      "load_percent": 25.67
+    }
+  },
+  {
+    "serial_number": "Y6JJHX34L5",
+    "hostname": "MBP-12803",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "knutueland",
+    "last_report": {
+      "timestamp": 1766225655,
+      "age_seconds": 90456,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 57.25,
+      "load_percent": 42.75
+    }
+  },
+  {
+    "serial_number": "MV69MXPQV2",
+    "hostname": "MBP-03954",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "vuquangnguyen",
+    "last_report": {
+      "timestamp": 1766311022,
+      "age_seconds": 5089,
+      "age_human": "1h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 66.1,
+      "load_percent": 33.900000000000006
+    }
+  },
+  {
+    "serial_number": "L7T6WV566C",
+    "hostname": "MBP-31051",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "None",
+    "last_report": {
+      "timestamp": 1766180166,
+      "age_seconds": 135945,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 89.58,
+      "load_percent": 10.420000000000002
+    }
+  },
+  {
+    "serial_number": "WC3WXPFD47",
+    "hostname": "MBP-04917",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "auh",
+    "last_report": {
+      "timestamp": 1766238627,
+      "age_seconds": 77484,
+      "age_human": "21h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.87,
+      "load_percent": 16.129999999999995
+    }
+  },
+  {
+    "serial_number": "WQQ74RMHF9",
+    "hostname": "MBP-05721",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "teresehelenehaug",
+    "last_report": {
+      "timestamp": 1760699552,
+      "age_seconds": 5616559,
+      "age_human": "9w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 82.2,
+      "load_percent": 17.799999999999997
+    }
+  },
+  {
+    "serial_number": "GYJKWTXHYY",
+    "hostname": "MBP-13857",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "julia.orsal",
+    "last_report": {
+      "timestamp": 1766188334,
+      "age_seconds": 127777,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 72.16,
+      "load_percent": 27.840000000000003
+    }
+  },
+  {
+    "serial_number": "MG9R1464K7",
+    "hostname": "MBP-14921",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "vegard.brox",
+    "last_report": {
+      "timestamp": 1766134736,
+      "age_seconds": 181375,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 63.9,
+      "load_percent": 36.1
+    }
+  },
+  {
+    "serial_number": "XFXW6W79JY",
+    "hostname": "MBP-07538",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "lisecelinvikan",
+    "last_report": {
+      "timestamp": 1766142415,
+      "age_seconds": 173696,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 54.99,
+      "load_percent": 45.01
+    }
+  },
+  {
+    "serial_number": "DW96TNVMMP",
+    "hostname": "MBP-20856",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "kristian.schjelderup",
+    "last_report": {
+      "timestamp": 1766314034,
+      "age_seconds": 2077,
+      "age_human": "34m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 77.59,
+      "load_percent": 22.409999999999997
+    }
+  },
+  {
+    "serial_number": "JG4M22GW32",
+    "hostname": "MBP-03092",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "davidaasterud",
+    "last_report": {
+      "timestamp": 1766145612,
+      "age_seconds": 170499,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 78.45,
+      "load_percent": 21.549999999999997
+    }
+  },
+  {
+    "serial_number": "F7XNJF42LT",
+    "hostname": "MBP-09049",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "tinameejohnsen",
+    "last_report": {
+      "timestamp": 1766189622,
+      "age_seconds": 126489,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 76.45,
+      "load_percent": 23.549999999999997
+    }
+  },
+  {
+    "serial_number": "GGQF3902FN",
+    "hostname": "MBP-15799",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "tej",
+    "last_report": {
+      "timestamp": 1766141749,
+      "age_seconds": 174362,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.14,
+      "load_percent": 16.86
+    }
+  },
+  {
+    "serial_number": "VV6TVW7LQ2",
+    "hostname": "MBP-12311",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "mats.ottem.frantzvaag",
+    "last_report": {
+      "timestamp": 1766140567,
+      "age_seconds": 175544,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 76.56,
+      "load_percent": 23.439999999999998
+    }
+  },
+  {
+    "serial_number": "XG506M5JYY",
+    "hostname": "MBP-32692",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "arn",
+    "last_report": {
+      "timestamp": 1766143684,
+      "age_seconds": 172427,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Heavy",
+    "cpu": {
+      "idle_percent": 32.48,
+      "load_percent": 67.52000000000001
+    }
+  },
+  {
+    "serial_number": "WVN69Y2J2G",
+    "hostname": "MBP-16573",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "Joakim",
+    "last_report": {
+      "timestamp": 1766290068,
+      "age_seconds": 26043,
+      "age_human": "7h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 90.57,
+      "load_percent": 9.430000000000007
+    }
+  },
+  {
+    "serial_number": "M9X6WVFYQW",
+    "hostname": "MBP-00106",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "hannaranden",
+    "last_report": {
+      "timestamp": 1766143413,
+      "age_seconds": 172698,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 54.29,
+      "load_percent": 45.71
+    }
+  },
+  {
+    "serial_number": "RQ1T976M7R",
+    "hostname": "MBP-23901",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "tit",
+    "last_report": {
+      "timestamp": 1765804724,
+      "age_seconds": 511387,
+      "age_human": "5d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 1.93,
+      "load_percent": 98.07
+    }
+  },
+  {
+    "serial_number": "YM2CK4D61N",
+    "hostname": "MBP-03613",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "trygvekjensli",
+    "last_report": {
+      "timestamp": 1766146338,
+      "age_seconds": 169773,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 80.73,
+      "load_percent": 19.269999999999996
+    }
+  },
+  {
+    "serial_number": "HL69HKD6W0",
+    "hostname": "MBP-04671",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "jul",
+    "last_report": {
+      "timestamp": 1766146093,
+      "age_seconds": 170018,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 89.71,
+      "load_percent": 10.290000000000006
+    }
+  },
+  {
+    "serial_number": "NHQTC4XFQX",
+    "hostname": "MBP-12119",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "j06",
+    "last_report": {
+      "timestamp": 1766300626,
+      "age_seconds": 15485,
+      "age_human": "4h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.41,
+      "load_percent": 16.590000000000003
+    }
+  },
+  {
+    "serial_number": "WN761546FH",
+    "hostname": "MBP-13432",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "fik",
+    "last_report": {
+      "timestamp": 1766063065,
+      "age_seconds": 253046,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 66.21,
+      "load_percent": 33.790000000000006
+    }
+  },
+  {
+    "serial_number": "MTPQRC2XYQ",
+    "hostname": "MBP-11309",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "azu",
+    "last_report": {
+      "timestamp": 1766273940,
+      "age_seconds": 42171,
+      "age_human": "11h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.46,
+      "load_percent": 13.540000000000006
+    }
+  },
+  {
+    "serial_number": "T765XPQMXC",
+    "hostname": "MBP-11287",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "erl",
+    "last_report": {
+      "timestamp": 1765455076,
+      "age_seconds": 861035,
+      "age_human": "1w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.64,
+      "load_percent": 13.36
+    }
+  },
+  {
+    "serial_number": "M0JY123KPF",
+    "hostname": "MBP-05828",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "erik.klokk",
+    "last_report": {
+      "timestamp": 1766010231,
+      "age_seconds": 305880,
+      "age_human": "3d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 39.26,
+      "load_percent": 60.74
+    }
+  },
+  {
+    "serial_number": "FQ220D44X0",
+    "hostname": "MBP-08644",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "storset",
+    "last_report": {
+      "timestamp": 1766053874,
+      "age_seconds": 262237,
+      "age_human": "3d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 76.14,
+      "load_percent": 23.86
+    }
+  },
+  {
+    "serial_number": "RJJ40MDX9W",
+    "hostname": "MBP-07264",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "grd",
+    "last_report": {
+      "timestamp": 1766288476,
+      "age_seconds": 27635,
+      "age_human": "7h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 85.39,
+      "load_percent": 14.61
+    }
+  },
+  {
+    "serial_number": "KD06L0V2JR",
+    "hostname": "MBP-10800",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "christian",
+    "last_report": {
+      "timestamp": 1766096233,
+      "age_seconds": 219878,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.5,
+      "load_percent": 13.5
+    }
+  },
+  {
+    "serial_number": "CV0HC3YY2H",
+    "hostname": "MBP-15822",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "marius",
+    "last_report": {
+      "timestamp": 1766144832,
+      "age_seconds": 171279,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.85,
+      "load_percent": 16.150000000000006
+    }
+  },
+  {
+    "serial_number": "JP7FJKRXTQ",
+    "hostname": "MBP-03074",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "janon.veluppillai",
+    "last_report": {
+      "timestamp": 1766310213,
+      "age_seconds": 5898,
+      "age_human": "1h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.31,
+      "load_percent": 11.689999999999998
+    }
+  },
+  {
+    "serial_number": "RRH3QH4TYH",
+    "hostname": "MBP-05307",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "ven",
+    "last_report": {
+      "timestamp": 1765970613,
+      "age_seconds": 345498,
+      "age_human": "3d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 3.3,
+      "load_percent": 96.7
+    }
+  },
+  {
+    "serial_number": "R4T2YC244Y",
+    "hostname": "MBP-02614",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "vildecarolinegundersen",
+    "last_report": {
+      "timestamp": 1766299016,
+      "age_seconds": 17095,
+      "age_human": "4h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 62.54,
+      "load_percent": 37.46
+    }
+  },
+  {
+    "serial_number": "Q69GDC9DDF",
+    "hostname": "MBP-26032",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "eirikeide",
+    "last_report": {
+      "timestamp": 1766145852,
+      "age_seconds": 170259,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 79.16,
+      "load_percent": 20.840000000000003
+    }
+  },
+  {
+    "serial_number": "RVFYY9906W",
+    "hostname": "MBP-17675",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "mme",
+    "last_report": {
+      "timestamp": 1766143846,
+      "age_seconds": 172265,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 87.5,
+      "load_percent": 12.5
+    }
+  },
+  {
+    "serial_number": "MFQR166C17",
+    "hostname": "MBP-10160",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "marcusberntzenjohansen",
+    "last_report": {
+      "timestamp": 1766141931,
+      "age_seconds": 174180,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 80.36,
+      "load_percent": 19.64
+    }
+  },
+  {
+    "serial_number": "RMFCGXJD4V",
+    "hostname": "MBP-05236",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "bertinhustadhansen",
+    "last_report": {
+      "timestamp": 1765886284,
+      "age_seconds": 429827,
+      "age_human": "4d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.3,
+      "load_percent": 11.700000000000003
+    }
+  },
+  {
+    "serial_number": "HDJC04WTLW",
+    "hostname": "MBP-10076",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "magnehustveit",
+    "last_report": {
+      "timestamp": 1766133158,
+      "age_seconds": 182953,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 77.66,
+      "load_percent": 22.340000000000003
+    }
+  },
+  {
+    "serial_number": "XTJY5W22P1",
+    "hostname": "MBP-24204",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "spk-henrik",
+    "last_report": {
+      "timestamp": 1766233516,
+      "age_seconds": 82595,
+      "age_human": "22h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 45.39,
+      "load_percent": 54.61
+    }
+  },
+  {
+    "serial_number": "PMQM69RQND",
+    "hostname": "MBP-27711",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "tkv",
+    "last_report": {
+      "timestamp": 1766141004,
+      "age_seconds": 175107,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 53.61,
+      "load_percent": 46.39
+    }
+  },
+  {
+    "serial_number": "D6L4MQ7JDP",
+    "hostname": "MBP-17613",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "diana.berg",
+    "last_report": {
+      "timestamp": 1766133446,
+      "age_seconds": 182665,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 81.25,
+      "load_percent": 18.75
+    }
+  },
+  {
+    "serial_number": "F4VHJMTY6C",
+    "hostname": "MBP-11390",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "None",
+    "last_report": {
+      "timestamp": 1766190944,
+      "age_seconds": 125167,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 90.9,
+      "load_percent": 9.099999999999994
+    }
+  },
+  {
+    "serial_number": "J9RL6WQL4F",
+    "hostname": "MBP-10347",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "hmo",
+    "last_report": {
+      "timestamp": 1765900349,
+      "age_seconds": 415762,
+      "age_human": "4d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 84.22,
+      "load_percent": 15.780000000000001
+    }
+  },
+  {
+    "serial_number": "NNXTTWX250",
+    "hostname": "MBP-32760",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "magnusax",
+    "last_report": {
+      "timestamp": 1766134920,
+      "age_seconds": 181191,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.26,
+      "load_percent": 11.739999999999995
+    }
+  },
+  {
+    "serial_number": "WLYX6QW77T",
+    "hostname": "MBP-20022",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "eila.rishovd",
+    "last_report": {
+      "timestamp": 1766140693,
+      "age_seconds": 175418,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 60.52,
+      "load_percent": 39.48
+    }
+  },
+  {
+    "serial_number": "XQCW6G9N4H",
+    "hostname": "MBP-31618",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "halilvugdalic",
+    "last_report": {
+      "timestamp": 1766266614,
+      "age_seconds": 49497,
+      "age_human": "13h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 76.8,
+      "load_percent": 23.200000000000003
+    }
+  },
+  {
+    "serial_number": "NC63K3M6DW",
+    "hostname": "MBP-21374",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "janeivindmichelsen",
+    "last_report": {
+      "timestamp": 1766045337,
+      "age_seconds": 270774,
+      "age_human": "3d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 76.99,
+      "load_percent": 23.010000000000005
+    }
+  },
+  {
+    "serial_number": "XTHQTVX295",
+    "hostname": "MBP-15991",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "olehalv",
+    "last_report": {
+      "timestamp": 1766298433,
+      "age_seconds": 17678,
+      "age_human": "4h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 85.94,
+      "load_percent": 14.060000000000002
+    }
+  },
+  {
+    "serial_number": "DWL4VF33J3",
+    "hostname": "MBP-29011",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "kamranaliiqbal",
+    "last_report": {
+      "timestamp": 1766314370,
+      "age_seconds": 1741,
+      "age_human": "29m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 87.94,
+      "load_percent": 12.060000000000002
+    }
+  },
+  {
+    "serial_number": "JYX4DW1712",
+    "hostname": "MBP-27687",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "rune.aasvestad",
+    "last_report": {
+      "timestamp": 1766314277,
+      "age_seconds": 1834,
+      "age_human": "30m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.67,
+      "load_percent": 11.329999999999998
+    }
+  },
+  {
+    "serial_number": "J7M0JW0JQ3",
+    "hostname": "MBP-31822",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "casperfeng",
+    "last_report": {
+      "timestamp": 1765891020,
+      "age_seconds": 425091,
+      "age_human": "4d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.28,
+      "load_percent": 16.72
+    }
+  },
+  {
+    "serial_number": "H5C2D6HKQQ",
+    "hostname": "MBP-02974",
+    "description": "MacBook Air (13-inch, M3, 2024)",
+    "console_user": "halvorholtskog",
+    "last_report": {
+      "timestamp": 1766135700,
+      "age_seconds": 180411,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 67.18,
+      "load_percent": 32.81999999999999
+    }
+  },
+  {
+    "serial_number": "XXM560WMLH",
+    "hostname": "MBP-11659",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "fan",
+    "last_report": {
+      "timestamp": 1765827437,
+      "age_seconds": 488674,
+      "age_human": "5d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 27.36,
+      "load_percent": 72.64
+    }
+  },
+  {
+    "serial_number": "FF90GN71V3",
+    "hostname": "MBP-10736",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "sander.s.hansen",
+    "last_report": {
+      "timestamp": 1766145504,
+      "age_seconds": 170607,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 63.55,
+      "load_percent": 36.45
+    }
+  },
+  {
+    "serial_number": "FX4RKQF9DL",
+    "hostname": "MBP-21668",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "aliciavoisey",
+    "last_report": {
+      "timestamp": 1766285106,
+      "age_seconds": 31005,
+      "age_human": "8h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 56.56,
+      "load_percent": 43.44
+    }
+  },
+  {
+    "serial_number": "WV7W7LHH5Y",
+    "hostname": "MBP-14219",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "ali",
+    "last_report": {
+      "timestamp": 1766284133,
+      "age_seconds": 31978,
+      "age_human": "8h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 35.3,
+      "load_percent": 64.7
+    }
+  },
+  {
+    "serial_number": "Y2VW2RJX96",
+    "hostname": "MBP-31173",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "gkw",
+    "last_report": {
+      "timestamp": 1766143846,
+      "age_seconds": 172265,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 75.78,
+      "load_percent": 24.22
+    }
+  },
+  {
+    "serial_number": "VCG9T02DJW",
+    "hostname": "MBP-17057",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "erik.ragnar",
+    "last_report": {
+      "timestamp": 1766304942,
+      "age_seconds": 11169,
+      "age_human": "3h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.47,
+      "load_percent": 13.530000000000001
+    }
+  },
+  {
+    "serial_number": "LNXRVQ4HYW",
+    "hostname": "MBP-00167",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "leo",
+    "last_report": {
+      "timestamp": 1766307536,
+      "age_seconds": 8575,
+      "age_human": "2h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.92,
+      "load_percent": 11.079999999999998
+    }
+  },
+  {
+    "serial_number": "MYHT6M6WHL",
+    "hostname": "MBP-06076",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "sivertalmvik",
+    "last_report": {
+      "timestamp": 1765535891,
+      "age_seconds": 780220,
+      "age_human": "1w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 71.21,
+      "load_percent": 28.790000000000006
+    }
+  },
+  {
+    "serial_number": "Y3WW72C27Q",
+    "hostname": "MBP-18290",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "benjaminwold1",
+    "last_report": {
+      "timestamp": 1766144462,
+      "age_seconds": 171649,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 68.26,
+      "load_percent": 31.739999999999995
+    }
+  },
+  {
+    "serial_number": "C5PQF2H6C0",
+    "hostname": "MBP-10664",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "kristinesivertsen",
+    "last_report": {
+      "timestamp": 1766220224,
+      "age_seconds": 95887,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 76.2,
+      "load_percent": 23.799999999999997
+    }
+  },
+  {
+    "serial_number": "Q3NTJN7P7D",
+    "hostname": "MBP-26247",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "matsfrantzen",
+    "last_report": {
+      "timestamp": 1766191565,
+      "age_seconds": 124546,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 77.2,
+      "load_percent": 22.799999999999997
+    }
+  },
+  {
+    "serial_number": "K45KWXDM7Y",
+    "hostname": "MBP-03986",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "hac",
+    "last_report": {
+      "timestamp": 1766303779,
+      "age_seconds": 12332,
+      "age_human": "3h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.8,
+      "load_percent": 16.200000000000003
+    }
+  },
+  {
+    "serial_number": "L0W6PPWV76",
+    "hostname": "MBP-24054",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "daniel.idris",
+    "last_report": {
+      "timestamp": 1766263204,
+      "age_seconds": 52907,
+      "age_human": "14h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 71.6,
+      "load_percent": 28.400000000000006
+    }
+  },
+  {
+    "serial_number": "Y9L2Q57D9J",
+    "hostname": "MBP-23021",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "anastasia.andersen",
+    "last_report": {
+      "timestamp": 1766195598,
+      "age_seconds": 120513,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 80.83,
+      "load_percent": 19.17
+    }
+  },
+  {
+    "serial_number": "XVHP6R7961",
+    "hostname": "MBP-00654",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "hamseism",
+    "last_report": {
+      "timestamp": 1766272518,
+      "age_seconds": 43593,
+      "age_human": "12h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 69.38,
+      "load_percent": 30.620000000000005
+    }
+  },
+  {
+    "serial_number": "VC4GDYFLWN",
+    "hostname": "MBP-13552",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "srt",
+    "last_report": {
+      "timestamp": 1766059765,
+      "age_seconds": 256346,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 82.72,
+      "load_percent": 17.28
+    }
+  },
+  {
+    "serial_number": "M4R4LQ54YD",
+    "hostname": "MBP-32048",
+    "description": "MacBook Pro (16-inch, Nov 2023)",
+    "console_user": "susannekvernmoholgernes",
+    "last_report": {
+      "timestamp": 1766315638,
+      "age_seconds": 473,
+      "age_human": "7m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 89.33,
+      "load_percent": 10.670000000000002
+    }
+  },
+  {
+    "serial_number": "GDK2VPKHY7",
+    "hostname": "MBP-08566",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "pgd",
+    "last_report": {
+      "timestamp": 1766218046,
+      "age_seconds": 98065,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 73.27,
+      "load_percent": 26.730000000000004
+    }
+  },
+  {
+    "serial_number": "RJXYPYM4LJ",
+    "hostname": "MBP-22170",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "pec",
+    "last_report": {
+      "timestamp": 1766143619,
+      "age_seconds": 172492,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 79.18,
+      "load_percent": 20.819999999999993
+    }
+  },
+  {
+    "serial_number": "R2LQQ7QYMJ",
+    "hostname": "MBP-32513",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "andersolsensandvik",
+    "last_report": {
+      "timestamp": 1766227692,
+      "age_seconds": 88419,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 87.19,
+      "load_percent": 12.810000000000002
+    }
+  },
+  {
+    "serial_number": "QVL73GQHKQ",
+    "hostname": "MBP-25466",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "nabs",
+    "last_report": {
+      "timestamp": 1766059431,
+      "age_seconds": 256680,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 73.96,
+      "load_percent": 26.040000000000006
+    }
+  },
+  {
+    "serial_number": "WP1V9VJJQM",
+    "hostname": "MBP-27394",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "vht",
+    "last_report": {
+      "timestamp": 1766282106,
+      "age_seconds": 34005,
+      "age_human": "9h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 73.87,
+      "load_percent": 26.129999999999995
+    }
+  },
+  {
+    "serial_number": "YJC79LX6RJ",
+    "hostname": "MBP-09414",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "skarheim",
+    "last_report": {
+      "timestamp": 1766297032,
+      "age_seconds": 19079,
+      "age_human": "5h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 79.54,
+      "load_percent": 20.459999999999994
+    }
+  },
+  {
+    "serial_number": "KXYPXK7DTW",
+    "hostname": "MBP-06322",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "ehi",
+    "last_report": {
+      "timestamp": 1766265169,
+      "age_seconds": 50942,
+      "age_human": "14h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 58.17,
+      "load_percent": 41.83
+    }
+  },
+  {
+    "serial_number": "XD497404PX",
+    "hostname": "MBP-03639",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "gto",
+    "last_report": {
+      "timestamp": 1766062756,
+      "age_seconds": 253355,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 84.55,
+      "load_percent": 15.450000000000003
+    }
+  },
+  {
+    "serial_number": "GJQQJL2R2T",
+    "hostname": "MBP-14117",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "eirik.arseth",
+    "last_report": {
+      "timestamp": 1765965945,
+      "age_seconds": 350166,
+      "age_human": "4d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 77.5,
+      "load_percent": 22.5
+    }
+  },
+  {
+    "serial_number": "XV0XVGG9X1",
+    "hostname": "MBP-28814",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "ols",
+    "last_report": {
+      "timestamp": 1766144817,
+      "age_seconds": 171294,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 78.11,
+      "load_percent": 21.89
+    }
+  },
+  {
+    "serial_number": "LMHYQ7QXFC",
+    "hostname": "MBP-17331",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "kavusikansivasubramaniam",
+    "last_report": {
+      "timestamp": 1766268970,
+      "age_seconds": 47141,
+      "age_human": "13h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 74.68,
+      "load_percent": 25.319999999999993
+    }
+  },
+  {
+    "serial_number": "KXLWCQY3Y3",
+    "hostname": "MBP-28870",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "aliimrananjum",
+    "last_report": {
+      "timestamp": 1766144977,
+      "age_seconds": 171134,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 46.38,
+      "load_percent": 53.62
+    }
+  },
+  {
+    "serial_number": "JR63V9V16R",
+    "hostname": "MBP-25278",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "nna",
+    "last_report": {
+      "timestamp": 1764690160,
+      "age_seconds": 1625951,
+      "age_human": "2w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 77.87,
+      "load_percent": 22.129999999999995
+    }
+  },
+  {
+    "serial_number": "LQHQ9376LJ",
+    "hostname": "MBP-15896",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "danialsheikh",
+    "last_report": {
+      "timestamp": 1766311149,
+      "age_seconds": 4962,
+      "age_human": "1h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 78.24,
+      "load_percent": 21.760000000000005
+    }
+  },
+  {
+    "serial_number": "MN7F3FCV60",
+    "hostname": "MBP-21527",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "karolina.pawlicka",
+    "last_report": {
+      "timestamp": 1765542991,
+      "age_seconds": 773120,
+      "age_human": "1w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.81,
+      "load_percent": 13.189999999999998
+    }
+  },
+  {
+    "serial_number": "RMC4QQ7KKX",
+    "hostname": "MBP-01470",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "aor",
+    "last_report": {
+      "timestamp": 1766140883,
+      "age_seconds": 175228,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.4,
+      "load_percent": 11.599999999999994
+    }
+  },
+  {
+    "serial_number": "DTDV0FK9T9",
+    "hostname": "MBP-30340",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "adriannystedriise",
+    "last_report": {
+      "timestamp": 1766315680,
+      "age_seconds": 431,
+      "age_human": "7m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 69.3,
+      "load_percent": 30.700000000000003
+    }
+  },
+  {
+    "serial_number": "WG2J4HTGP6",
+    "hostname": "MBP-02093",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "jenny.thor",
+    "last_report": {
+      "timestamp": 1766208214,
+      "age_seconds": 107897,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.77,
+      "load_percent": 11.230000000000004
+    }
+  },
+  {
+    "serial_number": "CR9XND636L",
+    "hostname": "MBP-11403",
+    "description": "MacBook Air (15-inch, M2, 2023)",
+    "console_user": "oivind.martinsen",
+    "last_report": {
+      "timestamp": 1766144549,
+      "age_seconds": 171562,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.63,
+      "load_percent": 13.370000000000005
+    }
+  },
+  {
+    "serial_number": "C4CNX9VTV5",
+    "hostname": "MBP-31108",
+    "description": "MacBook Pro (14-inch, Nov 2023)",
+    "console_user": "sofiethomassen",
+    "last_report": {
+      "timestamp": 1766145375,
+      "age_seconds": 170736,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 80.68,
+      "load_percent": 19.319999999999993
+    }
+  },
+  {
+    "serial_number": "JFC2R4T001",
+    "hostname": "MBP-07373",
+    "description": "MacBook Pro (14-inch, 2021)",
+    "console_user": "veh",
+    "last_report": {
+      "timestamp": 1766059626,
+      "age_seconds": 256485,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.76,
+      "load_percent": 16.239999999999995
+    }
+  },
+  {
+    "serial_number": "LY0WDM4JLW",
+    "hostname": "MBP-29506",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "jorgenekvoll",
+    "last_report": {
+      "timestamp": 1766145827,
+      "age_seconds": 170284,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 83.4,
+      "load_percent": 16.599999999999994
+    }
+  },
+  {
+    "serial_number": "CWMJW4034C",
+    "hostname": "MBP-23810",
+    "description": "MacBook Air (M2, 2022)",
+    "console_user": "redalouhibi",
+    "last_report": {
+      "timestamp": 1764951206,
+      "age_seconds": 1364905,
+      "age_human": "2w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 29.96,
+      "load_percent": 70.03999999999999
+    }
+  },
+  {
+    "serial_number": "WW04Q2Y06G",
+    "hostname": "MBP-26833",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "hom",
+    "last_report": {
+      "timestamp": 1766134739,
+      "age_seconds": 181372,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 54.84,
+      "load_percent": 45.16
+    }
+  },
+  {
+    "serial_number": "J4K6NGFPVH",
+    "hostname": "MBP-31799",
+    "description": "MacBook Pro (16-inch, Nov 2024)",
+    "console_user": "fredrik.brinchmann",
+    "last_report": {
+      "timestamp": 1766313369,
+      "age_seconds": 2742,
+      "age_human": "45m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 62.88,
+      "load_percent": 37.12
+    }
+  },
+  {
+    "serial_number": "H97WKT2066",
+    "hostname": "MBP-20201",
+    "description": "MacBook Air (15-inch, M4, 2025)",
+    "console_user": "anders.tangen",
+    "last_report": {
+      "timestamp": 1766314508,
+      "age_seconds": 1603,
+      "age_human": "26m"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 84.88,
+      "load_percent": 15.120000000000005
+    }
+  },
+  {
+    "serial_number": "VQVW7C9Q6V",
+    "hostname": "MBP-20596",
+    "description": "MacBook Pro (16-inch, 2021)",
+    "console_user": "fredrik.brinchmann",
+    "last_report": {
+      "timestamp": 1766267494,
+      "age_seconds": 48617,
+      "age_human": "13h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.42,
+      "load_percent": 11.579999999999998
+    }
+  },
+  {
+    "serial_number": "KJ2GK1994T",
+    "hostname": "MBP-32054",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "anne-marte",
+    "last_report": {
+      "timestamp": 1766310480,
+      "age_seconds": 5631,
+      "age_human": "1h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 89.41,
+      "load_percent": 10.590000000000003
+    }
+  },
+  {
+    "serial_number": "MY7NY4PWPK",
+    "hostname": "MBP-09790",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "live.wang.jensen",
+    "last_report": {
+      "timestamp": 1766146581,
+      "age_seconds": 169530,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Heavy",
+    "cpu": {
+      "idle_percent": 70.21,
+      "load_percent": 29.790000000000006
+    }
+  },
+  {
+    "serial_number": "CDPG4K4J6G",
+    "hostname": "MBP-11450",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "solskj",
+    "last_report": {
+      "timestamp": 1766301366,
+      "age_seconds": 14745,
+      "age_human": "4h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.8,
+      "load_percent": 11.200000000000003
+    }
+  },
+  {
+    "serial_number": "JN994167TQ",
+    "hostname": "MBP-28552",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "kristineskjellestad",
+    "last_report": {
+      "timestamp": 1766142239,
+      "age_seconds": 173872,
+      "age_human": "2d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.46,
+      "load_percent": 11.540000000000006
+    }
+  },
+  {
+    "serial_number": "MXL6WJ994D",
+    "hostname": "MBP-29333",
+    "description": "MacBook Pro (14-inch, Nov 2024)",
+    "console_user": "fatmakizilkaya",
+    "last_report": {
+      "timestamp": 1765270063,
+      "age_seconds": 1046048,
+      "age_human": "1w"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 74.75,
+      "load_percent": 25.25
+    }
+  },
+  {
+    "serial_number": "CD7F2P7PPX",
+    "hostname": "MBP-11103",
+    "description": "MacBook Air (13-inch, M4, 2025)",
+    "console_user": "adele",
+    "last_report": {
+      "timestamp": 1766145786,
+      "age_seconds": 170325,
+      "age_human": "1d"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 88.55,
+      "load_percent": 11.450000000000003
+    }
+  },
+  {
+    "serial_number": "G43K95QMCP",
+    "hostname": "MBP-07350",
+    "description": "MacBook Pro (14-inch, 2023)",
+    "console_user": "isb",
+    "last_report": {
+      "timestamp": 1766312448,
+      "age_seconds": 3663,
+      "age_human": "1h"
+    },
+    "thermal_pressure": "Nominal",
+    "cpu": {
+      "idle_percent": 86.91,
+      "load_percent": 13.090000000000003
+    }
+  }
+]
