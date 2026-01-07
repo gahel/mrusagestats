@@ -118,80 +118,422 @@ html = f"""<!DOCTYPE html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Usage Stats Dashboard</title>
+    <title>MacBook Usage Analytics - Real-time Monitoring</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; background: #0d1117; color: #c9d1d9; }}
-        .container {{ max-width: 1400px; margin: 0 auto; padding: 20px; }}
-        header {{ background: #161b22; padding: 30px 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #30363d; }}
-        h1 {{ color: #58a6ff; margin-bottom: 10px; }}
-        .timestamp {{ color: #8b949e; font-size: 14px; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; background: #0d1117; color: #c9d1d9; line-height: 1.5; }}
+        .container {{ max-width: 1600px; margin: 0 auto; padding: 20px; }}
         
-        .stats {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }}
-        .stat-card {{ background: #161b22; padding: 20px; border-radius: 8px; border: 1px solid #30363d; }}
-        .stat-label {{ color: #8b949e; font-size: 12px; text-transform: uppercase; }}
-        .stat-value {{ color: #58a6ff; font-size: 28px; font-weight: bold; margin-top: 10px; }}
+        header {{ background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); padding: 40px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #30363d; }}
+        h1 {{ color: #58a6ff; margin-bottom: 15px; font-size: 2.5rem; font-weight: 700; }}
+        .subtitle {{ color: #8b949e; font-size: 1.1rem; margin-bottom: 20px; }}
+        .timestamp {{ color: #7c3aed; font-size: 0.9rem; background: rgba(124, 58, 237, 0.1); padding: 8px 16px; border-radius: 20px; display: inline-block; }}
         
-        table {{ width: 100%; border-collapse: collapse; background: #161b22; margin-top: 20px; }}
-        th {{ background: #0d1117; color: #58a6ff; padding: 12px; text-align: left; border-bottom: 1px solid #30363d; }}
-        td {{ padding: 12px; border-bottom: 1px solid #30363d; }}
+        .metrics-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }}
+        .metric-card {{ background: #161b22; padding: 25px; border-radius: 12px; border: 1px solid #30363d; position: relative; overflow: hidden; }}
+        .metric-card::before {{ content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #58a6ff, #7c3aed); }}
+        .metric-label {{ color: #8b949e; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }}
+        .metric-value {{ color: #58a6ff; font-size: 2.2rem; font-weight: bold; margin-bottom: 8px; }}
+        .metric-change {{ font-size: 0.9rem; }}
+        .metric-up {{ color: #f85149; }}
+        .metric-down {{ color: #3fb950; }}
+        
+        .charts-section {{ margin-bottom: 40px; }}
+        .section-title {{ color: #58a6ff; font-size: 1.8rem; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }}
+        .section-title::before {{ content: '📊'; font-size: 1.5rem; }}
+        
+        .charts-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 25px; margin-bottom: 30px; }}
+        .chart-container {{ background: #161b22; padding: 25px; border-radius: 12px; border: 1px solid #30363d; position: relative; }}
+        .chart-title {{ color: #f0f6fc; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }}
+        .chart-canvas {{ position: relative; height: 300px; }}
+        
+        .alerts-section {{ background: #161b22; border-radius: 12px; padding: 25px; margin-bottom: 30px; border: 1px solid #30363d; }}
+        .alert {{ padding: 15px; margin: 10px 0; border-radius: 8px; display: flex; align-items: center; gap: 12px; }}
+        .alert-critical {{ background: rgba(248, 81, 73, 0.1); border: 1px solid #f85149; }}
+        .alert-warning {{ background: rgba(255, 212, 59, 0.1); border: 1px solid #ffd43b; }}
+        .alert-icon {{ font-size: 1.2rem; }}
+        
+        .machines-table {{ background: #161b22; border-radius: 12px; overflow: hidden; margin-bottom: 30px; }}
+        table {{ width: 100%; border-collapse: collapse; }}
+        th {{ background: #0d1117; color: #58a6ff; padding: 18px; text-align: left; font-weight: 600; border-bottom: 2px solid #30363d; }}
+        td {{ padding: 15px 18px; border-bottom: 1px solid #30363d; }}
         tr:hover {{ background: #0d1117; }}
+        .status-nominal {{ color: #3fb950; }}
+        .status-warning {{ color: #ffd43b; }}
+        .status-critical {{ color: #f85149; }}
+        
+        .footer {{ text-align: center; padding: 40px; color: #8b949e; border-top: 1px solid #30363d; margin-top: 40px; }}
+        .update-frequency {{ color: #7c3aed; font-weight: 600; }}
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 MacBook Usage Statistics</h1>
-            <div class="timestamp">Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</div>
+            <h1>🖥️ MacBook Fleet Analytics</h1>
+            <div class="subtitle">Real-time monitoring of {unique_machines} MacBooks across the organization</div>
+            <div class="timestamp">Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}</div>
         </header>
         
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-label">Total Records</div>
-                <div class="stat-value">{total_records:,}</div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Data Points</div>
+                <div class="metric-value">{total_records:,}</div>
+                <div class="metric-change">📈 Growing continuously</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Machines</div>
-                <div class="stat-value">{unique_machines}</div>
+            <div class="metric-card">
+                <div class="metric-label">Active Machines</div>
+                <div class="metric-value">{unique_machines}</div>
+                <div class="metric-change">🟢 All monitored</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Max Power (W)</div>
-                <div class="stat-value">{max_watts:.2f}</div>
+            <div class="metric-card">
+                <div class="metric-label">Peak Power Usage</div>
+                <div class="metric-value">{max_watts:.1f}W</div>
+                <div class="metric-change">⚡ Max observed</div>
+            </div>"""
+
+# Calculate additional metrics
+thermal_critical = sum(1 for r in records if r.get('thermal_pressure') == 'Critical')
+thermal_warning = sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])
+high_gpu_usage = sum(1 for r in records if isinstance(r.get('gpu_busy'), (int, float)) and r.get('gpu_busy', 0) > 80)
+
+html += f"""            <div class="metric-card">
+                <div class="metric-label">Thermal Alerts</div>
+                <div class="metric-value">{thermal_critical + thermal_warning}</div>
+                <div class="metric-change {'metric-up' if thermal_critical > 0 else 'metric-down'}">
+                    {'🔥 ' + str(thermal_critical) + ' critical' if thermal_critical > 0 else '✅ All normal'}
+                </div>
             </div>
+        </div>"""
+
+# Generate time-series data for charts
+recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-200:]  # Last 200 records
+
+# Group by collection time for trends
+from collections import defaultdict
+time_groups = defaultdict(list)
+for record in recent_records:
+    time_key = record.get('collected_at', '')[:16]  # Group by minute
+    time_groups[time_key].append(record)
+
+time_series_data = []
+for time_key in sorted(time_groups.keys()):
+    group = time_groups[time_key]
+    avg_watts = sum(r.get('package_watts', 0) for r in group if isinstance(r.get('package_watts'), (int, float))) / len(group)
+    avg_gpu = sum(r.get('gpu_busy', 0) for r in group if isinstance(r.get('gpu_busy'), (int, float))) / max(len([r for r in group if isinstance(r.get('gpu_busy'), (int, float))]), 1)
+    thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
+    
+    time_series_data.append({
+        'time': time_key,
+        'avg_watts': avg_watts,
+        'avg_gpu': avg_gpu,
+        'thermal_issues': thermal_issues,
+        'count': len(group)
+    })
+
+html += f"""
+        <div class="charts-section">
+            <h2 class="section-title">Performance Trends Over Time</h2>
+            
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">🌡️ Thermal Pressure Timeline</div>
+                    <div class="chart-canvas">
+                        <canvas id="thermalTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">⚡ Power Consumption Trends</div>
+                    <div class="chart-canvas">
+                        <canvas id="powerTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">🎮 GPU Utilization Over Time</div>
+                    <div class="chart-canvas">
+                        <canvas id="gpuTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">📊 Fleet Status Distribution</div>
+                    <div class="chart-canvas">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>"""
+
+# Alerts section
+html += f"""
+        <div class="alerts-section">
+            <h2 class="section-title">🚨 System Alerts</h2>"""
+
+if thermal_critical > 0:
+    html += f"""
+            <div class="alert alert-critical">
+                <span class="alert-icon">🔥</span>
+                <div>
+                    <strong>Critical Thermal Alert:</strong> {thermal_critical} machine(s) reporting critical thermal pressure.
+                    Immediate attention required to prevent hardware damage.
+                </div>
+            </div>"""
+
+if high_gpu_usage > 10:
+    html += f"""
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚡</span>
+                <div>
+                    <strong>High GPU Usage:</strong> {high_gpu_usage} instances of >80% GPU utilization detected.
+                    Monitor for sustained high performance workloads.
+                </div>
+            </div>"""
+
+if max_watts > 15:
+    html += f"""
+            <div class="alert alert-warning">
+                <span class="alert-icon">🔋</span>
+                <div>
+                    <strong>High Power Consumption:</strong> Peak power usage of {max_watts:.1f}W detected.
+                    Review power-intensive applications and thermal management.
+                </div>
+            </div>"""
+
+if thermal_critical == 0 and high_gpu_usage < 5:
+    html += f"""
+            <div class="alert" style="background: rgba(63, 185, 80, 0.1); border: 1px solid #3fb950;">
+                <span class="alert-icon">✅</span>
+                <div>
+                    <strong>Fleet Status: Healthy</strong> All systems operating within normal parameters.
+                    No immediate action required.
+                </div>
+            </div>"""
+
+html += """
         </div>
         
-        <h2 style="color: #58a6ff; margin: 30px 0 20px 0;">Machine Statistics</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Hostname</th>
-                    <th>Avg Power (W)</th>
-                    <th>Avg GPU %</th>
-                    <th>Records</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="machines-table">
+            <h2 class="section-title">💻 Machine Performance Overview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Machine</th>
+                        <th>Thermal Status</th>
+                        <th>Avg Power (W)</th>
+                        <th>Avg GPU Usage (%)</th>
+                        <th>Avg CPU Freq (GHz)</th>
+                        <th>Data Points</th>
+                        <th>Last Seen</th>
+                    </tr>
+                </thead>
+                <tbody>
 """
 
 for hostname in machine_list:
     machine_records = machines[hostname]
     watts = [r.get('package_watts', 0) for r in machine_records if isinstance(r.get('package_watts'), (int, float))]
     gpu_busy = [r.get('gpu_busy', 0) for r in machine_records if isinstance(r.get('gpu_busy'), (int, float))]
+    cpu_freq = [r.get('freq_hz', 0) / 1e9 for r in machine_records if isinstance(r.get('freq_hz'), (int, float))]
     
     avg_watts = sum(watts) / len(watts) if watts else 0
     avg_gpu = sum(gpu_busy) / len(gpu_busy) if gpu_busy else 0
+    avg_cpu_freq = sum(cpu_freq) / len(cpu_freq) if cpu_freq else 0
+    
+    # Get most common thermal status
+    thermal_states = [r.get('thermal_pressure', 'Unknown') for r in machine_records]
+    thermal_status = max(set(thermal_states), key=thermal_states.count)
+    
+    status_class = 'status-nominal'
+    if thermal_status in ['Critical']:
+        status_class = 'status-critical'
+    elif thermal_status in ['Warning', 'High']:
+        status_class = 'status-warning'
+    
+    last_seen = machine_records[-1].get('collected_at', 'Unknown')[:16] if machine_records else 'Unknown'
     
     html += f"""                <tr>
                     <td><strong>{hostname}</strong></td>
+                    <td class="{status_class}">{thermal_status}</td>
                     <td>{avg_watts:.2f}</td>
                     <td>{avg_gpu:.1f}%</td>
+                    <td>{avg_cpu_freq:.2f}</td>
                     <td>{len(machine_records)}</td>
+                    <td>{last_seen}</td>
                 </tr>
 """
 
 html += """            </tbody>
         </table>
     </div>
+    
+    <div class="footer">
+        <p>🔄 Data collected every <span class="update-frequency">hour</span> via GitHub Actions</p>
+        <p>📈 Historical trends available • 🚨 Real-time monitoring • ⚡ Performance analytics</p>
+    </div>
+</div>
+
+<script>
+// Chart.js configuration
+Chart.defaults.color = '#8b949e';
+Chart.defaults.borderColor = '#30363d';
+Chart.defaults.backgroundColor = 'rgba(88, 166, 255, 0.1)';
+
+// Time series data
+const timeSeriesData = """ + json.dumps(time_series_data) + """;
+
+// Thermal trend chart
+const thermalCtx = document.getElementById('thermalTrendChart').getContext('2d');
+new Chart(thermalCtx, {
+    type: 'line',
+    data: {
+        labels: timeSeriesData.map(d => d.time),
+        datasets: [{
+            label: 'Thermal Issues',
+            data: timeSeriesData.map(d => d.thermal_issues),
+            borderColor: '#f85149',
+            backgroundColor: 'rgba(248, 81, 73, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { 
+                beginAtZero: true,
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
+                    color: '#8b949e',
+                    maxTicksLimit: 10
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { labels: { color: '#8b949e' } }
+        }
+    }
+});
+
+// Power trend chart
+const powerCtx = document.getElementById('powerTrendChart').getContext('2d');
+new Chart(powerCtx, {
+    type: 'line',
+    data: {
+        labels: timeSeriesData.map(d => d.time),
+        datasets: [{
+            label: 'Average Power (W)',
+            data: timeSeriesData.map(d => d.avg_watts),
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { 
+                beginAtZero: true,
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
+                    color: '#8b949e',
+                    maxTicksLimit: 10
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { labels: { color: '#8b949e' } }
+        }
+    }
+});
+
+// GPU trend chart
+const gpuCtx = document.getElementById('gpuTrendChart').getContext('2d');
+new Chart(gpuCtx, {
+    type: 'line',
+    data: {
+        labels: timeSeriesData.map(d => d.time),
+        datasets: [{
+            label: 'Average GPU Usage (%)',
+            data: timeSeriesData.map(d => d.avg_gpu),
+            borderColor: '#7c3aed',
+            backgroundColor: 'rgba(124, 58, 237, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { 
+                beginAtZero: true,
+                max: 100,
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
+                    color: '#8b949e',
+                    maxTicksLimit: 10
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { labels: { color: '#8b949e' } }
+        }
+    }
+});
+
+// Status distribution chart""" + f"""
+const thermalNominal = {sum(1 for r in records if r.get('thermal_pressure') == 'Nominal')};
+const thermalWarning = {sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])};
+const thermalCritical = {sum(1 for r in records if r.get('thermal_pressure') == 'Critical')};
+
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+new Chart(statusCtx, {{
+    type: 'doughnut',
+    data: {{
+        labels: ['Nominal', 'Warning', 'Critical'],
+        datasets: [{{
+            data: [thermalNominal, thermalWarning, thermalCritical],
+            backgroundColor: ['#3fb950', '#ffd43b', '#f85149'],
+            borderWidth: 2,
+            borderColor: '#30363d'
+        }}]
+    }},
+    options: {{
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {{
+            legend: {{ 
+                labels: {{ color: '#8b949e' }},
+                position: 'bottom'
+            }}
+        }}
+    }}
+}});
+
+// Auto-refresh every 10 minutes
+setTimeout(() => {{
+    window.location.reload();
+}}, 600000);
+</script>
 </body>
 </html>
 """
