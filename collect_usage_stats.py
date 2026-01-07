@@ -21,7 +21,6 @@ columns = [
     "usage_stats.thermal_pressure",
     "usage_stats.package_watts",
     "usage_stats.gpu_busy",
-    "usage_stats.freq_hz",
     "usage_stats.gpu_freq_mhz",
     "usage_stats.backlight",
     "usage_stats.keyboard_backlight",
