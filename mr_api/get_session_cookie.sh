@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Script for å hente gyldig session cookie fra Munki Report
+# Dette krever at du logger inn manuelt i nettleser
+
+echo "🔐 Munki Report Session Cookie Helper"
+echo ""
+echo "Siden bruker SAML-autentisering, må du logge inn manuelt i nettleseren."
+echo ""
+echo "Instruksjoner:"
+echo "1. Åpne denne URL-en i din nettleser:"
+echo "   https://app-munkireport-prod-norwayeast-001.azurewebsites.net"
+echo ""
+echo "2. Logg inn med dine Microsoft Entra-legitimasjoner"
+echo ""
+echo "3. Etter innlogging, åpne Developer Tools (F12 eller Cmd+Option+I)"
+echo ""
+echo "4. Gå til Application tab → Cookies"
+echo ""
+echo "5. Finn og kopier verdien av disse cookies:"
+echo "   - PHPSESSID"
+echo "   - (eventuelt anden cookies som trengs)"
+echo ""
+echo "6. Lim inn her, eller kjør:"
+echo "   export MR_SESSION_COOKIE='PHPSESSID=xxx; andre-cookies'"
+echo "   python3 munki_report.py"
+echo ""
+echo "Alternative: Åpne DevTools Console og kjør:"
+echo "  console.log(document.cookie)"
+echo ""
+echo "Da får du alle cookies som kan kopieres direkte."

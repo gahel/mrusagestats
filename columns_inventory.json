@@ -1,0 +1,100 @@
+{
+  "timestamp": "2026-01-07",
+  "total_columns": 46,
+  "tables": {
+    "machine": {
+      "columns": [
+        "machine.serial_number",
+        "machine.hostname",
+        "machine.machine_desc",
+        "machine.os_version"
+      ],
+      "record_count": "108"
+    },
+    "reportdata": {
+      "columns": [
+        "reportdata.serial_number",
+        "reportdata.timestamp",
+        "reportdata.console_user",
+        "reportdata.remote_ip",
+        "reportdata.machine_group",
+        "reportdata.archive_status",
+        "reportdata.uptime"
+      ],
+      "record_count": "108"
+    },
+    "usage_stats": {
+      "columns": [
+        "usage_stats.serial_number",
+        "usage_stats.timestamp",
+        "usage_stats.thermal_pressure"
+      ],
+      "record_count": "108"
+    },
+    "managedinstalls": {
+      "columns": [
+        "managedinstalls.serial_number",
+        "managedinstalls.size"
+      ],
+      "record_count": "1174"
+    },
+    "security": {
+      "columns": [
+        "security.serial_number"
+      ],
+      "record_count": "108"
+    },
+    "munkireport": {
+      "columns": [
+        "munkireport.manifestname"
+      ],
+      "record_count": "varies"
+    },
+    "displays": {
+      "columns": [
+        "displays.serial_number",
+        "displays.display_serial",
+        "displays.timestamp",
+        "displays.id"
+      ],
+      "record_count": "555"
+    },
+    "report_items_with_serial_only": {
+      "tables": 28,
+      "examples": [
+        "applications.serial_number",
+        "appusage.serial_number",
+        "ard.serial_number",
+        "bluetooth.serial_number",
+        "certificate.serial_number",
+        "detectx.serial_number",
+        "extensions.serial_number",
+        "fan_temps.serial_number",
+        "filevault_status.serial_number",
+        "findmymac.serial_number",
+        "firewall.serial_number",
+        "fonts.serial_number",
+        "gpu.serial_number",
+        "mdm_status.serial_number",
+        "munki_facts.serial_number",
+        "munkiinfo.serial_number",
+        "network.serial_number",
+        "network_shares.serial_number",
+        "power.serial_number",
+        "printer.serial_number",
+        "profile.serial_number",
+        "softwareupdate.serial_number",
+        "sophos.serial_number",
+        "timemachine.serial_number",
+        "usb.serial_number",
+        "user_sessions.serial_number",
+        "warranty.serial_number",
+        "wifi.serial_number"
+      ]
+    }
+  },
+  "notes": {
+    "disk_space_data": "Not found in API - only available in web UI",
+    "web_ui_shows": "1 machine < 100GB, 107 machines > 10GB"
+  }
+}

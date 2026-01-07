@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-01-07T15:45:47.539496",
+  "total": 108,
+  "summary": {
+    "critical": 0,
+    "warning": 0,
+    "nominal": 108
+  },
+  "critical_machines": [],
+  "warning_machines": []
+}

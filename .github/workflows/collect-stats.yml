@@ -1,0 +1,141 @@
+name: Collect and Analyze Usage Stats
+
+on:
+  schedule:
+    # Run every hour at the top of the hour (0 minutes)
+    - cron: '0 * * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  collect:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: Configure API credentials
+        run: |
+          # Store credentials securely (you'll need to set these in GitHub Secrets)
+          mkdir -p ~/.config
+      
+      - name: Collect usage stats
+        env:
+          MR_PASSWORD: ${{ secrets.MR_API_PASSWORD }}
+        run: |
+          # Create a wrapper that uses environment variable for password
+          cat > collect_wrapper.py << 'EOF'
+          import sys
+          import os
+          sys.path.insert(0, '/Users/gaute/scripts/mr_api2')
+          
+          # Modify collect_usage_stats.py to use env var
+          import subprocess
+          import json
+          from datetime import datetime
+          
+          base_url = "https://app-munkireport-prod-norwayeast-001.azurewebsites.net/index.php?"
+          login = "localuser"
+          password = os.environ.get('MR_PASSWORD', '')
+          
+          if not password:
+              print("Error: MR_PASSWORD not set")
+              sys.exit(1)
+          
+          import requests
+          
+          columns = [
+              "machine.serial_number",
+              "machine.hostname",
+              "usage_stats.timestamp",
+              "usage_stats.thermal_pressure",
+              "usage_stats.package_watts",
+              "usage_stats.gpu_busy",
+              "usage_stats.freq_hz",
+              "usage_stats.gpu_freq_mhz",
+              "usage_stats.backlight",
+              "usage_stats.keyboard_backlight",
+              "usage_stats.ibyte_rate",
+              "usage_stats.obyte_rate",
+              "usage_stats.rbytes_per_s",
+              "usage_stats.wbytes_per_s",
+          ]
+          
+          auth_url = f"{base_url}/auth/login"
+          query_url = f"{base_url}/datatables/data"
+          session = requests.Session()
+          session.verify = False
+          
+          auth_request = session.post(auth_url, data={"login": login, "password": password})
+          
+          if auth_request.status_code != 200:
+              print(f"Authentication failed: {auth_request.status_code}")
+              sys.exit(1)
+          
+          headers = {"x-csrf-token": session.cookies["CSRF-TOKEN"]}
+          query_data = {f"columns[{i}][name]": c for i, c in enumerate(columns)}
+          
+          response = session.post(query_url, data=query_data, headers=headers)
+          result = response.json()
+          
+          timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+          filename = f"usage_stats_{timestamp}.json"
+          
+          with open(filename, 'w') as f:
+              json.dump({"collected_at": datetime.now().isoformat(), "records": result['recordsFiltered'], "data": result['data']}, f, indent=2)
+          
+          history_file = "usage_stats_history.jsonl"
+          with open(history_file, 'a') as f:
+              for row in result['data']:
+                  record = {
+                      "collected_at": datetime.now().isoformat(),
+                      "serial_number": row[0],
+                      "hostname": row[1],
+                      "timestamp": row[2],
+                      "thermal_pressure": row[3],
+                      "package_watts": row[4],
+                      "gpu_busy": row[5],
+                      "freq_hz": row[6],
+                      "gpu_freq_mhz": row[7],
+                      "backlight": row[8],
+                      "keyboard_backlight": row[9],
+                      "ibyte_rate": row[10],
+                      "obyte_rate": row[11],
+                      "rbytes_per_s": row[12],
+                      "wbytes_per_s": row[13],
+                  }
+                  f.write(json.dumps(record) + '\n')
+          
+          print(f"✓ Saved {result['recordsFiltered']} records")
+          EOF
+          
+          python collect_wrapper.py
+      
+      - name: Analyze and generate dashboard
+        run: |
+          python analyze_usage_stats.py
+      
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add usage_stats_history.jsonl usage_stats_*.json index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update usage stats - $(date +'%Y-%m-%d %H:%M:%S')" && git push)
+      
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          cname: # Leave empty unless you have a custom domain
