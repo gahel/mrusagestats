@@ -28,6 +28,8 @@ columns = [
     "usage_stats.obyte_rate",
     "usage_stats.rbytes_per_s",
     "usage_stats.wbytes_per_s",
+    "usage_stats.rops_per_s",
+    "usage_stats.wops_per_s",
 ]
 
 # authenticate
@@ -79,14 +81,15 @@ try:
                 "thermal_pressure": row[3],
                 "package_watts": row[4],
                 "gpu_busy": row[5],
-                "freq_hz": row[6],
-                "gpu_freq_mhz": row[7],
-                "backlight": row[8],
-                "keyboard_backlight": row[9],
-                "ibyte_rate": row[10],
-                "obyte_rate": row[11],
-                "rbytes_per_s": row[12],
-                "wbytes_per_s": row[13],
+                "gpu_freq_mhz": row[6],
+                "backlight": row[7],
+                "keyboard_backlight": row[8],
+                "ibyte_rate": row[9],
+                "obyte_rate": row[10],
+                "rbytes_per_s": row[11],
+                "wbytes_per_s": row[12],
+                "rops_per_s": row[13],
+                "wops_per_s": row[14],
             }
             f.write(json.dumps(record) + '\n')
     
