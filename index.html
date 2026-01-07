@@ -4,10 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Usage Stats Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; background: #0d1117; color: #c9d1d9; }
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
         header { background: #161b22; padding: 30px 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #30363d; }
         h1 { color: #58a6ff; margin-bottom: 10px; }
@@ -15,42 +14,30 @@
         
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .stat-card { background: #161b22; padding: 20px; border-radius: 8px; border: 1px solid #30363d; }
-        .stat-label { color: #8b949e; font-size: 12px; text-transform: uppercase; margin-bottom: 10px; }
-        .stat-value { color: #58a6ff; font-size: 28px; font-weight: bold; }
+        .stat-label { color: #8b949e; font-size: 12px; text-transform: uppercase; }
+        .stat-value { color: #58a6ff; font-size: 28px; font-weight: bold; margin-top: 10px; }
         
-        .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .chart-container { background: #161b22; padding: 20px; border-radius: 8px; border: 1px solid #30363d; position: relative; height: 300px; }
-        .chart-title { color: #58a6ff; font-size: 14px; font-weight: 600; margin-bottom: 15px; }
-        
-        table { width: 100%; border-collapse: collapse; background: #161b22; border-radius: 8px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; background: #161b22; margin-top: 20px; }
         th { background: #0d1117; color: #58a6ff; padding: 12px; text-align: left; border-bottom: 1px solid #30363d; }
         td { padding: 12px; border-bottom: 1px solid #30363d; }
         tr:hover { background: #0d1117; }
-        
-        .nominal { color: #3fb950; }
-        .warning { color: #f0883e; }
-        .critical { color: #f85149; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 MacBook Usage Statistics Dashboard</h1>
-            <div class="timestamp">Last updated: 2026-01-07 21:53:56</div>
+            <h1>📊 MacBook Usage Statistics</h1>
+            <div class="timestamp">Updated: 2026-01-07 21:30:33</div>
         </header>
         
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-label">Total Records</div>
-                <div class="stat-value">108</div>
+                <div class="stat-value">216</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Unique Machines</div>
+                <div class="stat-label">Machines</div>
                 <div class="stat-value">108</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Max Thermal</div>
-                <div class="stat-value">0</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Max Power (W)</div>
@@ -58,35 +45,14 @@
             </div>
         </div>
         
-        <div class="charts">
-            <div class="chart-container">
-                <div class="chart-title">Thermal Pressure Distribution</div>
-                <canvas id="thermalChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-title">Power Consumption Trend</div>
-                <canvas id="wattChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-title">GPU Busy Distribution</div>
-                <canvas id="gpuChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-title">Records Over Time</div>
-                <canvas id="timeChart"></canvas>
-            </div>
-        </div>
-        
-        <h2 style="color: #58a6ff; margin: 30px 0 20px 0;">Machine Overview</h2>
+        <h2 style="color: #58a6ff; margin: 30px 0 20px 0;">Machine Statistics</h2>
         <table>
             <thead>
                 <tr>
                     <th>Hostname</th>
                     <th>Avg Power (W)</th>
                     <th>Avg GPU %</th>
-                    <th>Avg CPU Freq (GHz)</th>
                     <th>Records</th>
-                    <th>Last Seen</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,966 +60,652 @@
                     <td><strong>MBP-00106</strong></td>
                     <td>0.03</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862438</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-00167</strong></td>
                     <td>1.94</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862898</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-00654</strong></td>
-                    <td>2.84</td>
-                    <td>0.3%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862987</td>
+                    <td>2.23</td>
+                    <td>0.2%</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-01470</strong></td>
                     <td>0.04</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863203</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-02093</strong></td>
                     <td>0.03</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863268</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-02614</strong></td>
                     <td>0.31</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862612</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-02974</strong></td>
                     <td>1.54</td>
                     <td>0.5%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862823</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-03074</strong></td>
                     <td>0.65</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862590</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-03092</strong></td>
                     <td>3.79</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862365</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-03613</strong></td>
                     <td>7.19</td>
                     <td>0.5%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862468</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-03639</strong></td>
                     <td>0.15</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863092</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-03954</strong></td>
                     <td>0.81</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862277</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-03986</strong></td>
                     <td>0.21</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862955</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-04671</strong></td>
                     <td>0.02</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862479</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-04917</strong></td>
                     <td>0.29</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862299</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-05236</strong></td>
                     <td>0.04</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862655</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-05307</strong></td>
                     <td>2.67</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862601</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-05721</strong></td>
                     <td>0.11</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862310</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-05828</strong></td>
                     <td>0.13</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862535</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-06076</strong></td>
                     <td>3.51</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862909</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-06322</strong></td>
                     <td>2.21</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863080</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-06817</strong></td>
-                    <td>0.01</td>
+                    <td>0.10</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862214</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-07264</strong></td>
-                    <td>0.04</td>
+                    <td>1.14</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862557</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-07350</strong></td>
                     <td>0.36</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863491</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-07373</strong></td>
                     <td>0.40</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863307</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-07538</strong></td>
                     <td>0.86</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862343</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-08566</strong></td>
                     <td>2.70</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863018</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-08644</strong></td>
                     <td>0.48</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862546</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-09049</strong></td>
                     <td>1.63</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862376</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-09414</strong></td>
-                    <td>0.08</td>
-                    <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863069</td>
+                    <td>0.35</td>
+                    <td>0.1%</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-09790</strong></td>
                     <td>3.87</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863436</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-10076</strong></td>
                     <td>0.09</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862667</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-10160</strong></td>
                     <td>0.34</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862644</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-10347</strong></td>
                     <td>5.93</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862726</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-10664</strong></td>
                     <td>0.14</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862929</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-10736</strong></td>
                     <td>3.44</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862843</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-10800</strong></td>
                     <td>0.39</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862569</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11103</strong></td>
                     <td>0.08</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863479</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11287</strong></td>
                     <td>6.59</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862525</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11309</strong></td>
                     <td>0.03</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862513</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11390</strong></td>
                     <td>0.29</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862716</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11403</strong></td>
                     <td>0.02</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863282</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11450</strong></td>
                     <td>2.64</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863447</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-11659</strong></td>
                     <td>1.06</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862833</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-12119</strong></td>
                     <td>1.33</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862490</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-12311</strong></td>
                     <td>0.31</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862397</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-12418</strong></td>
-                    <td>0.18</td>
+                    <td>1.47</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862088</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-12803</strong></td>
                     <td>3.57</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862266</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-13432</strong></td>
                     <td>1.02</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862501</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-13552</strong></td>
                     <td>1.12</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862997</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-13857</strong></td>
                     <td>0.45</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862322</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-14117</strong></td>
                     <td>2.19</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863102</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-14219</strong></td>
                     <td>7.18</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862864</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-14921</strong></td>
                     <td>5.13</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862332</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-15658</strong></td>
                     <td>1.48</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862255</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-15799</strong></td>
                     <td>3.56</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862387</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-15822</strong></td>
                     <td>3.45</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862580</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-15896</strong></td>
                     <td>1.19</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863156</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-15991</strong></td>
                     <td>0.57</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862777</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-16573</strong></td>
                     <td>0.06</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862419</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-17057</strong></td>
                     <td>0.07</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862888</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-17331</strong></td>
                     <td>0.17</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863124</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-17613</strong></td>
                     <td>0.27</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862705</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-17675</strong></td>
                     <td>0.71</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862633</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-18290</strong></td>
                     <td>0.17</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862919</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-20022</strong></td>
                     <td>0.16</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862747</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-20201</strong></td>
                     <td>4.34</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863403</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-20380</strong></td>
                     <td>1.72</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862244</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-20596</strong></td>
                     <td>0.31</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863415</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-20856</strong></td>
                     <td>0.64</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862354</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-21374</strong></td>
                     <td>4.51</td>
                     <td>0.3%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862767</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-21527</strong></td>
                     <td>0.21</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863166</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-21668</strong></td>
                     <td>0.15</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862855</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-22170</strong></td>
                     <td>0.13</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863028</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-23021</strong></td>
                     <td>0.42</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862977</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-23810</strong></td>
                     <td>0.05</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863333</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-23901</strong></td>
                     <td>0.05</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862456</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-24054</strong></td>
                     <td>5.05</td>
                     <td>0.6%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862966</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-24204</strong></td>
                     <td>3.00</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862678</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-25278</strong></td>
                     <td>0.87</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863146</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-25466</strong></td>
                     <td>3.20</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863049</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-26032</strong></td>
                     <td>0.06</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862623</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-26247</strong></td>
                     <td>1.52</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862944</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-26833</strong></td>
                     <td>11.69</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863365</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-27348</strong></td>
                     <td>5.46</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862183</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-27394</strong></td>
-                    <td>3.22</td>
-                    <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863059</td>
+                    <td>3.90</td>
+                    <td>0.3%</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-27687</strong></td>
-                    <td>0.85</td>
+                    <td>0.81</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862799</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-27711</strong></td>
                     <td>0.07</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862688</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-28208</strong></td>
                     <td>0.25</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862230</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-28552</strong></td>
                     <td>2.91</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863458</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-28814</strong></td>
                     <td>0.71</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863113</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-28870</strong></td>
                     <td>0.12</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863135</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-29011</strong></td>
                     <td>1.20</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862788</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-29333</strong></td>
                     <td>1.51</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863468</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-29506</strong></td>
                     <td>6.36</td>
                     <td>0.7%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863318</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-30340</strong></td>
                     <td>1.71</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863240</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-31051</strong></td>
                     <td>5.41</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862288</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-31108</strong></td>
                     <td>6.42</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863296</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-31173</strong></td>
                     <td>3.76</td>
                     <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862877</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-31618</strong></td>
                     <td>3.33</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862757</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-31799</strong></td>
-                    <td>2.58</td>
+                    <td>2.71</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863389</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-31822</strong></td>
                     <td>0.16</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862812</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-32048</strong></td>
                     <td>0.12</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863008</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-32054</strong></td>
                     <td>1.38</td>
                     <td>0.4%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863426</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-32513</strong></td>
                     <td>2.05</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863038</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-32681</strong></td>
-                    <td>0.49</td>
-                    <td>0.1%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.863502</td>
+                    <td>0.33</td>
+                    <td>0.0%</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-32692</strong></td>
                     <td>1.66</td>
                     <td>0.2%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862408</td>
+                    <td>2</td>
                 </tr>
                 <tr>
                     <td><strong>MBP-32760</strong></td>
                     <td>2.58</td>
                     <td>0.0%</td>
-                    <td>0.00</td>
-                    <td>1</td>
-                    <td>2026-01-07T21:50:46.862737</td>
+                    <td>2</td>
                 </tr>
             </tbody>
         </table>
     </div>
-    
-    <script>
-        // Thermal distribution
-        const thermalChart = new Chart(document.getElementById('thermalChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Nominal', 'Warning', 'Critical'],
-                datasets: [{
-                    data: [108, 0, 0],
-                    backgroundColor: ['#3fb950', '#f0883e', '#f85149']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#8b949e' } } }
-            }
-        });
-        
-        // Watts trend (last 30 records)
-        const wattRecords = [0.0829033, 2.21212, 0.154642, 2.18972, 0.713083, 0.170007, 0.119082, 0.874569, 1.19226, 0.213786, 0.0398564, 1.71444, 0.0341152, 0.021267, 6.41687, 0.399053, 6.35791, 0.0450001, 11.6942, 2.57818, 4.33609, 0.30787, 1.38133, 3.86762, 2.6431, 2.90796, 1.50573, 0.0842612, 0.359799, 0.489614];
-        const wattChart = new Chart(document.getElementById('wattChart'), {
-            type: 'line',
-            data: {
-                labels: Array.from({length: wattRecords.length}, (_, i) => i),
-                datasets: [{
-                    label: 'Power (W)',
-                    data: wattRecords,
-                    borderColor: '#58a6ff',
-                    backgroundColor: 'rgba(88, 166, 255, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#8b949e' } } },
-                scales: {
-                    y: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } },
-                    x: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } }
-                }
-            }
-        });
-        
-        // GPU busy distribution
-        const gpuBusy = [0, 0.10257, 0, 0.032594, 0.102968, 0.070463, 0.199095, 0.053043, 0.057513, 0.084807, 0.003846, 0, 0.121311, 0.13522, 0.037145, 0.447165, 0.026612, 0.099579, 0, 0.24194, 0, 0, 0, 0.501779, 0, 0.128318, 0.00043499999999996, 0.007089, 0.365496, 0.002175, 0.041255, 0.00417, 0.13485, 0.417847, 0.029022, 0.007176, 0.003823, 0.073792, 0.042269, 0.182971, 0.0054149999999999, 0.005064, 0.020309, 0.0051639999999999, 0.056538, 0.009536, 0.184266, 0, 0.082451, 0.438851, 0.333789, 0.013889, 0.028528, 0.05121, 0.00879, 0.492729, 0.067491, 0.04068, 0.028061, 0.0013840000000001, 0.098929, 0.021048, 0.00036499999999995, 0.012635, 0.038425, 0, 0.064675, 0.071396, 0.631393, 0.002815, 0.323862, 0, 0.008359, 0, 0.012776, 0.0082719999999999, 0.373065, 0.21536, 0.00093500000000002, 0.090551, 0.006258, 0.176687, 0.172801, 0.003919, 0.002781, 0.013255, 0.001575, 0.082241, 0.013178, 0.028738, 0, 0.005603, 0, 0.02848, 0.742036, 0, 0.069882, 0.157919, 0.230296, 0.189179, 0.397387, 0.026231, 0.004932, 0.409607, 0.069264, 0.032075, 0.024061, 0.067288];
-        const gpuChart = new Chart(document.getElementById('gpuChart'), {
-            type: 'bar',
-            data: {
-                labels: ['0-10%', '10-25%', '25-50%', '50-75%', '75-100%'],
-                datasets: [{
-                    label: 'Count',
-                    data: [
-                        gpuBusy.filter(x => x < 10).length,
-                        gpuBusy.filter(x => x >= 10 && x < 25).length,
-                        gpuBusy.filter(x => x >= 25 && x < 50).length,
-                        gpuBusy.filter(x => x >= 50 && x < 75).length,
-                        gpuBusy.filter(x => x >= 75).length
-                    ],
-                    backgroundColor: '#58a6ff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#8b949e' } } },
-                scales: {
-                    y: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } },
-                    x: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } }
-                }
-            }
-        });
-        
-        // Time chart (records per hour/day)
-        const timeChart = new Chart(document.getElementById('timeChart'), {
-            type: 'line',
-            data: {
-                labels: ['Last collection'],
-                datasets: [{
-                    label: 'Records collected',
-                    data: [108],
-                    borderColor: '#3fb950',
-                    backgroundColor: 'rgba(63, 185, 80, 0.1)',
-                    tension: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#8b949e' } } },
-                scales: {
-                    y: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } },
-                    x: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
