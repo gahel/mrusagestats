@@ -327,6 +327,29 @@ for time_key in sorted(time_groups.keys()):
     avg_cpu_usage = (100 - sum(cpu_idle_vals) / len(cpu_idle_vals)) if cpu_idle_vals else 0
     thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
     
+    # Get top 3 machines with highest load_short for this time period
+    sorted_by_load = sorted(group, key=lambda r: r.get('load_short', 0), reverse=True)
+    top3_machines = [
+        {
+            'hostname': sorted_by_load[0].get('hostname', 'Unknown') if len(sorted_by_load) > 0 else None,
+            'load_short': sorted_by_load[0].get('load_short', 0) if len(sorted_by_load) > 0 else 0,
+            'load_middle': sorted_by_load[0].get('load_middle', 0) if len(sorted_by_load) > 0 else 0,
+            'load_long': sorted_by_load[0].get('load_long', 0) if len(sorted_by_load) > 0 else 0,
+        },
+        {
+            'hostname': sorted_by_load[1].get('hostname', 'Unknown') if len(sorted_by_load) > 1 else None,
+            'load_short': sorted_by_load[1].get('load_short', 0) if len(sorted_by_load) > 1 else 0,
+            'load_middle': sorted_by_load[1].get('load_middle', 0) if len(sorted_by_load) > 1 else 0,
+            'load_long': sorted_by_load[1].get('load_long', 0) if len(sorted_by_load) > 1 else 0,
+        },
+        {
+            'hostname': sorted_by_load[2].get('hostname', 'Unknown') if len(sorted_by_load) > 2 else None,
+            'load_short': sorted_by_load[2].get('load_short', 0) if len(sorted_by_load) > 2 else 0,
+            'load_middle': sorted_by_load[2].get('load_middle', 0) if len(sorted_by_load) > 2 else 0,
+            'load_long': sorted_by_load[2].get('load_long', 0) if len(sorted_by_load) > 2 else 0,
+        }
+    ]
+    
     time_series_data.append({
         'time': time_key,
         'avg_watts': avg_watts,
@@ -336,7 +359,8 @@ for time_key in sorted(time_groups.keys()):
         'avg_load_long': avg_load_long,
         'avg_cpu_usage': avg_cpu_usage,
         'thermal_issues': thermal_issues,
-        'count': len(group)
+        'count': len(group),
+        'top3_machines': top3_machines
     })
 
 html += f"""
@@ -908,37 +932,138 @@ new Chart(gpuCtx, {
     }
 });
 
-// CPU Load chart with 3 load averages
+// CPU Load chart with fleet average + top 3 machines
 const cpuLoadCtx = document.getElementById('cpuLoadChart').getContext('2d');
 new Chart(cpuLoadCtx, {
     type: 'line',
     data: {
         labels: timeSeriesData.map(d => d.time),
-        datasets: [{
-            label: 'Load (1-min)',
-            data: timeSeriesData.map(d => d.avg_load_short),
-            borderColor: '#3fb950',
-            backgroundColor: 'rgba(63, 185, 80, 0.1)',
-            tension: 0.4,
-            fill: true,
-            yAxisID: 'y'
-        }, {
-            label: 'Load (5-min)',
-            data: timeSeriesData.map(d => d.avg_load_middle),
-            borderColor: '#d29922',
-            backgroundColor: 'rgba(210, 153, 34, 0.05)',
-            tension: 0.4,
-            fill: false,
-            yAxisID: 'y'
-        }, {
-            label: 'Load (15-min)',
-            data: timeSeriesData.map(d => d.avg_load_long),
-            borderColor: '#58a6ff',
-            backgroundColor: 'rgba(88, 166, 255, 0.05)',
-            tension: 0.4,
-            fill: false,
-            yAxisID: 'y'
-        }]
+        datasets: [
+            // Fleet averages (solid lines)
+            {
+                label: 'Avg Load (1-min)',
+                data: timeSeriesData.map(d => d.avg_load_short),
+                borderColor: '#3fb950',
+                backgroundColor: 'rgba(63, 185, 80, 0.1)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 2,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Avg Load (5-min)',
+                data: timeSeriesData.map(d => d.avg_load_middle),
+                borderColor: '#d29922',
+                backgroundColor: 'rgba(210, 153, 34, 0.05)',
+                tension: 0.4,
+                fill: false,
+                borderWidth: 2,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Avg Load (15-min)',
+                data: timeSeriesData.map(d => d.avg_load_long),
+                borderColor: '#58a6ff',
+                backgroundColor: 'rgba(88, 166, 255, 0.05)',
+                tension: 0.4,
+                fill: false,
+                borderWidth: 2,
+                yAxisID: 'y'
+            },
+            // Top 3 machines - 1-min load (dashed)
+            {
+                label: 'Top1 Load (1-min)',
+                data: timeSeriesData.map(d => d.top3_machines[0].load_short),
+                borderColor: 'rgba(63, 185, 80, 0.5)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Top2 Load (1-min)',
+                data: timeSeriesData.map(d => d.top3_machines[1].load_short),
+                borderColor: 'rgba(63, 185, 80, 0.35)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Top3 Load (1-min)',
+                data: timeSeriesData.map(d => d.top3_machines[2].load_short),
+                borderColor: 'rgba(63, 185, 80, 0.2)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            // Top 3 machines - 5-min load (dashed)
+            {
+                label: 'Top1 Load (5-min)',
+                data: timeSeriesData.map(d => d.top3_machines[0].load_middle),
+                borderColor: 'rgba(210, 153, 34, 0.5)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Top2 Load (5-min)',
+                data: timeSeriesData.map(d => d.top3_machines[1].load_middle),
+                borderColor: 'rgba(210, 153, 34, 0.35)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Top3 Load (5-min)',
+                data: timeSeriesData.map(d => d.top3_machines[2].load_middle),
+                borderColor: 'rgba(210, 153, 34, 0.2)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            // Top 3 machines - 15-min load (dashed)
+            {
+                label: 'Top1 Load (15-min)',
+                data: timeSeriesData.map(d => d.top3_machines[0].load_long),
+                borderColor: 'rgba(88, 166, 255, 0.5)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Top2 Load (15-min)',
+                data: timeSeriesData.map(d => d.top3_machines[1].load_long),
+                borderColor: 'rgba(88, 166, 255, 0.35)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Top3 Load (15-min)',
+                data: timeSeriesData.map(d => d.top3_machines[2].load_long),
+                borderColor: 'rgba(88, 166, 255, 0.2)',
+                borderDash: [5, 5],
+                tension: 0.4,
+                fill: false,
+                borderWidth: 1.5,
+                yAxisID: 'y'
+            }
+        ]
     },
     options: {
         responsive: true,
@@ -962,7 +1087,11 @@ new Chart(cpuLoadCtx, {
             }
         },
         plugins: {
-            legend: { labels: { color: '#8b949e' } }
+            legend: { 
+                labels: { color: '#8b949e' },
+                display: true,
+                position: 'top'
+            }
         }
     }
 });
