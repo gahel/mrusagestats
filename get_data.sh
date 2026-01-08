@@ -36,6 +36,10 @@ CLIENT_COLUMNS=(
     "munkireport.manifestname"
     "mdm_status.mdm_enrolled"
     "usage_stats.thermal_pressure"
+    "usage_stats.cpu_idle"
+    "usage_stats.cpu_sys"
+    "usage_stats.cpu_user"
+    "usage_stats.load_avg"
 )
 
 # Create query from columns
