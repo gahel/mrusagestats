@@ -967,12 +967,12 @@ new Chart(cpuLoadCtx, {
     }
 });
 
-// Thermal status chart
-const thermalCtx = document.getElementById('thermalChart').getContext('2d');
+// Thermal status chart (non-nominal only)
+const thermalStatusCtx = document.getElementById('thermalChart').getContext('2d');
 const thermalWarning = {sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])};
 const thermalCritical = {sum(1 for r in records if r.get('thermal_pressure') == 'Critical')};
 
-new Chart(thermalCtx, {{
+new Chart(thermalStatusCtx, {{
     type: 'doughnut',
     data: {{
         labels: ['Warning / High', 'Critical'],
@@ -996,8 +996,8 @@ new Chart(thermalCtx, {{
 }});
 
 // CPU usage chart
-const cpuUsageCtx = document.getElementById('cpuChart').getContext('2d');
-new Chart(cpuUsageCtx, {{
+const cpuMetricsCtx = document.getElementById('cpuChart').getContext('2d');
+new Chart(cpuMetricsCtx, {{
     type: 'line',
     data: {{
         labels: timeSeriesData.map(d => d.time),
