@@ -292,7 +292,8 @@ html += f"""            <div class="metric-card">
         </div>"""
 
 # Generate time-series data for charts
-recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-200:]  # Last 200 records
+# Take last 2640 records = 24 hours of data (110 machines × 24 hours)
+recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-2640:]  # Last 24 hours
 
 # Group by collection time for trends
 from collections import defaultdict
@@ -544,6 +545,99 @@ for machine in machine_data:
                 </tr>
 """
 
+# Add top-10 sections
+load_records = [(h, machines[h][-1]) for h in machines if machines[h]]
+load_records.sort(key=lambda x: x[1].get('load_short', 0) if isinstance(x[1].get('load_short'), (int, float)) else 0, reverse=True)
+
+disk_records = [(h, machines[h][-1]) for h in machines if machines[h]]
+disk_records.sort(key=lambda x: x[1].get('disk_free', float('inf')) if isinstance(x[1].get('disk_free'), (int, float)) else float('inf'))
+
+html += """    </div>
+    
+    <div class="machines-table">
+        <h2 class="section-title">🔥 Top 10 - Highest Load Average (1-min)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Machine</th>
+                    <th>Load (1-min)</th>
+                    <th>Load (5-min)</th>
+                    <th>Load (15-min)</th>
+                    <th>CPU Usage (%)</th>
+                    <th>Last Seen</th>
+                </tr>
+            </thead>
+            <tbody>
+"""
+
+for rank, (hostname, latest) in enumerate(load_records[:10], 1):
+    load_short = latest.get('load_short', 0) if isinstance(latest.get('load_short'), (int, float)) else 0
+    load_middle = latest.get('load_middle', 0) if isinstance(latest.get('load_middle'), (int, float)) else 0
+    load_long = latest.get('load_long', 0) if isinstance(latest.get('load_long'), (int, float)) else 0
+    cpu_idle = latest.get('cpu_idle', 0) if isinstance(latest.get('cpu_idle'), (int, float)) else 0
+    cpu_usage = 100 - cpu_idle
+    last_seen = latest.get('collected_at', 'Unknown')[:16]
+    
+    html += f"""                <tr>
+                    <td>{rank}</td>
+                    <td><strong>{hostname}</strong></td>
+                    <td>{load_short:.2f}</td>
+                    <td>{load_middle:.2f}</td>
+                    <td>{load_long:.2f}</td>
+                    <td>{cpu_usage:.1f}%</td>
+                    <td>{last_seen}</td>
+                </tr>
+"""
+
+html += """            </tbody>
+        </table>
+    </div>
+    
+    <div class="machines-table">
+        <h2 class="section-title">💾 Top 10 - Least Disk Space Available</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Machine</th>
+                    <th>Disk Used (%)</th>
+                    <th>Disk Free (GB)</th>
+                    <th>Disk Total (GB)</th>
+                    <th>Thermal Status</th>
+                    <th>Last Seen</th>
+                </tr>
+            </thead>
+            <tbody>
+"""
+
+for rank, (hostname, latest) in enumerate(disk_records[:10], 1):
+    disk_free = latest.get('disk_free', 0) if isinstance(latest.get('disk_free'), (int, float)) else 0
+    disk_total = latest.get('disk_total', 0) if isinstance(latest.get('disk_total'), (int, float)) else 0
+    disk_used_pct = latest.get('disk_used_pct', 0) if isinstance(latest.get('disk_used_pct'), (int, float)) else 0
+    thermal = latest.get('thermal_pressure', 'Unknown')
+    last_seen = latest.get('collected_at', 'Unknown')[:16]
+    
+    disk_free_gb = disk_free / (1024 ** 3)
+    disk_total_gb = disk_total / (1024 ** 3)
+    
+    thermal_class = 'status-nominal'
+    if thermal in ['Critical']:
+        thermal_class = 'status-critical'
+    elif thermal in ['Warning', 'High']:
+        thermal_class = 'status-warning'
+    
+    html += f"""                <tr>
+                    <td>{rank}</td>
+                    <td><strong>{hostname}</strong></td>
+                    <td>{disk_used_pct:.1f}%</td>
+                    <td>{disk_free_gb:.1f}</td>
+                    <td>{disk_total_gb:.1f}</td>
+                    <td class="{thermal_class}">{thermal}</td>
+                    <td>{last_seen}</td>
+                </tr>
+"""
+
 html += """            </tbody>
         </table>
     </div>
@@ -557,6 +651,7 @@ html += """            </tbody>
 <script>
 // Chart.js configuration
 Chart.defaults.color = '#8b949e';
+
 Chart.defaults.borderColor = '#30363d';
 Chart.defaults.backgroundColor = 'rgba(88, 166, 255, 0.1)';
 
