@@ -97,6 +97,37 @@ with open(history_file, 'a') as f:
         # Calculate disk usage percentage - diskreport.percentage is already calculated
         disk_used_pct = row[22] if len(row) > 22 else 0
         
+        # Parse CPU values (strings with %)
+        cpu_idle_val = None
+        if len(row) > 15 and row[15]:
+            try:
+                cpu_idle_val = float(str(row[15]).replace('%', '').strip())
+            except (ValueError, AttributeError):
+                cpu_idle_val = None
+        
+        cpu_sys_val = None
+        if len(row) > 16 and row[16]:
+            try:
+                cpu_sys_val = float(str(row[16]).replace('%', '').strip())
+            except (ValueError, AttributeError):
+                cpu_sys_val = None
+        
+        cpu_user_val = None
+        if len(row) > 17 and row[17]:
+            try:
+                cpu_user_val = float(str(row[17]).replace('%', '').strip())
+            except (ValueError, AttributeError):
+                cpu_user_val = None
+        
+        # Parse load_avg (comma-separated string, take first value - 1-min average)
+        load_avg_val = None
+        if len(row) > 18 and row[18]:
+            try:
+                load_str = str(row[18]).split(',')[0].strip()
+                load_avg_val = float(load_str)
+            except (ValueError, AttributeError, IndexError):
+                load_avg_val = None
+        
         record = {
             "collected_at": datetime.now().isoformat(),
             "serial_number": row[0],
@@ -114,10 +145,10 @@ with open(history_file, 'a') as f:
             "obyte_rate": row[12],
             "rbytes_per_s": row[13],
             "wbytes_per_s": row[14],
-            "cpu_idle": row[15] if len(row) > 15 else None,
-            "cpu_sys": row[16] if len(row) > 16 else None,
-            "cpu_user": row[17] if len(row) > 17 else None,
-            "load_avg": row[18] if len(row) > 18 else None,
+            "cpu_idle": cpu_idle_val,
+            "cpu_sys": cpu_sys_val,
+            "cpu_user": cpu_user_val,
+            "load_avg": load_avg_val,
             "disk_total": row[19] if len(row) > 19 else None,
             "disk_free": row[20] if len(row) > 20 else None,
             "disk_used_pct": disk_used_pct,
@@ -443,7 +474,6 @@ for hostname in machine_list:
         'thermal_status': thermal_status,
         'disk_used_pct': avg_disk_used_pct,
         'disk_free': avg_disk_free,
-        'memory_usage': avg_memory_usage,
         'thermal_priority': thermal_priority,
         'status_class': status_class,
         'avg_watts': avg_watts,

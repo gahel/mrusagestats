@@ -82,6 +82,37 @@ try:
     history_file = "usage_stats_history.jsonl"
     with open(history_file, 'a') as f:
         for row in result['data']:
+            # Parse CPU values (strings with %)
+            cpu_idle_val = None
+            if len(row) > 17 and row[17]:
+                try:
+                    cpu_idle_val = float(str(row[17]).replace('%', '').strip())
+                except (ValueError, AttributeError):
+                    cpu_idle_val = None
+            
+            cpu_sys_val = None
+            if len(row) > 18 and row[18]:
+                try:
+                    cpu_sys_val = float(str(row[18]).replace('%', '').strip())
+                except (ValueError, AttributeError):
+                    cpu_sys_val = None
+            
+            cpu_user_val = None
+            if len(row) > 19 and row[19]:
+                try:
+                    cpu_user_val = float(str(row[19]).replace('%', '').strip())
+                except (ValueError, AttributeError):
+                    cpu_user_val = None
+            
+            # Parse load_avg (comma-separated string, take first value - 1-min average)
+            load_avg_val = None
+            if len(row) > 20 and row[20]:
+                try:
+                    load_str = str(row[20]).split(',')[0].strip()
+                    load_avg_val = float(load_str)
+                except (ValueError, AttributeError, IndexError):
+                    load_avg_val = None
+            
             record = {
                 "collected_at": datetime.now().isoformat(),
                 "serial_number": row[0],
@@ -101,13 +132,13 @@ try:
                 "wops_per_s": row[14],
                 "freq_hz": row[15],
                 "freq_ratio": row[16],
-                "cpu_idle": row[17],
-                "cpu_sys": row[18],
-                "cpu_user": row[19],
-                "load_avg": row[20],
-                "disk_total": row[21],
-                "disk_free": row[22],
-                "disk_used_pct": row[23],
+                "cpu_idle": cpu_idle_val,
+                "cpu_sys": cpu_sys_val,
+                "cpu_user": cpu_user_val,
+                "load_avg": load_avg_val,
+                "disk_total": row[21] if len(row) > 21 else None,
+                "disk_free": row[22] if len(row) > 22 else None,
+                "disk_used_pct": row[23] if len(row) > 23 else None,
             }
             f.write(json.dumps(record) + '\n')
     
