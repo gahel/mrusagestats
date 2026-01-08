@@ -25,6 +25,7 @@ columns = [
     "usage_stats.package_watts",
     "usage_stats.gpu_busy",
     "usage_stats.freq_hz",
+    "usage_stats.freq_ratio",
     "usage_stats.gpu_freq_mhz",
     "usage_stats.backlight",
     "usage_stats.keyboard_backlight",
@@ -32,6 +33,10 @@ columns = [
     "usage_stats.obyte_rate",
     "usage_stats.rbytes_per_s",
     "usage_stats.wbytes_per_s",
+    "usage_stats.cpu_idle",
+    "usage_stats.cpu_sys",
+    "usage_stats.cpu_user",
+    "usage_stats.load_avg",
 ]
 
 print("Collecting usage stats...")
@@ -78,13 +83,18 @@ with open(history_file, 'a') as f:
             "package_watts": row[4],
             "gpu_busy": row[5],
             "freq_hz": row[6],
-            "gpu_freq_mhz": row[7],
-            "backlight": row[8],
-            "keyboard_backlight": row[9],
-            "ibyte_rate": row[10],
-            "obyte_rate": row[11],
-            "rbytes_per_s": row[12],
-            "wbytes_per_s": row[13],
+            "freq_ratio": row[7],
+            "gpu_freq_mhz": row[8],
+            "backlight": row[9],
+            "keyboard_backlight": row[10],
+            "ibyte_rate": row[11],
+            "obyte_rate": row[12],
+            "rbytes_per_s": row[13],
+            "wbytes_per_s": row[14],
+            "cpu_idle": row[15],
+            "cpu_sys": row[16],
+            "cpu_user": row[17],
+            "load_avg": row[18],
         }
         f.write(json.dumps(record) + '\n')
 
@@ -229,12 +239,17 @@ for time_key in sorted(time_groups.keys()):
     group = time_groups[time_key]
     avg_watts = sum(r.get('package_watts', 0) for r in group if isinstance(r.get('package_watts'), (int, float))) / len(group)
     avg_gpu = sum(r.get('gpu_busy', 0) for r in group if isinstance(r.get('gpu_busy'), (int, float))) / max(len([r for r in group if isinstance(r.get('gpu_busy'), (int, float))]), 1)
+    avg_load = sum(r.get('load_avg', 0) for r in group if isinstance(r.get('load_avg'), (int, float))) / max(len([r for r in group if isinstance(r.get('load_avg'), (int, float))]), 1)
+    cpu_idle_vals = [r.get('cpu_idle', 0) for r in group if isinstance(r.get('cpu_idle'), (int, float))]
+    avg_cpu_usage = (100 - sum(cpu_idle_vals) / len(cpu_idle_vals)) if cpu_idle_vals else 0
     thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
     
     time_series_data.append({
         'time': time_key,
         'avg_watts': avg_watts,
         'avg_gpu': avg_gpu,
+        'avg_load': avg_load,
+        'avg_cpu_usage': avg_cpu_usage,
         'thermal_issues': thermal_issues,
         'count': len(group)
     })
@@ -262,6 +277,13 @@ html += f"""
                     <div class="chart-title">🎮 GPU Utilization Over Time</div>
                     <div class="chart-canvas">
                         <canvas id="gpuTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">⚙️ CPU Usage & Load Average</div>
+                    <div class="chart-canvas">
+                        <canvas id="cpuLoadChart"></canvas>
                     </div>
                 </div>
                 
@@ -331,6 +353,8 @@ html += """
                         <th class="sortable" data-sort="thermal">Thermal Status</th>
                         <th class="sortable" data-sort="power">Avg Power (W)</th>
                         <th class="sortable" data-sort="gpu">Avg GPU Usage (%)</th>
+                        <th class="sortable" data-sort="cpu">CPU Usage (%)</th>
+                        <th class="sortable" data-sort="load">Load Avg</th>
                         <th class="sortable" data-sort="diskio">Avg Disk IOPS</th>
                         <th class="sortable" data-sort="records">Data Points</th>
                         <th class="sortable" data-sort="lastseen">Last Seen</th>
@@ -348,10 +372,20 @@ for hostname in machine_list:
     # Disk IOPS calculation (operations per second)
     read_ops = [r.get('rops_per_s', 0) for r in machine_records if isinstance(r.get('rops_per_s'), (int, float))]
     write_ops = [r.get('wops_per_s', 0) for r in machine_records if isinstance(r.get('wops_per_s'), (int, float))]
+    # CPU metrics
+    cpu_idle = [r.get('cpu_idle', 0) for r in machine_records if isinstance(r.get('cpu_idle'), (int, float))]
+    cpu_user = [r.get('cpu_user', 0) for r in machine_records if isinstance(r.get('cpu_user'), (int, float))]
+    cpu_sys = [r.get('cpu_sys', 0) for r in machine_records if isinstance(r.get('cpu_sys'), (int, float))]
+    load_avg = [r.get('load_avg', 0) for r in machine_records if isinstance(r.get('load_avg'), (int, float))]
     
     avg_watts = sum(watts) / len(watts) if watts else 0
     avg_gpu = sum(gpu_busy) / len(gpu_busy) if gpu_busy else 0
     avg_diskio = (sum(read_ops) + sum(write_ops)) / max(len(read_ops), len(write_ops)) if read_ops or write_ops else 0
+    avg_cpu_idle = sum(cpu_idle) / len(cpu_idle) if cpu_idle else 0
+    avg_cpu_user = sum(cpu_user) / len(cpu_user) if cpu_user else 0
+    avg_cpu_sys = sum(cpu_sys) / len(cpu_sys) if cpu_sys else 0
+    avg_load = sum(load_avg) / len(load_avg) if load_avg else 0
+    cpu_usage = 100 - avg_cpu_idle  # Total CPU usage is inverse of idle
     
     # Get most common thermal status
     thermal_states = [r.get('thermal_pressure', 'Unknown') for r in machine_records]
@@ -378,6 +412,8 @@ for hostname in machine_list:
         'avg_watts': avg_watts,
         'avg_gpu': avg_gpu,
         'avg_diskio': avg_diskio,
+        'avg_load': avg_load,
+        'cpu_usage': cpu_usage,
         'record_count': len(machine_records),
         'last_seen': last_seen
     })
@@ -397,6 +433,8 @@ for machine in machine_data:
                     <td class="{machine['status_class']}">{machine['thermal_status']}</td>
                     <td>{machine['avg_watts']:.2f}</td>
                     <td>{machine['avg_gpu']:.1f}%</td>
+                    <td>{machine['cpu_usage']:.1f}%</td>
+                    <td>{machine['avg_load']:.2f}</td>
                     <td>{int(machine['avg_diskio'])}</td>
                     <td>{machine['record_count']}</td>
                     <td>{machine['last_seen']}</td>
@@ -447,7 +485,7 @@ function sortTable(column) {
         const aVal = getCellValue(a, column);
         const bVal = getCellValue(b, column);
         
-        if (column === 'power' || column === 'gpu' || column === 'diskio' || column === 'records') {
+        if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskio' || column === 'records') {
             return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
         } else if (column === 'thermal') {
             const thermalOrder = {'Critical': 3, 'Warning': 2, 'High': 2, 'Nominal': 1, 'Unknown': 0};
@@ -468,11 +506,11 @@ function sortTable(column) {
 function getCellValue(row, column) {
     const columnMap = {
         'hostname': 0, 'thermal': 1, 'power': 2, 
-        'gpu': 3, 'diskio': 4, 'records': 5, 'lastseen': 6
+        'gpu': 3, 'cpu': 4, 'load': 5, 'diskio': 6, 'records': 7, 'lastseen': 8
     };
     const cell = row.cells[columnMap[column]];
     
-    if (column === 'power' || column === 'gpu' || column === 'cpu') {
+    if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskio') {
         return parseFloat(cell.textContent);
     } else if (column === 'records') {
         return parseInt(cell.textContent);
@@ -588,6 +626,67 @@ new Chart(gpuCtx, {
                 max: 100,
                 ticks: { color: '#8b949e' },
                 grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
+                    color: '#8b949e',
+                    maxTicksLimit: 10
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { labels: { color: '#8b949e' } }
+        }
+    }
+});
+
+// CPU Load chart
+const cpuLoadCtx = document.getElementById('cpuLoadChart').getContext('2d');
+new Chart(cpuLoadCtx, {
+    type: 'line',
+    data: {
+        labels: timeSeriesData.map(d => d.time),
+        datasets: [{
+            label: 'Avg CPU Usage (%)',
+            data: timeSeriesData.map(d => d.avg_cpu_usage),
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.1)',
+            tension: 0.4,
+            fill: true,
+            yAxisID: 'y'
+        }, {
+            label: 'Load Average',
+            data: timeSeriesData.map(d => d.avg_load * 20),  // Scale to 0-100 range
+            borderColor: '#f85149',
+            backgroundColor: 'rgba(248, 81, 73, 0.1)',
+            tension: 0.4,
+            fill: false,
+            yAxisID: 'y1'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { 
+                type: 'linear',
+                display: true,
+                position: 'left',
+                beginAtZero: true,
+                max: 100,
+                title: { display: true, text: 'CPU Usage (%)' },
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                beginAtZero: true,
+                title: { display: true, text: 'Load Average (scaled)' },
+                ticks: { color: '#8b949e' },
+                grid: { display: false }
             },
             x: { 
                 ticks: { 
