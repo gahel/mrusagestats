@@ -904,8 +904,7 @@ new Chart(cpuLoadCtx, {
     }
 });
 
-// Status distribution chart""" + f"""
-const thermalNominal = {sum(1 for r in records if r.get('thermal_pressure') == 'Nominal')};
+// Status distribution chart (only non-nominal thermal states)""" + f"""
 const thermalWarning = {sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])};
 const thermalCritical = {sum(1 for r in records if r.get('thermal_pressure') == 'Critical')};
 
@@ -913,10 +912,10 @@ const statusCtx = document.getElementById('statusChart').getContext('2d');
 new Chart(statusCtx, {{
     type: 'doughnut',
     data: {{
-        labels: ['Nominal', 'Warning', 'Critical'],
+        labels: ['Warning / High', 'Critical'],
         datasets: [{{
-            data: [thermalNominal, thermalWarning, thermalCritical],
-            backgroundColor: ['#3fb950', '#ffd43b', '#f85149'],
+            data: [thermalWarning, thermalCritical],
+            backgroundColor: ['#ffd43b', '#f85149'],
             borderWidth: 2,
             borderColor: '#30363d'
         }}]
