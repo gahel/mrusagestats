@@ -467,13 +467,27 @@ for hostname in machine_list:
     else:
         thermal_priority = 1
     
-    last_seen = machine_records[-1].get('collected_at', 'Unknown')[:16] if machine_records else 'Unknown'
+    # Convert disk_free from bytes to GB
+    disk_free_gb = avg_disk_free / (1024 ** 3) if avg_disk_free else 0
+    
+    # Parse last_seen timestamp to show actual date/time
+    last_seen_raw = machine_records[-1].get('collected_at', 'Unknown') if machine_records else 'Unknown'
+    if last_seen_raw != 'Unknown':
+        try:
+            # Parse ISO format datetime and format as readable date
+            from datetime import datetime
+            dt = datetime.fromisoformat(last_seen_raw)
+            last_seen = dt.strftime('%Y-%m-%d %H:%M')
+        except:
+            last_seen = last_seen_raw[:16]
+    else:
+        last_seen = 'Unknown'
     
     machine_data.append({
         'hostname': hostname,
         'thermal_status': thermal_status,
         'disk_used_pct': avg_disk_used_pct,
-        'disk_free': avg_disk_free,
+        'disk_free': disk_free_gb,
         'thermal_priority': thermal_priority,
         'status_class': status_class,
         'avg_watts': avg_watts,
@@ -503,7 +517,7 @@ for machine in machine_data:
                     <td>{machine['cpu_usage']:.1f}%</td>
                     <td>{machine['avg_load']:.2f}</td>
                     <td>{machine['disk_used_pct']:.1f}%</td>
-                    <td>{machine['disk_free']:.2f}</td>
+                    <td>{machine['disk_free']:.1f}</td>
                     <td>{int(machine['avg_diskio'])}</td>
                     <td>{machine['record_count']}</td>
                     <td>{machine['last_seen']}</td>
