@@ -30,6 +30,12 @@ columns = [
     "usage_stats.wbytes_per_s",
     "usage_stats.rops_per_s",
     "usage_stats.wops_per_s",
+    "usage_stats.freq_hz",
+    "usage_stats.freq_ratio",
+    "usage_stats.cpu_idle",
+    "usage_stats.cpu_sys",
+    "usage_stats.cpu_user",
+    "usage_stats.load_avg",
 ]
 
 # authenticate
@@ -90,6 +96,12 @@ try:
                 "wbytes_per_s": row[12],
                 "rops_per_s": row[13],
                 "wops_per_s": row[14],
+                "freq_hz": row[15],
+                "freq_ratio": row[16],
+                "cpu_idle": row[17],
+                "cpu_sys": row[18],
+                "cpu_user": row[19],
+                "load_avg": row[20],
             }
             f.write(json.dumps(record) + '\n')
     
