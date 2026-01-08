@@ -248,6 +248,12 @@ html = f"""<!DOCTYPE html>
         .high-power {{ background: rgba(248, 181, 73, 0.15); }}
         .high-gpu {{ background: rgba(124, 58, 237, 0.15); }}
         
+        .hostname-cell {{ display: inline-flex; align-items: center; gap: 8px; position: relative; }}
+        .copy-btn {{ background: #238636; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; opacity: 0; transition: opacity 0.2s, background 0.2s; white-space: nowrap; }}
+        .hostname-cell:hover .copy-btn {{ opacity: 1; }}
+        .copy-btn:hover {{ background: #2da043; }}
+        .copy-btn.copied {{ background: #3fb950; }}
+        
         .footer {{ text-align: center; padding: 40px; color: #8b949e; border-top: 1px solid #30363d; margin-top: 40px; }}
         .update-frequency {{ color: #7c3aed; font-weight: 600; }}
     </style>
@@ -531,7 +537,7 @@ for machine in machine_data:
         row_class += ' high-gpu'
     
     html += f"""                <tr{' class="' + row_class.strip() + '"' if row_class else ''}>
-                    <td><strong>{machine['hostname']}</strong></td>
+                    <td><div class="hostname-cell"><strong>{machine['hostname']}</strong><button class="copy-btn" onclick="copyToClipboard(\"{machine['hostname']}\", this)">Copy</button></div></td>
                     <td class="{machine['status_class']}">{machine['thermal_status']}</td>
                     <td>{machine['avg_watts']:.2f}</td>
                     <td>{machine['avg_gpu']:.1f}%</td>
@@ -581,7 +587,7 @@ for rank, (hostname, latest) in enumerate(load_records[:10], 1):
     
     html += f"""                <tr>
                     <td>{rank}</td>
-                    <td><strong>{hostname}</strong></td>
+                    <td><div class="hostname-cell"><strong>{hostname}</strong><button class="copy-btn" onclick="copyToClipboard('{hostname}', this)">Copy</button></div></td>
                     <td>{load_short:.2f}</td>
                     <td>{load_middle:.2f}</td>
                     <td>{load_long:.2f}</td>
@@ -629,7 +635,7 @@ for rank, (hostname, latest) in enumerate(disk_records[:10], 1):
     
     html += f"""                <tr>
                     <td>{rank}</td>
-                    <td><strong>{hostname}</strong></td>
+                    <td><div class="hostname-cell"><strong>{hostname}</strong><button class="copy-btn" onclick="copyToClipboard(\"{hostname}\", this)">Copy</button></div></td>
                     <td>{disk_used_pct:.1f}%</td>
                     <td>{disk_free_gb:.1f}</td>
                     <td>{disk_total_gb:.1f}</td>
@@ -926,6 +932,21 @@ new Chart(statusCtx, {{
         }}
     }}
 }});
+
+// Copy to clipboard function
+function copyToClipboard(text, button) {{
+    navigator.clipboard.writeText(text).then(() => {{
+        button.classList.add('copied');
+        button.textContent = 'Copied!';
+        setTimeout(() => {{
+            button.classList.remove('copied');
+            button.textContent = 'Copy';
+        }}, 2000);
+    }}).catch(err => {{
+        console.error('Failed to copy:', err);
+        alert('Failed to copy: ' + text);
+    }});
+}}
 
 // Auto-refresh every 10 minutes
 setTimeout(() => {{
