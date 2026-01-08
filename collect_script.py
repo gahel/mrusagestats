@@ -37,6 +37,9 @@ columns = [
     "usage_stats.cpu_sys",
     "usage_stats.cpu_user",
     "usage_stats.load_avg",
+    "diskreport.totalsize",
+    "diskreport.freespace",
+    "diskreport.percentage",
 ]
 
 print("Collecting usage stats...")
@@ -59,6 +62,23 @@ query_data = {f"columns[{i}][name]": c for i, c in enumerate(columns)}
 response = session.post(query_url, data=query_data, headers=headers)
 result = response.json()
 
+# Check if we got an error response
+if "error" in result:
+    print(f"API Error: {result['error']}")
+    exit(1)
+
+# Debug: Check what keys are in the response
+if "recordsFiltered" not in result:
+    print(f"Warning: 'recordsFiltered' not in response. Available keys: {result.keys()}")
+    print(f"Full response: {json.dumps(result, indent=2)[:500]}")
+    # Try to find the count in other possible keys
+    if "recordsTotal" in result:
+        records_count = result["recordsTotal"]
+    else:
+        records_count = len(result.get("data", []))
+else:
+    records_count = result['recordsFiltered']
+
 # Save snapshot
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 filename = f"usage_stats_{timestamp}.json"
@@ -66,14 +86,48 @@ filename = f"usage_stats_{timestamp}.json"
 with open(filename, 'w') as f:
     json.dump({
         "collected_at": datetime.now().isoformat(), 
-        "records": result['recordsFiltered'], 
-        "data": result['data']
+        "records": records_count, 
+        "data": result.get('data', [])
     }, f, indent=2)
 
 # Append to history
 history_file = "usage_stats_history.jsonl"
 with open(history_file, 'a') as f:
-    for row in result['data']:
+    for row in result.get('data', []):
+        # Calculate disk usage percentage - diskreport.percentage is already calculated
+        disk_used_pct = row[22] if len(row) > 22 else 0
+        
+        # Parse CPU values (strings with %)
+        cpu_idle_val = None
+        if len(row) > 15 and row[15]:
+            try:
+                cpu_idle_val = float(str(row[15]).replace('%', '').strip())
+            except (ValueError, AttributeError):
+                cpu_idle_val = None
+        
+        cpu_sys_val = None
+        if len(row) > 16 and row[16]:
+            try:
+                cpu_sys_val = float(str(row[16]).replace('%', '').strip())
+            except (ValueError, AttributeError):
+                cpu_sys_val = None
+        
+        cpu_user_val = None
+        if len(row) > 17 and row[17]:
+            try:
+                cpu_user_val = float(str(row[17]).replace('%', '').strip())
+            except (ValueError, AttributeError):
+                cpu_user_val = None
+        
+        # Parse load_avg (comma-separated string, take first value - 1-min average)
+        load_avg_val = None
+        if len(row) > 18 and row[18]:
+            try:
+                load_str = str(row[18]).split(',')[0].strip()
+                load_avg_val = float(load_str)
+            except (ValueError, AttributeError, IndexError):
+                load_avg_val = None
+        
         record = {
             "collected_at": datetime.now().isoformat(),
             "serial_number": row[0],
@@ -91,14 +145,18 @@ with open(history_file, 'a') as f:
             "obyte_rate": row[12],
             "rbytes_per_s": row[13],
             "wbytes_per_s": row[14],
-            "cpu_idle": row[15],
-            "cpu_sys": row[16],
-            "cpu_user": row[17],
-            "load_avg": row[18],
+            "cpu_idle": cpu_idle_val,
+            "cpu_sys": cpu_sys_val,
+            "cpu_user": cpu_user_val,
+            "load_avg": load_avg_val,
+            "disk_total": row[19] if len(row) > 19 else None,
+            "disk_free": row[20] if len(row) > 20 else None,
+            "disk_used_pct": disk_used_pct,
         }
         f.write(json.dumps(record) + '\n')
 
-print(f"✓ Saved {result['recordsFiltered']} records to {filename}")
+print(f"✓ Saved {records_count} records to {filename}")
+print(f"✓ Appended to {history_file}")
 
 # Generate dashboard
 print("Generating dashboard...")
@@ -355,6 +413,8 @@ html += """
                         <th class="sortable" data-sort="gpu">Avg GPU Usage (%)</th>
                         <th class="sortable" data-sort="cpu">CPU Usage (%)</th>
                         <th class="sortable" data-sort="load">Load Avg</th>
+                        <th class="sortable" data-sort="diskused">Disk Used (%)</th>
+                        <th class="sortable" data-sort="diskfree">Disk Free (GB)</th>
                         <th class="sortable" data-sort="diskio">Avg Disk IOPS</th>
                         <th class="sortable" data-sort="records">Data Points</th>
                         <th class="sortable" data-sort="lastseen">Last Seen</th>
@@ -377,6 +437,9 @@ for hostname in machine_list:
     cpu_user = [r.get('cpu_user', 0) for r in machine_records if isinstance(r.get('cpu_user'), (int, float))]
     cpu_sys = [r.get('cpu_sys', 0) for r in machine_records if isinstance(r.get('cpu_sys'), (int, float))]
     load_avg = [r.get('load_avg', 0) for r in machine_records if isinstance(r.get('load_avg'), (int, float))]
+    # Disk metrics - diskreport.percentage is already calculated
+    disk_used_pct = [r.get('disk_used_pct', 0) for r in machine_records if r.get('disk_used_pct') is not None]
+    disk_free = [r.get('disk_free', 0) for r in machine_records if r.get('disk_free') is not None]
     
     avg_watts = sum(watts) / len(watts) if watts else 0
     avg_gpu = sum(gpu_busy) / len(gpu_busy) if gpu_busy else 0
@@ -386,6 +449,8 @@ for hostname in machine_list:
     avg_cpu_sys = sum(cpu_sys) / len(cpu_sys) if cpu_sys else 0
     avg_load = sum(load_avg) / len(load_avg) if load_avg else 0
     cpu_usage = 100 - avg_cpu_idle  # Total CPU usage is inverse of idle
+    avg_disk_used_pct = sum(disk_used_pct) / len(disk_used_pct) if disk_used_pct else 0
+    avg_disk_free = sum(disk_free) / len(disk_free) if disk_free else 0
     
     # Get most common thermal status
     thermal_states = [r.get('thermal_pressure', 'Unknown') for r in machine_records]
@@ -407,6 +472,8 @@ for hostname in machine_list:
     machine_data.append({
         'hostname': hostname,
         'thermal_status': thermal_status,
+        'disk_used_pct': avg_disk_used_pct,
+        'disk_free': avg_disk_free,
         'thermal_priority': thermal_priority,
         'status_class': status_class,
         'avg_watts': avg_watts,
@@ -435,6 +502,8 @@ for machine in machine_data:
                     <td>{machine['avg_gpu']:.1f}%</td>
                     <td>{machine['cpu_usage']:.1f}%</td>
                     <td>{machine['avg_load']:.2f}</td>
+                    <td>{machine['disk_used_pct']:.1f}%</td>
+                    <td>{machine['disk_free']:.2f}</td>
                     <td>{int(machine['avg_diskio'])}</td>
                     <td>{machine['record_count']}</td>
                     <td>{machine['last_seen']}</td>
@@ -485,7 +554,7 @@ function sortTable(column) {
         const aVal = getCellValue(a, column);
         const bVal = getCellValue(b, column);
         
-        if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskio' || column === 'records') {
+        if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskused' || column === 'diskfree' || column === 'diskio' || column === 'records') {
             return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
         } else if (column === 'thermal') {
             const thermalOrder = {'Critical': 3, 'Warning': 2, 'High': 2, 'Nominal': 1, 'Unknown': 0};
@@ -506,11 +575,11 @@ function sortTable(column) {
 function getCellValue(row, column) {
     const columnMap = {
         'hostname': 0, 'thermal': 1, 'power': 2, 
-        'gpu': 3, 'cpu': 4, 'load': 5, 'diskio': 6, 'records': 7, 'lastseen': 8
+        'gpu': 3, 'cpu': 4, 'load': 5, 'diskused': 6, 'diskfree': 7, 'diskio': 8, 'records': 9, 'lastseen': 10
     };
     const cell = row.cells[columnMap[column]];
     
-    if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskio') {
+    if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskused' || column === 'diskfree' || column === 'diskio') {
         return parseFloat(cell.textContent);
     } else if (column === 'records') {
         return parseInt(cell.textContent);
