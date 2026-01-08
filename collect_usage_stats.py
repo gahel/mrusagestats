@@ -36,11 +36,9 @@ columns = [
     "usage_stats.cpu_sys",
     "usage_stats.cpu_user",
     "usage_stats.load_avg",
-    "disk.free",
-    "disk.used",
-    "disk.total",
-    "machine.physical_memory",
-    "usage_stats.memory",
+    "diskreport.totalsize",
+    "diskreport.freespace",
+    "diskreport.percentage",
 ]
 
 # authenticate
@@ -84,11 +82,6 @@ try:
     history_file = "usage_stats_history.jsonl"
     with open(history_file, 'a') as f:
         for row in result['data']:
-            # Calculate disk usage percentage
-            disk_used_pct = 0
-            if isinstance(row[23], (int, float)) and isinstance(row[24], (int, float)) and row[24] > 0:
-                disk_used_pct = (row[23] / row[24]) * 100
-            
             record = {
                 "collected_at": datetime.now().isoformat(),
                 "serial_number": row[0],
@@ -112,12 +105,9 @@ try:
                 "cpu_sys": row[18],
                 "cpu_user": row[19],
                 "load_avg": row[20],
-                "disk_free": row[21],
-                "disk_used": row[22],
-                "disk_total": row[23],
-                "disk_used_pct": disk_used_pct,
-                "physical_memory": row[24],
-                "memory_usage": row[25],
+                "disk_total": row[21],
+                "disk_free": row[22],
+                "disk_used_pct": row[23],
             }
             f.write(json.dumps(record) + '\n')
     
