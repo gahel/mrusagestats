@@ -119,14 +119,21 @@ with open(history_file, 'a') as f:
             except (ValueError, AttributeError):
                 cpu_user_val = None
         
-        # Parse load_avg (comma-separated string, take first value - 1-min average)
-        load_avg_val = None
+        # Parse load_avg (comma-separated string: "short, middle, long")
+        load_short = None
+        load_middle = None
+        load_long = None
         if len(row) > 18 and row[18]:
             try:
-                load_str = str(row[18]).split(',')[0].strip()
-                load_avg_val = float(load_str)
+                load_parts = str(row[18]).split(',')
+                if len(load_parts) >= 1:
+                    load_short = float(load_parts[0].strip())
+                if len(load_parts) >= 2:
+                    load_middle = float(load_parts[1].strip())
+                if len(load_parts) >= 3:
+                    load_long = float(load_parts[2].strip())
             except (ValueError, AttributeError, IndexError):
-                load_avg_val = None
+                pass
         
         record = {
             "collected_at": datetime.now().isoformat(),
@@ -148,7 +155,9 @@ with open(history_file, 'a') as f:
             "cpu_idle": cpu_idle_val,
             "cpu_sys": cpu_sys_val,
             "cpu_user": cpu_user_val,
-            "load_avg": load_avg_val,
+            "load_short": load_short,
+            "load_middle": load_middle,
+            "load_long": load_long,
             "disk_total": row[19] if len(row) > 19 else None,
             "disk_free": row[20] if len(row) > 20 else None,
             "disk_used_pct": disk_used_pct,
@@ -297,7 +306,16 @@ for time_key in sorted(time_groups.keys()):
     group = time_groups[time_key]
     avg_watts = sum(r.get('package_watts', 0) for r in group if isinstance(r.get('package_watts'), (int, float))) / len(group)
     avg_gpu = sum(r.get('gpu_busy', 0) for r in group if isinstance(r.get('gpu_busy'), (int, float))) / max(len([r for r in group if isinstance(r.get('gpu_busy'), (int, float))]), 1)
-    avg_load = sum(r.get('load_avg', 0) for r in group if isinstance(r.get('load_avg'), (int, float))) / max(len([r for r in group if isinstance(r.get('load_avg'), (int, float))]), 1)
+    
+    # Calculate average for each load period (short, middle, long)
+    load_short_vals = [r.get('load_short', 0) for r in group if isinstance(r.get('load_short'), (int, float))]
+    load_middle_vals = [r.get('load_middle', 0) for r in group if isinstance(r.get('load_middle'), (int, float))]
+    load_long_vals = [r.get('load_long', 0) for r in group if isinstance(r.get('load_long'), (int, float))]
+    
+    avg_load_short = sum(load_short_vals) / len(load_short_vals) if load_short_vals else 0
+    avg_load_middle = sum(load_middle_vals) / len(load_middle_vals) if load_middle_vals else 0
+    avg_load_long = sum(load_long_vals) / len(load_long_vals) if load_long_vals else 0
+    
     cpu_idle_vals = [r.get('cpu_idle', 0) for r in group if isinstance(r.get('cpu_idle'), (int, float))]
     avg_cpu_usage = (100 - sum(cpu_idle_vals) / len(cpu_idle_vals)) if cpu_idle_vals else 0
     thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
@@ -306,7 +324,9 @@ for time_key in sorted(time_groups.keys()):
         'time': time_key,
         'avg_watts': avg_watts,
         'avg_gpu': avg_gpu,
-        'avg_load': avg_load,
+        'avg_load_short': avg_load_short,
+        'avg_load_middle': avg_load_middle,
+        'avg_load_long': avg_load_long,
         'avg_cpu_usage': avg_cpu_usage,
         'thermal_issues': thermal_issues,
         'count': len(group)
@@ -724,28 +744,36 @@ new Chart(gpuCtx, {
     }
 });
 
-// CPU Load chart
+// CPU Load chart with 3 load averages
 const cpuLoadCtx = document.getElementById('cpuLoadChart').getContext('2d');
 new Chart(cpuLoadCtx, {
     type: 'line',
     data: {
         labels: timeSeriesData.map(d => d.time),
         datasets: [{
-            label: 'Avg CPU Usage (%)',
-            data: timeSeriesData.map(d => d.avg_cpu_usage),
-            borderColor: '#58a6ff',
-            backgroundColor: 'rgba(88, 166, 255, 0.1)',
+            label: 'Load (1-min)',
+            data: timeSeriesData.map(d => d.avg_load_short),
+            borderColor: '#3fb950',
+            backgroundColor: 'rgba(63, 185, 80, 0.1)',
             tension: 0.4,
             fill: true,
             yAxisID: 'y'
         }, {
-            label: 'Load Average',
-            data: timeSeriesData.map(d => d.avg_load * 20),  // Scale to 0-100 range
-            borderColor: '#f85149',
-            backgroundColor: 'rgba(248, 81, 73, 0.1)',
+            label: 'Load (5-min)',
+            data: timeSeriesData.map(d => d.avg_load_middle),
+            borderColor: '#d29922',
+            backgroundColor: 'rgba(210, 153, 34, 0.05)',
             tension: 0.4,
             fill: false,
-            yAxisID: 'y1'
+            yAxisID: 'y'
+        }, {
+            label: 'Load (15-min)',
+            data: timeSeriesData.map(d => d.avg_load_long),
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.05)',
+            tension: 0.4,
+            fill: false,
+            yAxisID: 'y'
         }]
     },
     options: {
@@ -757,19 +785,9 @@ new Chart(cpuLoadCtx, {
                 display: true,
                 position: 'left',
                 beginAtZero: true,
-                max: 100,
-                title: { display: true, text: 'CPU Usage (%)' },
+                title: { display: true, text: 'Load Average' },
                 ticks: { color: '#8b949e' },
                 grid: { color: '#30363d' }
-            },
-            y1: {
-                type: 'linear',
-                display: true,
-                position: 'right',
-                beginAtZero: true,
-                title: { display: true, text: 'Load Average (scaled)' },
-                ticks: { color: '#8b949e' },
-                grid: { display: false }
             },
             x: { 
                 ticks: { 
