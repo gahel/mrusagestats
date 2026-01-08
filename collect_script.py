@@ -969,93 +969,87 @@ new Chart(cpuLoadCtx, {
 
 // Thermal status chart (non-nominal only)
 const thermalStatusCtx = document.getElementById('thermalChart').getContext('2d');
-const thermalWarning = {sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])};
-const thermalCritical = {sum(1 for r in records if r.get('thermal_pressure') == 'Critical')};
-
-new Chart(thermalStatusCtx, {{
+new Chart(thermalStatusCtx, {
     type: 'doughnut',
-    data: {{
+    data: {
         labels: ['Warning / High', 'Critical'],
-        datasets: [{{
-            data: [thermalWarning, thermalCritical],
+        datasets: [{
+            data: [0, 0],
             backgroundColor: ['#ffd43b', '#f85149'],
             borderWidth: 2,
             borderColor: '#30363d'
-        }}]
-    }},
-    options: {{
+        }]
+    },
+    options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {{
-            legend: {{ 
-                labels: {{ color: '#8b949e' }},
+        plugins: {
+            legend: { 
+                labels: { color: '#8b949e' },
                 position: 'bottom'
-            }}
-        }}
-    }}
-}});
+            }
+        }
+    }
+});
 
 // CPU usage chart
 const cpuMetricsCtx = document.getElementById('cpuChart').getContext('2d');
-new Chart(cpuMetricsCtx, {{
+new Chart(cpuMetricsCtx, {
     type: 'line',
-    data: {{
+    data: {
         labels: timeSeriesData.map(d => d.time),
-        datasets: [{{
+        datasets: [{
             label: 'Average CPU Usage (%)',
             data: timeSeriesData.map(d => d.avg_cpu_usage),
             borderColor: '#58a6ff',
             backgroundColor: 'rgba(88, 166, 255, 0.1)',
             tension: 0.4,
             fill: true
-        }}]
-    }},
-    options: {{
+        }]
+    },
+    options: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: {{
-            y: {{ 
+        scales: {
+            y: { 
                 beginAtZero: true,
                 max: 100,
-                ticks: {{ color: '#8b949e' }},
-                grid: {{ color: '#30363d' }}
-            }},
-            x: {{ 
-                ticks: {{ 
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
                     color: '#8b949e',
                     maxTicksLimit: 10
-                }},
-                grid: {{ color: '#30363d' }}
-            }}
-        }},
-        plugins: {{
-            legend: {{ labels: {{ color: '#8b949e' }} }}
-        }}
-    }}
-}});
-
-            </div>
-        </div>
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { labels: { color: '#8b949e' } }
+        }
+    }
+});
 
 // Copy to clipboard function
-function copyToClipboard(text, button) {{
-    navigator.clipboard.writeText(text).then(() => {{
+function copyToClipboard(text, button) {
+    navigator.clipboard.writeText(text).then(() => {
         button.classList.add('copied');
         button.textContent = 'Copied!';
-        setTimeout(() => {{
+        setTimeout(() => {
             button.classList.remove('copied');
             button.textContent = 'Copy';
-        }}, 2000);
-    }}).catch(err => {{
+        }, 2000);
+    }).catch(err => {
         console.error('Failed to copy:', err);
         alert('Failed to copy: ' + text);
-    }});
-}}
+    });
+}
 
 // Auto-refresh every 10 minutes
-setTimeout(() => {{
+setTimeout(() => {
     window.location.reload();
-}}, 600000);
+}, 600000);
 </script>
 </body>
 </html>
