@@ -934,6 +934,16 @@ new Chart(gpuCtx, {
 
 // CPU Load chart with fleet average + top 3 machines
 const cpuLoadCtx = document.getElementById('cpuLoadChart').getContext('2d');
+
+// Helper to safely get hostname from top3 data
+function getTopMachineLabel(index, interval) {
+    return (data) => {
+        const machine = data.top3_machines && data.top3_machines[index];
+        const hostname = machine && machine.hostname ? machine.hostname : `Top${index + 1}`;
+        return hostname + ` (${interval})`;
+    };
+}
+
 new Chart(cpuLoadCtx, {
     type: 'line',
     data: {
@@ -947,7 +957,7 @@ new Chart(cpuLoadCtx, {
                 backgroundColor: 'rgba(63, 185, 80, 0.1)',
                 tension: 0.4,
                 fill: true,
-                borderWidth: 2,
+                borderWidth: 1.5,
                 yAxisID: 'y'
             },
             {
@@ -957,7 +967,7 @@ new Chart(cpuLoadCtx, {
                 backgroundColor: 'rgba(210, 153, 34, 0.05)',
                 tension: 0.4,
                 fill: false,
-                borderWidth: 2,
+                borderWidth: 1.5,
                 yAxisID: 'y'
             },
             {
@@ -967,100 +977,100 @@ new Chart(cpuLoadCtx, {
                 backgroundColor: 'rgba(88, 166, 255, 0.05)',
                 tension: 0.4,
                 fill: false,
-                borderWidth: 2,
+                borderWidth: 1.5,
                 yAxisID: 'y'
             },
-            // Top 3 machines - 1-min load (dashed)
+            // Top 3 machines - 1-min load (dashed, thin)
             {
-                label: 'Top1 Load (1-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (1-min)' : 'Top1 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.5)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
             {
-                label: 'Top2 Load (1-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (1-min)' : 'Top2 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.35)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
             {
-                label: 'Top3 Load (1-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (1-min)' : 'Top3 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.2)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
-            // Top 3 machines - 5-min load (dashed)
+            // Top 3 machines - 5-min load (dashed, thin)
             {
-                label: 'Top1 Load (5-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (5-min)' : 'Top1 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.5)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
             {
-                label: 'Top2 Load (5-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (5-min)' : 'Top2 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.35)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
             {
-                label: 'Top3 Load (5-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (5-min)' : 'Top3 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.2)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
-            // Top 3 machines - 15-min load (dashed)
+            // Top 3 machines - 15-min load (dashed, thin)
             {
-                label: 'Top1 Load (15-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (15-min)' : 'Top1 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.5)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
             {
-                label: 'Top2 Load (15-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (15-min)' : 'Top2 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.35)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             },
             {
-                label: 'Top3 Load (15-min)',
+                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (15-min)' : 'Top3 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.2)',
                 borderDash: [5, 5],
                 tension: 0.4,
                 fill: false,
-                borderWidth: 1.5,
+                borderWidth: 0.8,
                 yAxisID: 'y'
             }
         ]
@@ -1090,7 +1100,10 @@ new Chart(cpuLoadCtx, {
             legend: { 
                 labels: { color: '#8b949e' },
                 display: true,
-                position: 'top'
+                position: 'left',
+                maxWidth: 200,
+                maxHeight: 600,
+                font: { size: 10 }
             }
         }
     }
