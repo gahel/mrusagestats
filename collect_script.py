@@ -5,6 +5,7 @@ GitHub Actions script - collects and analyzes usage stats
 import os
 import requests
 import json
+import time
 from datetime import datetime
 from collections import defaultdict
 
@@ -327,8 +328,22 @@ for time_key in sorted(time_groups.keys()):
     avg_cpu_usage = (100 - sum(cpu_idle_vals) / len(cpu_idle_vals)) if cpu_idle_vals else 0
     thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
     
-    # Get top 3 machines with highest load_short for this time period
-    sorted_by_load = sorted(group, key=lambda r: r.get('load_short', 0), reverse=True)
+    # Get top 3 machines with highest load_short for this time period (only if seen in last 2 hours)
+    current_time = time.time()
+    two_hours_ago = current_time - (2 * 3600)
+    
+    # Filter machines seen in last 2 hours
+    recent_machines = []
+    for r in group:
+        try:
+            ts = int(r.get('timestamp', 0))
+            if ts > 0 and ts >= two_hours_ago:
+                recent_machines.append(r)
+        except (ValueError, TypeError):
+            pass
+    
+    # Get top 3 from recently seen machines
+    sorted_by_load = sorted(recent_machines, key=lambda r: r.get('load_short', 0), reverse=True)
     top3_machines = [
         {
             'hostname': sorted_by_load[0].get('hostname', 'Unknown') if len(sorted_by_load) > 0 else None,
@@ -427,7 +442,16 @@ for hostname, latest in top3_load:
     cpu_idle = latest.get('cpu_idle', 0) if isinstance(latest.get('cpu_idle'), (int, float)) else 0
     cpu_usage = 100 - cpu_idle
     thermal = latest.get('thermal_pressure', 'Unknown')
-    last_seen = latest.get('collected_at', 'Unknown')[:16]
+    
+    # Convert Unix timestamp to readable format
+    try:
+        ts = int(latest.get('timestamp', 0))
+        if ts > 0:
+            last_seen = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
+        else:
+            last_seen = latest.get('collected_at', 'Unknown')[:16]
+    except (ValueError, TypeError):
+        last_seen = latest.get('collected_at', 'Unknown')[:16]
     
     thermal_class = 'status-nominal'
     if thermal in ['Critical']:
@@ -584,18 +608,26 @@ for hostname in machine_list:
     # Convert disk_free from bytes to GB
     disk_free_gb = avg_disk_free / (1024 ** 3) if avg_disk_free else 0
     
-    # Parse last_seen timestamp to show actual date/time
-    last_seen_raw = machine_records[-1].get('collected_at', 'Unknown') if machine_records else 'Unknown'
-    if last_seen_raw != 'Unknown':
+    # Parse last_seen timestamp to show actual date/time from API (reportdata.timestamp)
+    last_record = machine_records[-1] if machine_records else None
+    last_seen = 'Unknown'
+    
+    if last_record:
         try:
-            # Parse ISO format datetime and format as readable date
-            from datetime import datetime
-            dt = datetime.fromisoformat(last_seen_raw)
-            last_seen = dt.strftime('%Y-%m-%d %H:%M')
-        except:
-            last_seen = last_seen_raw[:16]
-    else:
-        last_seen = 'Unknown'
+            # Try to get Unix timestamp from API (reportdata.timestamp)
+            ts = int(last_record.get('timestamp', 0))
+            if ts > 0:
+                from datetime import datetime
+                last_seen = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
+            else:
+                # Fallback to collected_at if timestamp is missing/invalid
+                last_seen_raw = last_record.get('collected_at', 'Unknown')
+                if last_seen_raw != 'Unknown':
+                    from datetime import datetime
+                    dt = datetime.fromisoformat(last_seen_raw)
+                    last_seen = dt.strftime('%Y-%m-%d %H:%M')
+        except (ValueError, TypeError, AttributeError):
+            last_seen = 'Unknown'
     
     machine_data.append({
         'hostname': hostname,
@@ -985,7 +1017,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (1-min)' : 'Top1 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.5)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -995,7 +1027,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (1-min)' : 'Top2 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.35)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1005,7 +1037,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (1-min)' : 'Top3 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.2)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1016,7 +1048,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (5-min)' : 'Top1 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.5)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1026,7 +1058,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (5-min)' : 'Top2 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.35)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1036,7 +1068,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (5-min)' : 'Top3 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.2)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1047,7 +1079,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (15-min)' : 'Top1 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.5)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1057,7 +1089,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (15-min)' : 'Top2 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.35)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1067,7 +1099,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (15-min)' : 'Top3 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.2)',
-                borderDash: [5, 5],
+                
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
