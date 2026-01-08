@@ -366,16 +366,79 @@ html += f"""
                 </div>
 
                 <div class="chart-container">
-                    <div class="chart-title">⚙️ CPU Usage & Load Average</div>
+                    <div class="chart-title">⚙️ Load Average</div>
                     <div class="chart-canvas">
                         <canvas id="cpuLoadChart"></canvas>
                     </div>
                 </div>
-                
+            </div>
+        </div>
+        
+        <div class="machines-table">
+            <h2 class="section-title">🔝 Top 3 by Load Average (1-min)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Machine</th>
+                        <th>Load (1-min)</th>
+                        <th>Load (5-min)</th>
+                        <th>Load (15-min)</th>
+                        <th>CPU Usage (%)</th>
+                        <th>Thermal</th>
+                        <th>Last Seen</th>
+                    </tr>
+                </thead>
+                <tbody>
+"""
+
+# Get top 3 machines by load average (1-min)
+top3_load = sorted([(h, machines[h][-1]) for h in machines if machines[h]], 
+                   key=lambda x: x[1].get('load_short', 0) if isinstance(x[1].get('load_short'), (int, float)) else 0, 
+                   reverse=True)[:3]
+
+for hostname, latest in top3_load:
+    load_short = latest.get('load_short', 0) if isinstance(latest.get('load_short'), (int, float)) else 0
+    load_middle = latest.get('load_middle', 0) if isinstance(latest.get('load_middle'), (int, float)) else 0
+    load_long = latest.get('load_long', 0) if isinstance(latest.get('load_long'), (int, float)) else 0
+    cpu_idle = latest.get('cpu_idle', 0) if isinstance(latest.get('cpu_idle'), (int, float)) else 0
+    cpu_usage = 100 - cpu_idle
+    thermal = latest.get('thermal_pressure', 'Unknown')
+    last_seen = latest.get('collected_at', 'Unknown')[:16]
+    
+    thermal_class = 'status-nominal'
+    if thermal in ['Critical']:
+        thermal_class = 'status-critical'
+    elif thermal in ['Warning', 'High']:
+        thermal_class = 'status-warning'
+    
+    html += f"""                <tr>
+                    <td><div class="hostname-cell"><strong>{hostname}</strong><button class="copy-btn" onclick="copyToClipboard(\"{hostname}\", this)">Copy</button></div></td>
+                    <td>{load_short:.2f}</td>
+                    <td>{load_middle:.2f}</td>
+                    <td>{load_long:.2f}</td>
+                    <td>{cpu_usage:.1f}%</td>
+                    <td class="{thermal_class}">{thermal}</td>
+                    <td>{last_seen}</td>
+                </tr>
+"""
+
+html += """                </tbody>
+            </table>
+        </div>
+        
+        <div class="charts-section">
+            <h2 class="section-title">📊 Thermal & CPU Metrics</h2>
+            <div class="charts-grid">
                 <div class="chart-container">
-                    <div class="chart-title">📊 Fleet Status Distribution</div>
+                    <div class="chart-title">🌡️ Non-Nominal Thermal States</div>
                     <div class="chart-canvas">
-                        <canvas id="statusChart"></canvas>
+                        <canvas id="thermalChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">📊 Average CPU Usage Over Time</div>
+                    <div class="chart-canvas">
+                        <canvas id="cpuChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -904,12 +967,12 @@ new Chart(cpuLoadCtx, {
     }
 });
 
-// Status distribution chart (only non-nominal thermal states)""" + f"""
+// Thermal status chart
+const thermalCtx = document.getElementById('thermalChart').getContext('2d');
 const thermalWarning = {sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])};
 const thermalCritical = {sum(1 for r in records if r.get('thermal_pressure') == 'Critical')};
 
-const statusCtx = document.getElementById('statusChart').getContext('2d');
-new Chart(statusCtx, {{
+new Chart(thermalCtx, {{
     type: 'doughnut',
     data: {{
         labels: ['Warning / High', 'Critical'],
@@ -931,6 +994,48 @@ new Chart(statusCtx, {{
         }}
     }}
 }});
+
+// CPU usage chart
+const cpuUsageCtx = document.getElementById('cpuChart').getContext('2d');
+new Chart(cpuUsageCtx, {{
+    type: 'line',
+    data: {{
+        labels: timeSeriesData.map(d => d.time),
+        datasets: [{{
+            label: 'Average CPU Usage (%)',
+            data: timeSeriesData.map(d => d.avg_cpu_usage),
+            borderColor: '#58a6ff',
+            backgroundColor: 'rgba(88, 166, 255, 0.1)',
+            tension: 0.4,
+            fill: true
+        }}]
+    }},
+    options: {{
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {{
+            y: {{ 
+                beginAtZero: true,
+                max: 100,
+                ticks: {{ color: '#8b949e' }},
+                grid: {{ color: '#30363d' }}
+            }},
+            x: {{ 
+                ticks: {{ 
+                    color: '#8b949e',
+                    maxTicksLimit: 10
+                }},
+                grid: {{ color: '#30363d' }}
+            }}
+        }},
+        plugins: {{
+            legend: {{ labels: {{ color: '#8b949e' }} }}
+        }}
+    }}
+}});
+
+            </div>
+        </div>
 
 // Copy to clipboard function
 function copyToClipboard(text, button) {{
