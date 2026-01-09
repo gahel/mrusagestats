@@ -1334,6 +1334,30 @@ new Chart(cpuLoadCtx, {
                 maxWidth: 200,
                 maxHeight: 600,
                 font: { size: 10 }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleColor: '#58a6ff',
+                bodyColor: '#c9d1d9',
+                borderColor: '#30363d',
+                borderWidth: 1,
+                callbacks: {
+                    title: function(context) {
+                        const label = context[0].dataset.label || '';
+                        // Extract hostname from label like "MBP-00106 (1-min)"
+                        const match = label.match(/^([A-Z0-9\-]+)\s*\(/);
+                        if (match && match[1]) {
+                            return match[1];
+                        }
+                        return label;
+                    },
+                    label: function(context) {
+                        const interval = context.dataset.label.match(/\(([^)]+)\)/);
+                        const intervalText = interval ? interval[1] : 'load';
+                        return intervalText + ': ' + context.parsed.y.toFixed(2);
+                    }
+                }
             }
         }
     }
