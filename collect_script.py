@@ -331,9 +331,10 @@ for time_key in sorted(time_groups.keys()):
     avg_cpu_usage = (100 - sum(cpu_idle_vals) / len(cpu_idle_vals)) if cpu_idle_vals else 0
     thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
     
-    # Build per-machine CPU usage for trend
+    # Build per-machine CPU usage for trend - collect unique hostnames from this group
     machine_cpu_data = {}
-    for hostname in machines.keys():
+    unique_hostnames = set(r.get('hostname') for r in group if r.get('hostname'))
+    for hostname in unique_hostnames:
         machine_records_at_time = [r for r in group if r.get('hostname') == hostname]
         if machine_records_at_time:
             cpu_idle_for_machine = [r.get('cpu_idle', 0) for r in machine_records_at_time if isinstance(r.get('cpu_idle'), (int, float))]
