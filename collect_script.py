@@ -416,7 +416,22 @@ for time_key in sorted(time_groups.keys()):
         'machine_cpu_usage': machine_cpu_data,
         'thermal_issues': thermal_issues,
         'count': len(group),
-        'top3_machines': top3_machines
+        'top3_machines': top3_machines,
+        'top3_labels_1min': [
+            (top3_machines[0]['hostname'] or 'Unknown') + ' (1-min)',
+            (top3_machines[1]['hostname'] or 'Unknown') + ' (1-min)',
+            (top3_machines[2]['hostname'] or 'Unknown') + ' (1-min)'
+        ],
+        'top3_labels_5min': [
+            (top3_machines[0]['hostname'] or 'Unknown') + ' (5-min)',
+            (top3_machines[1]['hostname'] or 'Unknown') + ' (5-min)',
+            (top3_machines[2]['hostname'] or 'Unknown') + ' (5-min)'
+        ],
+        'top3_labels_15min': [
+            (top3_machines[0]['hostname'] or 'Unknown') + ' (15-min)',
+            (top3_machines[1]['hostname'] or 'Unknown') + ' (15-min)',
+            (top3_machines[2]['hostname'] or 'Unknown') + ' (15-min)'
+        ]
     })
 
 html += f"""
@@ -1280,7 +1295,7 @@ new Chart(cpuLoadCtx, {
             },
             // Top 3 machines - 1-min load (dashed, thin)
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (1-min)' : 'Top1 (1-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_1min[0] : 'Top1 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.5)',
                 pointRadius: 0,
@@ -1290,7 +1305,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (1-min)' : 'Top2 (1-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_1min[1] : 'Top2 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.35)',
                 pointRadius: 0,
@@ -1300,7 +1315,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (1-min)' : 'Top3 (1-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_1min[2] : 'Top3 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.2)',
                 pointRadius: 0,
@@ -1311,7 +1326,7 @@ new Chart(cpuLoadCtx, {
             },
             // Top 3 machines - 5-min load (dashed, thin)
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (5-min)' : 'Top1 (5-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_5min[0] : 'Top1 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.5)',
                 pointRadius: 0,
@@ -1321,7 +1336,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (5-min)' : 'Top2 (5-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_5min[1] : 'Top2 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.35)',
                 pointRadius: 0,
@@ -1331,7 +1346,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (5-min)' : 'Top3 (5-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_5min[2] : 'Top3 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.2)',
                 pointRadius: 0,
@@ -1342,7 +1357,7 @@ new Chart(cpuLoadCtx, {
             },
             // Top 3 machines - 15-min load (dashed, thin)
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (15-min)' : 'Top1 (15-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_15min[0] : 'Top1 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.5)',
                 pointRadius: 0,
@@ -1352,7 +1367,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (15-min)' : 'Top2 (15-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_15min[1] : 'Top2 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.35)',
                 pointRadius: 0,
@@ -1362,7 +1377,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (15-min)' : 'Top3 (15-min)',
+                label: timeSeriesData.length > 0 ? timeSeriesData[0].top3_labels_15min[2] : 'Top3 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.2)',
                 pointRadius: 0,
