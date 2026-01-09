@@ -372,7 +372,7 @@ for time_key in sorted(time_groups.keys()):
     current_time = time.time()
     two_hours_ago = current_time - (2 * 3600)
     
-    # Filter machines seen in last 2 hours
+    # Filter machines seen in last 2 hours - ONLY recent machines
     recent_machines = []
     for r in group:
         try:
