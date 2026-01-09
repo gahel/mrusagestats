@@ -1524,7 +1524,7 @@ machineModal.innerHTML = `
 `;
 document.body.appendChild(machineModal);
 
-const machineData = {machine_details_json};
+const machineData = """ + machine_details_json + """;
 
 function showMachineDetails(hostname) {
     const data = machineData[hostname];
