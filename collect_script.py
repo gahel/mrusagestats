@@ -299,8 +299,11 @@ html += f"""            <div class="metric-card">
         </div>"""
 
 # Generate time-series data for charts
-# Take last 2640 records = 24 hours of data (110 machines × 24 hours)
-recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-2640:]  # Last 24 hours
+# Currently: Keep ALL records for complete historical timeline
+# Future: Implement 7-day retention when data becomes too large
+# TODO: Uncomment line below and comment current line when needed:
+# recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-7*24*60:]  # Keep last 7 days
+recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))
 
 # Group by collection time for trends
 from collections import defaultdict
@@ -990,6 +993,7 @@ new Chart(cpuLoadCtx, {
                 tension: 0.4,
                 fill: true,
                 borderWidth: 1.5,
+                pointRadius: 0,
                 yAxisID: 'y'
             },
             {
@@ -1000,6 +1004,7 @@ new Chart(cpuLoadCtx, {
                 tension: 0.4,
                 fill: false,
                 borderWidth: 1.5,
+                pointRadius: 0,
                 yAxisID: 'y'
             },
             {
@@ -1010,6 +1015,7 @@ new Chart(cpuLoadCtx, {
                 tension: 0.4,
                 fill: false,
                 borderWidth: 1.5,
+                pointRadius: 0,
                 yAxisID: 'y'
             },
             // Top 3 machines - 1-min load (dashed, thin)
@@ -1017,7 +1023,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (1-min)' : 'Top1 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.5)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1027,7 +1033,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (1-min)' : 'Top2 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.35)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1037,7 +1043,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (1-min)' : 'Top3 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.2)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1048,7 +1054,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (5-min)' : 'Top1 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.5)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1058,7 +1064,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (5-min)' : 'Top2 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.35)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1068,7 +1074,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (5-min)' : 'Top3 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.2)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1079,7 +1085,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (15-min)' : 'Top1 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.5)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1089,7 +1095,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (15-min)' : 'Top2 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.35)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -1099,7 +1105,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (15-min)' : 'Top3 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.2)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,

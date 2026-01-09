@@ -71,13 +71,13 @@
         <header>
             <h1>🖥️ MacBook Fleet Analytics</h1>
             <div class="subtitle">Real-time monitoring of 108 MacBooks across the organization</div>
-            <div class="timestamp">Last updated: 2026-01-09 08:15:48 UTC</div>
+            <div class="timestamp">Last updated: 2026-01-09 10:05:28 UTC</div>
         </header>
         
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">Total Data Points</div>
-                <div class="metric-value">5,324</div>
+                <div class="metric-value">4,125</div>
                 <div class="metric-change">📈 Growing continuously</div>
             </div>
             <div class="metric-card">
@@ -153,7 +153,7 @@
                     <td>70.68</td>
                     <td>61.2%</td>
                     <td class="status-nominal">Nominal</td>
-                    <td>2026-01-05 13:43</td>
+                    <td>2026-01-05 14:43</td>
                 </tr>
                 <tr>
                     <td><div class="hostname-cell"><strong>MBP-26833</strong><button class="copy-btn" onclick="copyToClipboard("MBP-26833", this)">Copy</button></div></td>
@@ -162,16 +162,16 @@
                     <td>26.61</td>
                     <td>96.7%</td>
                     <td class="status-nominal">Nominal</td>
-                    <td>2026-01-01 12:14</td>
+                    <td>2026-01-01 13:14</td>
                 </tr>
                 <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11287</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11287", this)">Copy</button></div></td>
-                    <td>167.03</td>
-                    <td>65.78</td>
-                    <td>25.97</td>
-                    <td>50.9%</td>
+                    <td><div class="hostname-cell"><strong>MBP-27348</strong><button class="copy-btn" onclick="copyToClipboard("MBP-27348", this)">Copy</button></div></td>
+                    <td>122.13</td>
+                    <td>63.35</td>
+                    <td>26.33</td>
+                    <td>76.7%</td>
                     <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09 08:09</td>
+                    <td>2025-11-27 13:15</td>
                 </tr>
                 </tbody>
             </table>
@@ -196,13 +196,6 @@
         </div>
         <div class="alerts-section">
             <h2 class="section-title">🚨 System Alerts</h2>
-            <div class="alert alert-warning">
-                <span class="alert-icon">🔋</span>
-                <div>
-                    <strong>High Power Consumption:</strong> Peak power usage of 23.4W detected.
-                    Review power-intensive applications and thermal management.
-                </div>
-            </div>
             <div class="alert" style="background: rgba(63, 185, 80, 0.1); border: 1px solid #3fb950;">
                 <span class="alert-icon">✅</span>
                 <div>
@@ -211,1731 +204,16 @@
                 </div>
             </div>
         </div>
-        
-        <div class="machines-table">
-            <h2 class="section-title">💻 Machine Performance Overview</h2>
-            <table id="machinesTable">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-sort="hostname">Machine</th>
-                        <th class="sortable" data-sort="thermal">Thermal Status</th>
-                        <th class="sortable" data-sort="power">Avg Power (W)</th>
-                        <th class="sortable" data-sort="gpu">Avg GPU Usage (%)</th>
-                        <th class="sortable" data-sort="cpu">CPU Usage (%)</th>
-                        <th class="sortable" data-sort="load">Load Avg</th>
-                        <th class="sortable" data-sort="diskused">Disk Used (%)</th>
-                        <th class="sortable" data-sort="diskfree">Disk Free (GB)</th>
-                        <th class="sortable" data-sort="diskio">Avg Disk IOPS</th>
-                        <th class="sortable" data-sort="records">Data Points</th>
-                        <th class="sortable" data-sort="lastseen">Last Seen</th>
-                    </tr>
-                </thead>
-                <tbody id="machinesTableBody">
-                <tr class="high-power">
-                    <td><div class="hostname-cell"><strong>MBP-26833</strong><button class="copy-btn" onclick="copyToClipboard("MBP-26833", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>11.69</td>
-                    <td>0.1%</td>
-                    <td>96.7%</td>
-                    <td>190.08</td>
-                    <td>0.0%</td>
-                    <td>195.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-01 12:14</td>
-                </tr>
-                <tr class="high-power">
-                    <td><div class="hostname-cell"><strong>MBP-01470</strong><button class="copy-btn" onclick="copyToClipboard("MBP-01470", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>8.70</td>
-                    <td>0.5%</td>
-                    <td>28.5%</td>
-                    <td>6.59</td>
-                    <td>0.0%</td>
-                    <td>666.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:36</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-14219</strong><button class="copy-btn" onclick="copyToClipboard("MBP-14219", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>7.18</td>
-                    <td>0.0%</td>
-                    <td>61.2%</td>
-                    <td>279.24</td>
-                    <td>0.0%</td>
-                    <td>495.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-05 13:43</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-14921</strong><button class="copy-btn" onclick="copyToClipboard("MBP-14921", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>6.76</td>
-                    <td>0.6%</td>
-                    <td>27.3%</td>
-                    <td>4.15</td>
-                    <td>0.0%</td>
-                    <td>821.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:03</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-31108</strong><button class="copy-btn" onclick="copyToClipboard("MBP-31108", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>6.42</td>
-                    <td>0.0%</td>
-                    <td>19.3%</td>
-                    <td>1.23</td>
-                    <td>0.0%</td>
-                    <td>343.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-19 11:56</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11287</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11287", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>5.71</td>
-                    <td>0.1%</td>
-                    <td>27.6%</td>
-                    <td>2.63</td>
-                    <td>0.0%</td>
-                    <td>298.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:09</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-27348</strong><button class="copy-btn" onclick="copyToClipboard("MBP-27348", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>5.46</td>
-                    <td>0.1%</td>
-                    <td>76.7%</td>
-                    <td>122.13</td>
-                    <td>0.0%</td>
-                    <td>187.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-11-27 12:15</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-09790</strong><button class="copy-btn" onclick="copyToClipboard("MBP-09790", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>5.30</td>
-                    <td>0.1%</td>
-                    <td>61.3%</td>
-                    <td>5.69</td>
-                    <td>0.0%</td>
-                    <td>331.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 20:29</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-24054</strong><button class="copy-btn" onclick="copyToClipboard("MBP-24054", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>5.05</td>
-                    <td>0.6%</td>
-                    <td>32.8%</td>
-                    <td>6.46</td>
-                    <td>0.0%</td>
-                    <td>593.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-30 10:50</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-07538</strong><button class="copy-btn" onclick="copyToClipboard("MBP-07538", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>4.39</td>
-                    <td>0.6%</td>
-                    <td>37.5%</td>
-                    <td>4.53</td>
-                    <td>0.0%</td>
-                    <td>603.7</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:06</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-03954</strong><button class="copy-btn" onclick="copyToClipboard("MBP-03954", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>4.30</td>
-                    <td>0.4%</td>
-                    <td>33.0%</td>
-                    <td>4.14</td>
-                    <td>0.0%</td>
-                    <td>252.6</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:17</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-00654</strong><button class="copy-btn" onclick="copyToClipboard("MBP-00654", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>4.05</td>
-                    <td>0.2%</td>
-                    <td>36.1%</td>
-                    <td>7.40</td>
-                    <td>0.0%</td>
-                    <td>669.7</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 22:41</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-10800</strong><button class="copy-btn" onclick="copyToClipboard("MBP-10800", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>4.02</td>
-                    <td>0.1%</td>
-                    <td>25.6%</td>
-                    <td>4.05</td>
-                    <td>0.0%</td>
-                    <td>241.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:28</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-29506</strong><button class="copy-btn" onclick="copyToClipboard("MBP-29506", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.89</td>
-                    <td>0.3%</td>
-                    <td>33.7%</td>
-                    <td>92.15</td>
-                    <td>0.0%</td>
-                    <td>709.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:05</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-20596</strong><button class="copy-btn" onclick="copyToClipboard("MBP-20596", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.87</td>
-                    <td>0.2%</td>
-                    <td>28.8%</td>
-                    <td>13.11</td>
-                    <td>0.0%</td>
-                    <td>469.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 07:43</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-10347</strong><button class="copy-btn" onclick="copyToClipboard("MBP-10347", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.81</td>
-                    <td>0.2%</td>
-                    <td>20.2%</td>
-                    <td>2.61</td>
-                    <td>0.0%</td>
-                    <td>749.6</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:31</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-21374</strong><button class="copy-btn" onclick="copyToClipboard("MBP-21374", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.74</td>
-                    <td>0.2%</td>
-                    <td>24.2%</td>
-                    <td>2.81</td>
-                    <td>0.0%</td>
-                    <td>292.4</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:30</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-28870</strong><button class="copy-btn" onclick="copyToClipboard("MBP-28870", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.62</td>
-                    <td>0.1%</td>
-                    <td>34.8%</td>
-                    <td>4.34</td>
-                    <td>0.0%</td>
-                    <td>270.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 15:20</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-06076</strong><button class="copy-btn" onclick="copyToClipboard("MBP-06076", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.51</td>
-                    <td>0.0%</td>
-                    <td>68.2%</td>
-                    <td>89.55</td>
-                    <td>0.0%</td>
-                    <td>725.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-07 12:47</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-00106</strong><button class="copy-btn" onclick="copyToClipboard("MBP-00106", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.49</td>
-                    <td>0.4%</td>
-                    <td>29.4%</td>
-                    <td>3.39</td>
-                    <td>0.0%</td>
-                    <td>125.1</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 03:41</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-27394</strong><button class="copy-btn" onclick="copyToClipboard("MBP-27394", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.36</td>
-                    <td>0.2%</td>
-                    <td>22.9%</td>
-                    <td>5.04</td>
-                    <td>0.0%</td>
-                    <td>562.3</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 02:05</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-10076</strong><button class="copy-btn" onclick="copyToClipboard("MBP-10076", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.26</td>
-                    <td>0.1%</td>
-                    <td>23.1%</td>
-                    <td>4.05</td>
-                    <td>0.0%</td>
-                    <td>775.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 12:57</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-27711</strong><button class="copy-btn" onclick="copyToClipboard("MBP-27711", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.23</td>
-                    <td>0.2%</td>
-                    <td>32.2%</td>
-                    <td>5.24</td>
-                    <td>0.0%</td>
-                    <td>798.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:50</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-31618</strong><button class="copy-btn" onclick="copyToClipboard("MBP-31618", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>3.09</td>
-                    <td>0.3%</td>
-                    <td>19.5%</td>
-                    <td>3.56</td>
-                    <td>0.0%</td>
-                    <td>732.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:02</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-31799</strong><button class="copy-btn" onclick="copyToClipboard("MBP-31799", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.91</td>
-                    <td>0.4%</td>
-                    <td>20.4%</td>
-                    <td>11.30</td>
-                    <td>0.0%</td>
-                    <td>214.4</td>
-                    <td>0</td>
-                    <td>52</td>
-                    <td>2026-01-09 07:33</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-31051</strong><button class="copy-btn" onclick="copyToClipboard("MBP-31051", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.90</td>
-                    <td>0.1%</td>
-                    <td>26.0%</td>
-                    <td>2.48</td>
-                    <td>0.0%</td>
-                    <td>317.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 12:51</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-08566</strong><button class="copy-btn" onclick="copyToClipboard("MBP-08566", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.80</td>
-                    <td>0.2%</td>
-                    <td>20.7%</td>
-                    <td>44.61</td>
-                    <td>0.0%</td>
-                    <td>269.2</td>
-                    <td>0</td>
-                    <td>78</td>
-                    <td>2026-01-09 05:14</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-32513</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32513", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.65</td>
-                    <td>0.1%</td>
-                    <td>20.3%</td>
-                    <td>2.97</td>
-                    <td>0.0%</td>
-                    <td>116.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 20:59</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-28208</strong><button class="copy-btn" onclick="copyToClipboard("MBP-28208", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.62</td>
-                    <td>0.1%</td>
-                    <td>23.7%</td>
-                    <td>3.39</td>
-                    <td>0.0%</td>
-                    <td>105.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:35</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-03613</strong><button class="copy-btn" onclick="copyToClipboard("MBP-03613", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.59</td>
-                    <td>0.2%</td>
-                    <td>14.0%</td>
-                    <td>2.81</td>
-                    <td>0.0%</td>
-                    <td>763.4</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:26</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-32760</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32760", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.58</td>
-                    <td>0.0%</td>
-                    <td>23.9%</td>
-                    <td>5.86</td>
-                    <td>0.0%</td>
-                    <td>293.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-28 23:50</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-02093</strong><button class="copy-btn" onclick="copyToClipboard("MBP-02093", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.52</td>
-                    <td>0.1%</td>
-                    <td>32.7%</td>
-                    <td>1.98</td>
-                    <td>0.0%</td>
-                    <td>340.2</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 22:25</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-03092</strong><button class="copy-btn" onclick="copyToClipboard("MBP-03092", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.49</td>
-                    <td>0.1%</td>
-                    <td>15.1%</td>
-                    <td>10.92</td>
-                    <td>0.0%</td>
-                    <td>752.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:09</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-12418</strong><button class="copy-btn" onclick="copyToClipboard("MBP-12418", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.38</td>
-                    <td>0.0%</td>
-                    <td>24.6%</td>
-                    <td>33.95</td>
-                    <td>0.0%</td>
-                    <td>231.6</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 22:23</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-15658</strong><button class="copy-btn" onclick="copyToClipboard("MBP-15658", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.08</td>
-                    <td>0.4%</td>
-                    <td>18.1%</td>
-                    <td>2.07</td>
-                    <td>0.0%</td>
-                    <td>346.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:57</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-07264</strong><button class="copy-btn" onclick="copyToClipboard("MBP-07264", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.06</td>
-                    <td>0.1%</td>
-                    <td>18.2%</td>
-                    <td>7.12</td>
-                    <td>0.0%</td>
-                    <td>597.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 17:00</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-05828</strong><button class="copy-btn" onclick="copyToClipboard("MBP-05828", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.06</td>
-                    <td>0.4%</td>
-                    <td>17.4%</td>
-                    <td>3.17</td>
-                    <td>0.0%</td>
-                    <td>281.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:22</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-15822</strong><button class="copy-btn" onclick="copyToClipboard("MBP-15822", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.03</td>
-                    <td>0.3%</td>
-                    <td>37.7%</td>
-                    <td>4.17</td>
-                    <td>0.0%</td>
-                    <td>329.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:56</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-20022</strong><button class="copy-btn" onclick="copyToClipboard("MBP-20022", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.03</td>
-                    <td>0.4%</td>
-                    <td>38.2%</td>
-                    <td>14.94</td>
-                    <td>0.0%</td>
-                    <td>95.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:45</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-09414</strong><button class="copy-btn" onclick="copyToClipboard("MBP-09414", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2.00</td>
-                    <td>0.2%</td>
-                    <td>28.5%</td>
-                    <td>3.43</td>
-                    <td>0.0%</td>
-                    <td>20.1</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 16:08</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-05307</strong><button class="copy-btn" onclick="copyToClipboard("MBP-05307", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.98</td>
-                    <td>0.2%</td>
-                    <td>43.2%</td>
-                    <td>9.61</td>
-                    <td>0.0%</td>
-                    <td>578.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:59</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-30340</strong><button class="copy-btn" onclick="copyToClipboard("MBP-30340", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.85</td>
-                    <td>0.0%</td>
-                    <td>11.4%</td>
-                    <td>2.32</td>
-                    <td>0.0%</td>
-                    <td>757.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:05</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-25466</strong><button class="copy-btn" onclick="copyToClipboard("MBP-25466", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.84</td>
-                    <td>0.3%</td>
-                    <td>22.0%</td>
-                    <td>3.18</td>
-                    <td>0.0%</td>
-                    <td>323.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:19</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-15799</strong><button class="copy-btn" onclick="copyToClipboard("MBP-15799", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.84</td>
-                    <td>0.3%</td>
-                    <td>20.4%</td>
-                    <td>3.79</td>
-                    <td>0.0%</td>
-                    <td>110.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:47</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-09049</strong><button class="copy-btn" onclick="copyToClipboard("MBP-09049", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.74</td>
-                    <td>0.0%</td>
-                    <td>22.9%</td>
-                    <td>3.18</td>
-                    <td>0.0%</td>
-                    <td>365.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:11</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-20380</strong><button class="copy-btn" onclick="copyToClipboard("MBP-20380", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.72</td>
-                    <td>0.1%</td>
-                    <td>19.5%</td>
-                    <td>27.37</td>
-                    <td>0.0%</td>
-                    <td>314.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-16 08:30</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-13432</strong><button class="copy-btn" onclick="copyToClipboard("MBP-13432", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.67</td>
-                    <td>0.0%</td>
-                    <td>26.5%</td>
-                    <td>66.42</td>
-                    <td>0.0%</td>
-                    <td>189.3</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 22:38</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-31173</strong><button class="copy-btn" onclick="copyToClipboard("MBP-31173", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.66</td>
-                    <td>0.1%</td>
-                    <td>28.6%</td>
-                    <td>9.55</td>
-                    <td>0.0%</td>
-                    <td>538.4</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:41</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-10736</strong><button class="copy-btn" onclick="copyToClipboard("MBP-10736", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.64</td>
-                    <td>0.1%</td>
-                    <td>24.4%</td>
-                    <td>2.38</td>
-                    <td>0.0%</td>
-                    <td>258.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:41</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-03074</strong><button class="copy-btn" onclick="copyToClipboard("MBP-03074", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.54</td>
-                    <td>0.0%</td>
-                    <td>16.8%</td>
-                    <td>1.77</td>
-                    <td>0.0%</td>
-                    <td>327.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 15:15</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-12803</strong><button class="copy-btn" onclick="copyToClipboard("MBP-12803", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.51</td>
-                    <td>0.1%</td>
-                    <td>18.4%</td>
-                    <td>2.46</td>
-                    <td>0.0%</td>
-                    <td>131.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:35</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-29333</strong><button class="copy-btn" onclick="copyToClipboard("MBP-29333", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.51</td>
-                    <td>0.1%</td>
-                    <td>25.2%</td>
-                    <td>76.16</td>
-                    <td>0.0%</td>
-                    <td>844.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-09 08:47</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-06322</strong><button class="copy-btn" onclick="copyToClipboard("MBP-06322", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.33</td>
-                    <td>0.1%</td>
-                    <td>19.3%</td>
-                    <td>3.67</td>
-                    <td>0.0%</td>
-                    <td>203.8</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:06</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-15896</strong><button class="copy-btn" onclick="copyToClipboard("MBP-15896", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.26</td>
-                    <td>0.0%</td>
-                    <td>22.4%</td>
-                    <td>2.87</td>
-                    <td>0.0%</td>
-                    <td>584.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 12:41</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11450</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11450", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.26</td>
-                    <td>0.0%</td>
-                    <td>17.5%</td>
-                    <td>1.42</td>
-                    <td>0.0%</td>
-                    <td>367.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:43</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-12311</strong><button class="copy-btn" onclick="copyToClipboard("MBP-12311", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.24</td>
-                    <td>0.2%</td>
-                    <td>35.4%</td>
-                    <td>6.91</td>
-                    <td>0.0%</td>
-                    <td>241.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 17:28</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-02614</strong><button class="copy-btn" onclick="copyToClipboard("MBP-02614", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.15</td>
-                    <td>0.0%</td>
-                    <td>19.8%</td>
-                    <td>5.63</td>
-                    <td>0.0%</td>
-                    <td>142.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:35</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-14117</strong><button class="copy-btn" onclick="copyToClipboard("MBP-14117", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.10</td>
-                    <td>0.1%</td>
-                    <td>23.2%</td>
-                    <td>1.81</td>
-                    <td>0.0%</td>
-                    <td>285.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:13</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-26247</strong><button class="copy-btn" onclick="copyToClipboard("MBP-26247", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.07</td>
-                    <td>0.2%</td>
-                    <td>14.6%</td>
-                    <td>3.02</td>
-                    <td>0.0%</td>
-                    <td>837.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 20:01</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-20856</strong><button class="copy-btn" onclick="copyToClipboard("MBP-20856", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.05</td>
-                    <td>0.0%</td>
-                    <td>21.3%</td>
-                    <td>3.27</td>
-                    <td>0.0%</td>
-                    <td>194.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:09</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-28552</strong><button class="copy-btn" onclick="copyToClipboard("MBP-28552", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.04</td>
-                    <td>0.1%</td>
-                    <td>28.7%</td>
-                    <td>2.06</td>
-                    <td>0.0%</td>
-                    <td>355.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:55</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-24204</strong><button class="copy-btn" onclick="copyToClipboard("MBP-24204", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.04</td>
-                    <td>0.1%</td>
-                    <td>15.1%</td>
-                    <td>2.43</td>
-                    <td>0.0%</td>
-                    <td>693.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:02</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-32692</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32692", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.04</td>
-                    <td>0.1%</td>
-                    <td>32.9%</td>
-                    <td>3.33</td>
-                    <td>0.0%</td>
-                    <td>694.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 16:39</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-27687</strong><button class="copy-btn" onclick="copyToClipboard("MBP-27687", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.03</td>
-                    <td>0.0%</td>
-                    <td>18.9%</td>
-                    <td>3.25</td>
-                    <td>0.0%</td>
-                    <td>97.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 01:19</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-12119</strong><button class="copy-btn" onclick="copyToClipboard("MBP-12119", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.03</td>
-                    <td>0.1%</td>
-                    <td>19.6%</td>
-                    <td>2.68</td>
-                    <td>0.0%</td>
-                    <td>183.8</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:06</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-23901</strong><button class="copy-btn" onclick="copyToClipboard("MBP-23901", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.02</td>
-                    <td>0.0%</td>
-                    <td>27.1%</td>
-                    <td>6.37</td>
-                    <td>0.0%</td>
-                    <td>692.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:21</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11659</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11659", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>1.00</td>
-                    <td>0.1%</td>
-                    <td>26.7%</td>
-                    <td>2.83</td>
-                    <td>0.0%</td>
-                    <td>239.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:52</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-03639</strong><button class="copy-btn" onclick="copyToClipboard("MBP-03639", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.92</td>
-                    <td>0.0%</td>
-                    <td>33.4%</td>
-                    <td>4.34</td>
-                    <td>0.0%</td>
-                    <td>640.1</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:00</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-10160</strong><button class="copy-btn" onclick="copyToClipboard("MBP-10160", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.92</td>
-                    <td>0.2%</td>
-                    <td>16.1%</td>
-                    <td>3.27</td>
-                    <td>0.0%</td>
-                    <td>837.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:14</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-25278</strong><button class="copy-btn" onclick="copyToClipboard("MBP-25278", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.87</td>
-                    <td>0.0%</td>
-                    <td>22.1%</td>
-                    <td>4.07</td>
-                    <td>0.0%</td>
-                    <td>344.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-02 14:19</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-00167</strong><button class="copy-btn" onclick="copyToClipboard("MBP-00167", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.82</td>
-                    <td>0.0%</td>
-                    <td>44.5%</td>
-                    <td>14.49</td>
-                    <td>0.0%</td>
-                    <td>162.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 00:27</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-32054</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32054", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.76</td>
-                    <td>0.1%</td>
-                    <td>14.2%</td>
-                    <td>9.79</td>
-                    <td>0.0%</td>
-                    <td>376.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:14</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11309</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11309", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.74</td>
-                    <td>0.2%</td>
-                    <td>21.4%</td>
-                    <td>3.75</td>
-                    <td>0.0%</td>
-                    <td>117.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:32</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-20201</strong><button class="copy-btn" onclick="copyToClipboard("MBP-20201", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.74</td>
-                    <td>0.0%</td>
-                    <td>11.0%</td>
-                    <td>38.14</td>
-                    <td>0.0%</td>
-                    <td>151.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:41</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-18290</strong><button class="copy-btn" onclick="copyToClipboard("MBP-18290", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.71</td>
-                    <td>0.2%</td>
-                    <td>22.2%</td>
-                    <td>13.53</td>
-                    <td>0.0%</td>
-                    <td>760.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:26</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-17675</strong><button class="copy-btn" onclick="copyToClipboard("MBP-17675", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.71</td>
-                    <td>0.0%</td>
-                    <td>12.5%</td>
-                    <td>2.30</td>
-                    <td>0.0%</td>
-                    <td>678.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-19 11:30</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-23810</strong><button class="copy-btn" onclick="copyToClipboard("MBP-23810", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.69</td>
-                    <td>0.0%</td>
-                    <td>20.8%</td>
-                    <td>2.04</td>
-                    <td>0.0%</td>
-                    <td>7.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 23:00</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-17057</strong><button class="copy-btn" onclick="copyToClipboard("MBP-17057", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.69</td>
-                    <td>0.0%</td>
-                    <td>19.2%</td>
-                    <td>2.12</td>
-                    <td>0.0%</td>
-                    <td>120.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 06:56</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-05236</strong><button class="copy-btn" onclick="copyToClipboard("MBP-05236", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.68</td>
-                    <td>0.3%</td>
-                    <td>23.4%</td>
-                    <td>5.74</td>
-                    <td>0.0%</td>
-                    <td>693.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:06</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-29011</strong><button class="copy-btn" onclick="copyToClipboard("MBP-29011", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.65</td>
-                    <td>0.0%</td>
-                    <td>18.6%</td>
-                    <td>3.51</td>
-                    <td>0.0%</td>
-                    <td>711.2</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:12</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-02974</strong><button class="copy-btn" onclick="copyToClipboard("MBP-02974", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.60</td>
-                    <td>0.2%</td>
-                    <td>26.2%</td>
-                    <td>2.27</td>
-                    <td>0.0%</td>
-                    <td>93.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:57</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-08644</strong><button class="copy-btn" onclick="copyToClipboard("MBP-08644", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.57</td>
-                    <td>0.0%</td>
-                    <td>39.7%</td>
-                    <td>2.72</td>
-                    <td>0.0%</td>
-                    <td>777.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 12:34</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-15991</strong><button class="copy-btn" onclick="copyToClipboard("MBP-15991", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.56</td>
-                    <td>0.1%</td>
-                    <td>16.7%</td>
-                    <td>2.98</td>
-                    <td>0.0%</td>
-                    <td>665.7</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 21:16</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-10664</strong><button class="copy-btn" onclick="copyToClipboard("MBP-10664", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.56</td>
-                    <td>0.0%</td>
-                    <td>16.7%</td>
-                    <td>43.15</td>
-                    <td>0.0%</td>
-                    <td>351.1</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:32</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-28814</strong><button class="copy-btn" onclick="copyToClipboard("MBP-28814", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.55</td>
-                    <td>0.1%</td>
-                    <td>19.5%</td>
-                    <td>2.34</td>
-                    <td>0.0%</td>
-                    <td>729.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:52</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-13552</strong><button class="copy-btn" onclick="copyToClipboard("MBP-13552", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.53</td>
-                    <td>0.0%</td>
-                    <td>15.4%</td>
-                    <td>1.85</td>
-                    <td>0.0%</td>
-                    <td>179.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:06</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-07350</strong><button class="copy-btn" onclick="copyToClipboard("MBP-07350", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.52</td>
-                    <td>0.0%</td>
-                    <td>19.7%</td>
-                    <td>5.22</td>
-                    <td>0.0%</td>
-                    <td>231.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:21</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-06817</strong><button class="copy-btn" onclick="copyToClipboard("MBP-06817", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.50</td>
-                    <td>0.0%</td>
-                    <td>11.6%</td>
-                    <td>1.13</td>
-                    <td>0.0%</td>
-                    <td>453.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:58</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11403</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11403", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.47</td>
-                    <td>0.3%</td>
-                    <td>20.1%</td>
-                    <td>2.22</td>
-                    <td>0.0%</td>
-                    <td>112.4</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:45</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-04917</strong><button class="copy-btn" onclick="copyToClipboard("MBP-04917", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.42</td>
-                    <td>0.0%</td>
-                    <td>21.4%</td>
-                    <td>10.92</td>
-                    <td>0.0%</td>
-                    <td>375.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:24</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-07373</strong><button class="copy-btn" onclick="copyToClipboard("MBP-07373", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.40</td>
-                    <td>0.0%</td>
-                    <td>16.2%</td>
-                    <td>5.50</td>
-                    <td>0.0%</td>
-                    <td>455.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-18 12:06</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-03986</strong><button class="copy-btn" onclick="copyToClipboard("MBP-03986", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.38</td>
-                    <td>0.0%</td>
-                    <td>16.5%</td>
-                    <td>2.20</td>
-                    <td>0.0%</td>
-                    <td>260.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:40</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-26032</strong><button class="copy-btn" onclick="copyToClipboard("MBP-26032", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.37</td>
-                    <td>0.1%</td>
-                    <td>18.1%</td>
-                    <td>2.22</td>
-                    <td>0.0%</td>
-                    <td>85.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 12:34</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-17331</strong><button class="copy-btn" onclick="copyToClipboard("MBP-17331", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.35</td>
-                    <td>0.0%</td>
-                    <td>10.9%</td>
-                    <td>1.39</td>
-                    <td>0.0%</td>
-                    <td>234.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:01</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-13857</strong><button class="copy-btn" onclick="copyToClipboard("MBP-13857", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.35</td>
-                    <td>0.1%</td>
-                    <td>17.5%</td>
-                    <td>2.94</td>
-                    <td>0.0%</td>
-                    <td>121.3</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:28</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-23021</strong><button class="copy-btn" onclick="copyToClipboard("MBP-23021", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.30</td>
-                    <td>0.0%</td>
-                    <td>13.8%</td>
-                    <td>7.55</td>
-                    <td>0.0%</td>
-                    <td>298.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:10</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-22170</strong><button class="copy-btn" onclick="copyToClipboard("MBP-22170", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.30</td>
-                    <td>0.1%</td>
-                    <td>21.9%</td>
-                    <td>3.59</td>
-                    <td>0.0%</td>
-                    <td>768.4</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:25</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-32681</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32681", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.29</td>
-                    <td>0.0%</td>
-                    <td>23.6%</td>
-                    <td>2.18</td>
-                    <td>0.0%</td>
-                    <td>385.7</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:45</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-16573</strong><button class="copy-btn" onclick="copyToClipboard("MBP-16573", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.27</td>
-                    <td>0.0%</td>
-                    <td>17.7%</td>
-                    <td>3.46</td>
-                    <td>0.0%</td>
-                    <td>562.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 14:35</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11390</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11390", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.27</td>
-                    <td>0.1%</td>
-                    <td>17.4%</td>
-                    <td>3.66</td>
-                    <td>0.0%</td>
-                    <td>810.0</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 13:03</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-21527</strong><button class="copy-btn" onclick="copyToClipboard("MBP-21527", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.21</td>
-                    <td>0.1%</td>
-                    <td>19.6%</td>
-                    <td>3.27</td>
-                    <td>0.0%</td>
-                    <td>321.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-06 14:53</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-31822</strong><button class="copy-btn" onclick="copyToClipboard("MBP-31822", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.16</td>
-                    <td>0.0%</td>
-                    <td>16.7%</td>
-                    <td>2.64</td>
-                    <td>0.0%</td>
-                    <td>196.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-16 13:16</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-21668</strong><button class="copy-btn" onclick="copyToClipboard("MBP-21668", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.15</td>
-                    <td>0.0%</td>
-                    <td>14.4%</td>
-                    <td>4.31</td>
-                    <td>0.0%</td>
-                    <td>340.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-12-27 12:59</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-17613</strong><button class="copy-btn" onclick="copyToClipboard("MBP-17613", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.14</td>
-                    <td>0.0%</td>
-                    <td>20.5%</td>
-                    <td>1.93</td>
-                    <td>0.0%</td>
-                    <td>286.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 08:04</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-32048</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32048", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.12</td>
-                    <td>0.0%</td>
-                    <td>9.2%</td>
-                    <td>3.22</td>
-                    <td>0.0%</td>
-                    <td>349.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-04 11:50</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-05721</strong><button class="copy-btn" onclick="copyToClipboard("MBP-05721", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.11</td>
-                    <td>0.0%</td>
-                    <td>17.8%</td>
-                    <td>4.99</td>
-                    <td>0.0%</td>
-                    <td>806.5</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2025-10-17 11:12</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-11103</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11103", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.09</td>
-                    <td>0.0%</td>
-                    <td>12.8%</td>
-                    <td>14.39</td>
-                    <td>0.0%</td>
-                    <td>383.9</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-08 16:30</td>
-                </tr>
-                <tr>
-                    <td><div class="hostname-cell"><strong>MBP-04671</strong><button class="copy-btn" onclick="copyToClipboard("MBP-04671", this)">Copy</button></div></td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>0.02</td>
-                    <td>0.0%</td>
-                    <td>9.3%</td>
-                    <td>1.40</td>
-                    <td>0.0%</td>
-                    <td>772.4</td>
-                    <td>0</td>
-                    <td>49</td>
-                    <td>2026-01-09 07:02</td>
-                </tr>
     </div>
-    
-    <div class="machines-table">
-        <h2 class="section-title">🔥 Top 10 - Highest Load Average (1-min)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Machine</th>
-                    <th>Load (1-min)</th>
-                    <th>Load (5-min)</th>
-                    <th>Load (15-min)</th>
-                    <th>CPU Usage (%)</th>
-                    <th>Last Seen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><div class="hostname-cell"><strong>MBP-14219</strong><button class="copy-btn" onclick="copyToClipboard('MBP-14219', this)">Copy</button></div></td>
-                    <td>279.24</td>
-                    <td>165.32</td>
-                    <td>70.68</td>
-                    <td>61.2%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><div class="hostname-cell"><strong>MBP-26833</strong><button class="copy-btn" onclick="copyToClipboard('MBP-26833', this)">Copy</button></div></td>
-                    <td>190.08</td>
-                    <td>68.36</td>
-                    <td>26.61</td>
-                    <td>96.7%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><div class="hostname-cell"><strong>MBP-11287</strong><button class="copy-btn" onclick="copyToClipboard('MBP-11287', this)">Copy</button></div></td>
-                    <td>167.03</td>
-                    <td>65.78</td>
-                    <td>25.97</td>
-                    <td>50.9%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><div class="hostname-cell"><strong>MBP-10160</strong><button class="copy-btn" onclick="copyToClipboard('MBP-10160', this)">Copy</button></div></td>
-                    <td>156.27</td>
-                    <td>55.45</td>
-                    <td>21.49</td>
-                    <td>56.7%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td><div class="hostname-cell"><strong>MBP-07350</strong><button class="copy-btn" onclick="copyToClipboard('MBP-07350', this)">Copy</button></div></td>
-                    <td>130.92</td>
-                    <td>47.34</td>
-                    <td>18.40</td>
-                    <td>63.8%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td><div class="hostname-cell"><strong>MBP-14921</strong><button class="copy-btn" onclick="copyToClipboard('MBP-14921', this)">Copy</button></div></td>
-                    <td>128.97</td>
-                    <td>47.72</td>
-                    <td>18.68</td>
-                    <td>52.1%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td><div class="hostname-cell"><strong>MBP-07538</strong><button class="copy-btn" onclick="copyToClipboard('MBP-07538', this)">Copy</button></div></td>
-                    <td>125.23</td>
-                    <td>203.20</td>
-                    <td>119.10</td>
-                    <td>40.2%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td><div class="hostname-cell"><strong>MBP-27348</strong><button class="copy-btn" onclick="copyToClipboard('MBP-27348', this)">Copy</button></div></td>
-                    <td>122.13</td>
-                    <td>63.35</td>
-                    <td>26.33</td>
-                    <td>76.7%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td><div class="hostname-cell"><strong>MBP-29506</strong><button class="copy-btn" onclick="copyToClipboard('MBP-29506', this)">Copy</button></div></td>
-                    <td>92.15</td>
-                    <td>29.52</td>
-                    <td>12.65</td>
-                    <td>33.7%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td><div class="hostname-cell"><strong>MBP-06076</strong><button class="copy-btn" onclick="copyToClipboard('MBP-06076', this)">Copy</button></div></td>
-                    <td>89.55</td>
-                    <td>37.64</td>
-                    <td>15.00</td>
-                    <td>68.2%</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="machines-table">
-        <h2 class="section-title">💾 Top 10 - Least Disk Space Available</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Machine</th>
-                    <th>Disk Used (%)</th>
-                    <th>Disk Free (GB)</th>
-                    <th>Disk Total (GB)</th>
-                    <th>Thermal Status</th>
-                    <th>Last Seen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><div class="hostname-cell"><strong>MBP-23810</strong><button class="copy-btn" onclick="copyToClipboard("MBP-23810", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>7.0</td>
-                    <td>228.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><div class="hostname-cell"><strong>MBP-09414</strong><button class="copy-btn" onclick="copyToClipboard("MBP-09414", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>20.0</td>
-                    <td>228.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><div class="hostname-cell"><strong>MBP-26032</strong><button class="copy-btn" onclick="copyToClipboard("MBP-26032", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>85.5</td>
-                    <td>228.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><div class="hostname-cell"><strong>MBP-02974</strong><button class="copy-btn" onclick="copyToClipboard("MBP-02974", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>93.0</td>
-                    <td>228.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td><div class="hostname-cell"><strong>MBP-20022</strong><button class="copy-btn" onclick="copyToClipboard("MBP-20022", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>95.0</td>
-                    <td>228.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td><div class="hostname-cell"><strong>MBP-27687</strong><button class="copy-btn" onclick="copyToClipboard("MBP-27687", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>96.5</td>
-                    <td>460.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td><div class="hostname-cell"><strong>MBP-28208</strong><button class="copy-btn" onclick="copyToClipboard("MBP-28208", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>98.5</td>
-                    <td>460.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td><div class="hostname-cell"><strong>MBP-15799</strong><button class="copy-btn" onclick="copyToClipboard("MBP-15799", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>110.0</td>
-                    <td>460.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td><div class="hostname-cell"><strong>MBP-11403</strong><button class="copy-btn" onclick="copyToClipboard("MBP-11403", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>110.5</td>
-                    <td>228.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td><div class="hostname-cell"><strong>MBP-32513</strong><button class="copy-btn" onclick="copyToClipboard("MBP-32513", this)">Copy</button></div></td>
-                    <td>0.0%</td>
-                    <td>114.0</td>
-                    <td>460.0</td>
-                    <td class="status-nominal">Nominal</td>
-                    <td>2026-01-09T08:15</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="footer">
-        <p>🔄 Data collected every <span class="update-frequency">hour</span> via GitHub Actions</p>
-        <p>📈 Historical trends available • 🚨 Real-time monitoring • ⚡ Performance analytics</p>
-    </div>
-</div>
 
 <script>
 // Chart.js configuration
 Chart.defaults.color = '#8b949e';
-
 Chart.defaults.borderColor = '#30363d';
 Chart.defaults.backgroundColor = 'rgba(88, 166, 255, 0.1)';
 
-// Table sorting functionality
-let currentSort = { column: 'thermal', direction: 'desc' };
-
-function sortTable(column) {
-    const table = document.getElementById('machinesTable');
-    const tbody = document.getElementById('machinesTableBody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    
-    // Toggle direction if clicking same column
-    if (currentSort.column === column) {
-        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-    } else {
-        currentSort.direction = 'desc';
-        currentSort.column = column;
-    }
-    
-    // Update header indicators
-    document.querySelectorAll('th').forEach(th => {
-        th.classList.remove('sort-asc', 'sort-desc');
-    });
-    document.querySelector(`th[data-sort="${column}"]`).classList.add(
-        currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc'
-    );
-    
-    rows.sort((a, b) => {
-        const aVal = getCellValue(a, column);
-        const bVal = getCellValue(b, column);
-        
-        if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskused' || column === 'diskfree' || column === 'diskio' || column === 'records') {
-            return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
-        } else if (column === 'thermal') {
-            const thermalOrder = {'Critical': 3, 'Warning': 2, 'High': 2, 'Nominal': 1, 'Unknown': 0};
-            return currentSort.direction === 'asc' ? 
-                (thermalOrder[aVal] || 0) - (thermalOrder[bVal] || 0) :
-                (thermalOrder[bVal] || 0) - (thermalOrder[aVal] || 0);
-        } else {
-            return currentSort.direction === 'asc' ? 
-                aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-        }
-    });
-    
-    // Rebuild table
-    tbody.innerHTML = '';
-    rows.forEach(row => tbody.appendChild(row));
-}
-
-function getCellValue(row, column) {
-    const columnMap = {
-        'hostname': 0, 'thermal': 1, 'power': 2, 
-        'gpu': 3, 'cpu': 4, 'load': 5, 'diskused': 6, 'diskfree': 7, 'diskio': 8, 'records': 9, 'lastseen': 10
-    };
-    const cell = row.cells[columnMap[column]];
-    
-    if (column === 'power' || column === 'gpu' || column === 'cpu' || column === 'load' || column === 'diskused' || column === 'diskfree' || column === 'diskio') {
-        return parseFloat(cell.textContent);
-    } else if (column === 'records') {
-        return parseInt(cell.textContent);
-    }
-    return cell.textContent.trim();
-}
-
-// Add click listeners to headers
-document.querySelectorAll('th[data-sort]').forEach(th => {
-    th.addEventListener('click', () => sortTable(th.dataset.sort));
-});
-
 // Time series data
-const timeSeriesData = [{"time": "2026-01-08T17:17", "avg_watts": 2.782573816666666, "avg_gpu": 0.11506566666666668, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 26.198750000000004, "thermal_issues": 0, "count": 24, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:03", "avg_watts": 2.010250254220184, "avg_gpu": 0.14916777064220188, "avg_load_short": 14.369908256880736, "avg_load_middle": 8.557706422018349, "avg_load_long": 5.681100917431195, "avg_cpu_usage": 25.000183486238512, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:14", "avg_watts": 2.0395766120183487, "avg_gpu": 0.1503450825688074, "avg_load_short": 13.89376146788991, "avg_load_middle": 8.393853211009175, "avg_load_long": 5.603944954128441, "avg_cpu_usage": 25.097522935779807, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:29", "avg_watts": 2.0455525753211012, "avg_gpu": 0.1520789082568808, "avg_load_short": 13.909449541284404, "avg_load_middle": 8.4148623853211, "avg_load_long": 5.622201834862387, "avg_cpu_usage": 25.092293577981636, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:54", "avg_watts": 2.0456142542201836, "avg_gpu": 0.15306060550458722, "avg_load_short": 14.375963302752293, "avg_load_middle": 8.823394495412844, "avg_load_long": 5.869633027522937, "avg_cpu_usage": 25.108256880733933, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:11", "avg_watts": 2.0340011349541287, "avg_gpu": 0.15312713761467897, "avg_load_short": 14.379357798165138, "avg_load_middle": 8.821651376146788, "avg_load_long": 5.864495412844038, "avg_cpu_usage": 25.17816513761467, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:15", "avg_watts": 2.0340011349541287, "avg_gpu": 0.15312713761467897, "avg_load_short": 14.379357798165138, "avg_load_middle": 8.821651376146788, "avg_load_long": 5.864495412844038, "avg_cpu_usage": 25.17816513761467, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:36", "avg_watts": 2.039352217522936, "avg_gpu": 0.1512439633027524, "avg_load_short": 14.338623853211008, "avg_load_middle": 8.760183486238532, "avg_load_long": 5.82256880733945, "avg_cpu_usage": 25.127889908256876, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:53", "avg_watts": 2.040829242293578, "avg_gpu": 0.14865612844036707, "avg_load_short": 13.907247706422018, "avg_load_middle": 8.303577981651376, "avg_load_long": 5.5255045871559645, "avg_cpu_usage": 25.081009174311916, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:02", "avg_watts": 1.975261123027523, "avg_gpu": 0.14265238532110092, "avg_load_short": 14.843486238532112, "avg_load_middle": 8.952844036697247, "avg_load_long": 5.97908256880734, "avg_cpu_usage": 24.93229357798164, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:11", "avg_watts": 1.967535141376147, "avg_gpu": 0.14191772477064224, "avg_load_short": 14.864128440366972, "avg_load_middle": 8.963853211009173, "avg_load_long": 5.978990825688074, "avg_cpu_usage": 24.975504587155953, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:13", "avg_watts": 1.9694135358715599, "avg_gpu": 0.14196966972477065, "avg_load_short": 14.867798165137616, "avg_load_middle": 8.961100917431192, "avg_load_long": 5.976880733944954, "avg_cpu_usage": 25.076238532110082, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:26", "avg_watts": 1.8908468019266058, "avg_gpu": 0.13961441284403672, "avg_load_short": 13.859724770642202, "avg_load_middle": 8.575412844036697, "avg_load_long": 5.8269724770642215, "avg_cpu_usage": 24.59504587155962, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:42", "avg_watts": 1.8286601202752295, "avg_gpu": 0.13903431192660554, "avg_load_short": 13.561743119266053, "avg_load_middle": 8.558990825688072, "avg_load_long": 5.837981651376147, "avg_cpu_usage": 24.12513761467889, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T21:10", "avg_watts": 1.7927468633944952, "avg_gpu": 0.1372081376146789, "avg_load_short": 13.533853211009173, "avg_load_middle": 8.502385321100917, "avg_load_long": 5.775229357798165, "avg_cpu_usage": 24.032477064220174, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T22:10", "avg_watts": 1.7812237578899084, "avg_gpu": 0.13338309174311927, "avg_load_short": 13.550366972477063, "avg_load_middle": 8.448990825688073, "avg_load_long": 5.769082568807339, "avg_cpu_usage": 24.517706422018335, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T23:09", "avg_watts": 1.8087644266972474, "avg_gpu": 0.1355930733944954, "avg_load_short": 13.518899082568804, "avg_load_middle": 8.449174311926607, "avg_load_long": 5.801467889908256, "avg_cpu_usage": 24.437064220183487, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T00:51", "avg_watts": 1.7964497899999998, "avg_gpu": 0.13244891743119264, "avg_load_short": 13.564678899082569, "avg_load_middle": 8.607522935779818, "avg_load_long": 5.973853211009173, "avg_cpu_usage": 23.912477064220155, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T02:51", "avg_watts": 1.788318508348624, "avg_gpu": 0.13662636697247704, "avg_load_short": 13.588990825688073, "avg_load_middle": 8.574311926605505, "avg_load_long": 5.915137614678896, "avg_cpu_usage": 23.747064220183475, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T03:57", "avg_watts": 1.7359451533027523, "avg_gpu": 0.12830688073394494, "avg_load_short": 13.622477064220183, "avg_load_middle": 8.627431192660552, "avg_load_long": 5.943944954128439, "avg_cpu_usage": 23.64633027522933, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T04:34", "avg_watts": 1.7323004835779814, "avg_gpu": 0.12824578899082567, "avg_load_short": 13.608715596330276, "avg_load_middle": 8.607798165137615, "avg_load_long": 5.927706422018345, "avg_cpu_usage": 23.503394495412806, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T05:16", "avg_watts": 1.7016616945871557, "avg_gpu": 0.12298450458715594, "avg_load_short": 13.850183486238533, "avg_load_middle": 8.825779816513762, "avg_load_long": 6.076880733944951, "avg_cpu_usage": 23.40211009174307, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T06:17", "avg_watts": 1.8577480138532112, "avg_gpu": 0.127894871559633, "avg_load_short": 17.21559633027523, "avg_load_middle": 10.101192660550458, "avg_load_long": 6.5298165137614665, "avg_cpu_usage": 24.514311926605487, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-09T07:16", "avg_watts": 1.8154923733944954, "avg_gpu": 0.13006863302752292, "avg_load_short": 15.297706422018347, "avg_load_middle": 9.302385321100916, "avg_load_long": 6.234954128440366, "avg_cpu_usage": 23.928532110091723, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": "MBP-10160", "load_short": 156.27, "load_middle": 55.45, "load_long": 21.49}, {"hostname": "MBP-31799", "load_short": 4.52, "load_middle": 4.2, "load_long": 4.2}, {"hostname": "MBP-03639", "load_short": 3.92, "load_middle": 3.06, "load_long": 2.98}]}, {"time": "2026-01-09T08:15", "avg_watts": 2.083980249541285, "avg_gpu": 0.11193479816513764, "avg_load_short": 19.00954128440367, "avg_load_middle": 12.162844036697248, "avg_load_long": 7.674587155963303, "avg_cpu_usage": 26.012293577981637, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": "MBP-11287", "load_short": 167.03, "load_middle": 65.78, "load_long": 25.97}, {"hostname": "MBP-10160", "load_short": 156.27, "load_middle": 55.45, "load_long": 21.49}, {"hostname": "MBP-07350", "load_short": 130.92, "load_middle": 47.34, "load_long": 18.4}]}];
+const timeSeriesData = [{"time": "2026-01-07T21:30", "avg_watts": 1.7789730166666669, "avg_gpu": 0.09900372222222222, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-07T21:50", "avg_watts": 1.7533204161574074, "avg_gpu": 0.09840471759259259, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 216, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-07T22:00", "avg_watts": 1.8082836296296296, "avg_gpu": 0.0971459074074074, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-07T22:10", "avg_watts": 1.8001588518518519, "avg_gpu": 0.0971459074074074, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-07T22:19", "avg_watts": 1.8001588518518519, "avg_gpu": 0.0971459074074074, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-07T23:10", "avg_watts": 1.8302320435185184, "avg_gpu": 0.09559940740740741, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T00:50", "avg_watts": 1.8589502824074073, "avg_gpu": 0.09817111111111111, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T02:50", "avg_watts": 1.7890412351851852, "avg_gpu": 0.09602239814814816, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T03:56", "avg_watts": 1.7905183277777779, "avg_gpu": 0.09612167592592592, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T04:33", "avg_watts": 1.783583337037037, "avg_gpu": 0.09636848148148147, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T05:15", "avg_watts": 1.8655551944444444, "avg_gpu": 0.09739692592592591, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T06:17", "avg_watts": 1.9158619907407408, "avg_gpu": 0.09902379629629629, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T07:15", "avg_watts": 1.9440742166666667, "avg_gpu": 0.09321018518518517, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T08:15", "avg_watts": 2.6361424481481484, "avg_gpu": 0.12408397962962964, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T09:17", "avg_watts": 2.7303097750000003, "avg_gpu": 0.11073057407407408, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T10:12", "avg_watts": 2.7628789694444444, "avg_gpu": 0.1331279611111111, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T11:11", "avg_watts": 2.286778725, "avg_gpu": 0.1323830861111111, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T12:21", "avg_watts": 2.204737286111111, "avg_gpu": 0.16461976203703704, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T13:02", "avg_watts": 2.2566082006481483, "avg_gpu": 0.15908119722222225, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 0, "thermal_issues": 0, "count": 108, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T14:18", "avg_watts": 2.354920692818182, "avg_gpu": 0.1679331, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 26.798636363636362, "thermal_issues": 0, "count": 110, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T14:30", "avg_watts": 2.364414729181818, "avg_gpu": 0.16583511818181818, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 26.573545454545453, "thermal_issues": 0, "count": 110, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T15:14", "avg_watts": 2.040995432818182, "avg_gpu": 0.1659133090909091, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 24.922636363636357, "thermal_issues": 0, "count": 110, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T16:15", "avg_watts": 2.0844118588073397, "avg_gpu": 0.16287325688073392, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 25.506788990825683, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T17:17", "avg_watts": 1.971655923027523, "avg_gpu": 0.15797049541284403, "avg_load_short": 0, "avg_load_middle": 0, "avg_load_long": 0, "avg_cpu_usage": 25.037706422018346, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:03", "avg_watts": 2.0102502542201837, "avg_gpu": 0.14916777064220185, "avg_load_short": 14.369908256880734, "avg_load_middle": 8.557706422018349, "avg_load_long": 5.681100917431193, "avg_cpu_usage": 25.000183486238527, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:14", "avg_watts": 2.0395766120183487, "avg_gpu": 0.15034508256880733, "avg_load_short": 13.89376146788991, "avg_load_middle": 8.393853211009175, "avg_load_long": 5.6039449541284405, "avg_cpu_usage": 25.09752293577982, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:29", "avg_watts": 2.045552575321101, "avg_gpu": 0.15207890825688072, "avg_load_short": 13.909449541284404, "avg_load_middle": 8.4148623853211, "avg_load_long": 5.622201834862386, "avg_cpu_usage": 25.09229357798165, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T18:54", "avg_watts": 2.0456142542201836, "avg_gpu": 0.15306060550458717, "avg_load_short": 14.375963302752293, "avg_load_middle": 8.823394495412844, "avg_load_long": 5.869633027522935, "avg_cpu_usage": 25.108256880733947, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:11", "avg_watts": 2.0340011349541283, "avg_gpu": 0.1531271376146789, "avg_load_short": 14.379357798165138, "avg_load_middle": 8.821651376146788, "avg_load_long": 5.864495412844037, "avg_cpu_usage": 25.178165137614684, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:15", "avg_watts": 2.0340011349541283, "avg_gpu": 0.1531271376146789, "avg_load_short": 14.379357798165138, "avg_load_middle": 8.821651376146788, "avg_load_long": 5.864495412844037, "avg_cpu_usage": 25.178165137614684, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:36", "avg_watts": 2.0393522175229357, "avg_gpu": 0.1512439633027523, "avg_load_short": 14.33862385321101, "avg_load_middle": 8.760183486238532, "avg_load_long": 5.822568807339449, "avg_cpu_usage": 25.127889908256876, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T19:53", "avg_watts": 2.040829242293578, "avg_gpu": 0.14865612844036696, "avg_load_short": 13.90724770642202, "avg_load_middle": 8.303577981651376, "avg_load_long": 5.525504587155963, "avg_cpu_usage": 25.08100917431193, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:02", "avg_watts": 1.975261123027523, "avg_gpu": 0.14265238532110092, "avg_load_short": 14.84348623853211, "avg_load_middle": 8.952844036697249, "avg_load_long": 5.97908256880734, "avg_cpu_usage": 24.932293577981653, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:11", "avg_watts": 1.9675351413761466, "avg_gpu": 0.1419177247706422, "avg_load_short": 14.864128440366972, "avg_load_middle": 8.963853211009173, "avg_load_long": 5.978990825688074, "avg_cpu_usage": 24.975504587155967, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:13", "avg_watts": 1.9694135358715597, "avg_gpu": 0.14196966972477063, "avg_load_short": 14.867798165137616, "avg_load_middle": 8.961100917431192, "avg_load_long": 5.976880733944954, "avg_cpu_usage": 25.076238532110096, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:26", "avg_watts": 1.8908468019266054, "avg_gpu": 0.1396144128440367, "avg_load_short": 13.859724770642202, "avg_load_middle": 8.575412844036698, "avg_load_long": 5.82697247706422, "avg_cpu_usage": 24.595045871559634, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}, {"time": "2026-01-08T20:42", "avg_watts": 1.8286601202752293, "avg_gpu": 0.1390343119266055, "avg_load_short": 13.561743119266055, "avg_load_middle": 8.558990825688072, "avg_load_long": 5.837981651376147, "avg_cpu_usage": 24.12513761467889, "thermal_issues": 0, "count": 109, "top3_machines": [{"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}, {"hostname": null, "load_short": 0, "load_middle": 0, "load_long": 0}]}];
 
 // Thermal trend chart
 const thermalCtx = document.getElementById('thermalTrendChart').getContext('2d');
@@ -1949,7 +227,8 @@ new Chart(thermalCtx, {
             borderColor: '#f85149',
             backgroundColor: 'rgba(248, 81, 73, 0.1)',
             tension: 0.4,
-            fill: true
+            fill: true,
+            pointRadius: 0
         }]
     },
     options: {
@@ -1987,7 +266,8 @@ new Chart(powerCtx, {
             borderColor: '#58a6ff',
             backgroundColor: 'rgba(88, 166, 255, 0.1)',
             tension: 0.4,
-            fill: true
+            fill: true,
+            pointRadius: 0
         }]
     },
     options: {
@@ -2025,7 +305,8 @@ new Chart(gpuCtx, {
             borderColor: '#7c3aed',
             backgroundColor: 'rgba(124, 58, 237, 0.1)',
             tension: 0.4,
-            fill: true
+            fill: true,
+            pointRadius: 0
         }]
     },
     options: {
@@ -2055,15 +336,6 @@ new Chart(gpuCtx, {
 // CPU Load chart with fleet average + top 3 machines
 const cpuLoadCtx = document.getElementById('cpuLoadChart').getContext('2d');
 
-// Helper to safely get hostname from top3 data
-function getTopMachineLabel(index, interval) {
-    return (data) => {
-        const machine = data.top3_machines && data.top3_machines[index];
-        const hostname = machine && machine.hostname ? machine.hostname : `Top${index + 1}`;
-        return hostname + ` (${interval})`;
-    };
-}
-
 new Chart(cpuLoadCtx, {
     type: 'line',
     data: {
@@ -2078,6 +350,7 @@ new Chart(cpuLoadCtx, {
                 tension: 0.4,
                 fill: true,
                 borderWidth: 1.5,
+                pointRadius: 0,
                 yAxisID: 'y'
             },
             {
@@ -2088,6 +361,7 @@ new Chart(cpuLoadCtx, {
                 tension: 0.4,
                 fill: false,
                 borderWidth: 1.5,
+                pointRadius: 0,
                 yAxisID: 'y'
             },
             {
@@ -2098,14 +372,15 @@ new Chart(cpuLoadCtx, {
                 tension: 0.4,
                 fill: false,
                 borderWidth: 1.5,
+                pointRadius: 0,
                 yAxisID: 'y'
             },
-            // Top 3 machines - 1-min load (dashed, thin)
+            // Top 3 machines - 1-min load
             {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (1-min)' : 'Top1 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.5)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2115,7 +390,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (1-min)' : 'Top2 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.35)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2125,18 +400,18 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (1-min)' : 'Top3 (1-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_short),
                 borderColor: 'rgba(63, 185, 80, 0.2)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
                 yAxisID: 'y'
             },
-            // Top 3 machines - 5-min load (dashed, thin)
+            // Top 3 machines - 5-min load
             {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (5-min)' : 'Top1 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.5)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2146,7 +421,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (5-min)' : 'Top2 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.35)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2156,18 +431,18 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (5-min)' : 'Top3 (5-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_middle),
                 borderColor: 'rgba(210, 153, 34, 0.2)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
                 yAxisID: 'y'
             },
-            // Top 3 machines - 15-min load (dashed, thin)
+            // Top 3 machines - 15-min load
             {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[0].hostname ? timeSeriesData[0].top3_machines[0].hostname + ' (15-min)' : 'Top1 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[0].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.5)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2177,7 +452,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[1].hostname ? timeSeriesData[0].top3_machines[1].hostname + ' (15-min)' : 'Top2 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[1].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.35)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2187,7 +462,7 @@ new Chart(cpuLoadCtx, {
                 label: timeSeriesData.length > 0 && timeSeriesData[0].top3_machines[2].hostname ? timeSeriesData[0].top3_machines[2].hostname + ' (15-min)' : 'Top3 (15-min)',
                 data: timeSeriesData.map(d => d.top3_machines[2].load_long),
                 borderColor: 'rgba(88, 166, 255, 0.2)',
-                
+                pointRadius: 0,
                 tension: 0.4,
                 fill: false,
                 borderWidth: 0.8,
@@ -2266,7 +541,8 @@ new Chart(cpuMetricsCtx, {
             borderColor: '#58a6ff',
             backgroundColor: 'rgba(88, 166, 255, 0.1)',
             tension: 0.4,
-            fill: true
+            fill: true,
+            pointRadius: 0
         }]
     },
     options: {
@@ -2307,11 +583,6 @@ function copyToClipboard(text, button) {
         alert('Failed to copy: ' + text);
     });
 }
-
-// Auto-refresh every 10 minutes
-setTimeout(() => {
-    window.location.reload();
-}, 600000);
 </script>
 </body>
 </html>
