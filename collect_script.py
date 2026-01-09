@@ -1083,22 +1083,6 @@ new Chart(powerPerMachineCtx, {
 const cpuPerMachineCtx = document.getElementById('cpuPerMachineChart').getContext('2d');
 
 const cpuTrendDatasets = [];
-const machineNames = Object.keys(machines).sort();
-
-// Create a consistent color map for each machine
-const colorMap = {};
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-for (let hostname of machineNames) {
-    colorMap[hostname] = getRandomColor();
-}
 
 for (let hostname of machineNames) {
     const color = colorMap[hostname];
