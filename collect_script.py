@@ -755,6 +755,7 @@ for hostname in machine_list:
         'model': last_record.get('model', 'N/A'),
         'memory': last_record.get('memory', 0),
         'thermal_pressure': last_record.get('thermal_pressure', 'Unknown'),
+        'long_username': last_record.get('long_username', 'N/A'),
         'cpu_idle': sum(cpu_idle_list) / len(cpu_idle_list) if cpu_idle_list else 0,
         'cpu_user': sum(cpu_user_list) / len(cpu_user_list) if cpu_user_list else 0,
         'cpu_sys': sum(cpu_sys_list) / len(cpu_sys_list) if cpu_sys_list else 0,
@@ -1565,6 +1566,10 @@ function showMachineDetails(hostname) {
             <div class="detail-item">
                 <div class="detail-label">Hostname</div>
                 <div class="detail-value">${data.hostname}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Username</div>
+                <div class="detail-value">${data.long_username || 'N/A'}</div>
             </div>
             <div class="detail-item">
                 <div class="detail-label">Model</div>
