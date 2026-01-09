@@ -382,6 +382,10 @@ for time_key in sorted(time_groups.keys()):
         except (ValueError, TypeError):
             pass
     
+    # Skip this time period if there are no recent machines - don't include stale data
+    if not recent_machines:
+        continue
+    
     # Get top 3 from recently seen machines
     sorted_by_load = sorted(recent_machines, key=lambda r: r.get('load_short', 0), reverse=True)
     top3_machines = [
