@@ -250,10 +250,32 @@ html = f"""<!DOCTYPE html>
         .high-gpu {{ background: rgba(124, 58, 237, 0.15); }}
         
         .hostname-cell {{ display: inline-flex; align-items: center; gap: 8px; position: relative; }}
+        .hostname-link {{ cursor: pointer; color: #58a6ff; transition: color 0.2s; }}
+        .hostname-link:hover {{ color: #79c0ff; text-decoration: underline; }}
         .copy-btn {{ background: #238636; color: #fff; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; opacity: 0; transition: opacity 0.2s, background 0.2s; white-space: nowrap; }}
         .hostname-cell:hover .copy-btn {{ opacity: 1; }}
         .copy-btn:hover {{ background: #2da043; }}
         .copy-btn.copied {{ background: #3fb950; }}
+        
+        /* Machine Details Modal */
+        .modal {{ display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); animation: fadeIn 0.3s ease-in; }}
+        .modal.active {{ display: flex; align-items: center; justify-content: center; }}
+        @keyframes fadeIn {{ from {{ opacity: 0; }} to {{ opacity: 1; }} }}
+        .modal-content {{ background: #0d1117; border: 1px solid #30363d; border-radius: 12px; padding: 30px; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease-out; }}
+        @keyframes slideUp {{ from {{ transform: translateY(20px); opacity: 0; }} to {{ transform: translateY(0); opacity: 1; }} }}
+        .modal-header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #30363d; padding-bottom: 15px; }}
+        .modal-header h2 {{ margin: 0; color: #58a6ff; }}
+        .modal-close {{ background: none; border: none; color: #8b949e; font-size: 1.5rem; cursor: pointer; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }}
+        .modal-close:hover {{ color: #f85149; }}
+        .detail-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }}
+        .detail-item {{ background: #161b22; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }}
+        .detail-label {{ color: #8b949e; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }}
+        .detail-value {{ color: #f0f6fc; font-size: 1.1rem; font-weight: 500; word-break: break-all; }}
+        .detail-status {{ padding: 8px 12px; border-radius: 6px; display: inline-block; font-weight: 600; }}
+        .detail-status.nominal {{ background: rgba(63, 185, 80, 0.2); color: #3fb950; }}
+        .detail-status.warning {{ background: rgba(255, 212, 59, 0.2); color: #ffd43b; }}
+        .detail-status.heavy {{ background: rgba(248, 113, 113, 0.2); color: #f85149; }}
+        .detail-status.critical {{ background: rgba(248, 81, 73, 0.2); color: #f85149; }}
         
         .footer {{ text-align: center; padding: 40px; color: #8b949e; border-top: 1px solid #30363d; margin-top: 40px; }}
         .update-frequency {{ color: #7c3aed; font-weight: 600; }}
@@ -286,14 +308,15 @@ html = f"""<!DOCTYPE html>
 
 # Calculate additional metrics
 thermal_critical = sum(1 for r in records if r.get('thermal_pressure') == 'Critical')
+thermal_heavy = sum(1 for r in records if r.get('thermal_pressure') == 'Heavy')
 thermal_warning = sum(1 for r in records if r.get('thermal_pressure') in ['Warning', 'High'])
 high_gpu_usage = sum(1 for r in records if isinstance(r.get('gpu_busy'), (int, float)) and r.get('gpu_busy', 0) > 80)
 
 html += f"""            <div class="metric-card">
                 <div class="metric-label">Thermal Alerts</div>
-                <div class="metric-value">{thermal_critical + thermal_warning}</div>
-                <div class="metric-change {'metric-up' if thermal_critical > 0 else 'metric-down'}">
-                    {'🔥 ' + str(thermal_critical) + ' critical' if thermal_critical > 0 else '✅ All normal'}
+                <div class="metric-value">{thermal_critical + thermal_heavy + thermal_warning}</div>
+                <div class="metric-change {'metric-up' if thermal_critical + thermal_heavy > 0 else 'metric-down'}">
+                    {'🔥 ' + str(thermal_critical + thermal_heavy) + ' critical/heavy' if thermal_critical + thermal_heavy > 0 else '✅ All normal'}
                 </div>
             </div>
         </div>"""
@@ -539,6 +562,16 @@ if thermal_critical > 0:
                 </div>
             </div>"""
 
+if thermal_heavy > 0:
+    html += f"""
+            <div class="alert alert-warning">
+                <span class="alert-icon">🌡️</span>
+                <div>
+                    <strong>Heavy Thermal Pressure:</strong> {thermal_heavy} machine(s) reporting heavy thermal pressure.
+                    Monitor closely and consider reducing workload or improving ventilation.
+                </div>
+            </div>"""
+
 if high_gpu_usage > 10:
     html += f"""
             <div class="alert alert-warning">
@@ -680,6 +713,41 @@ for hostname in machine_list:
 # Sort by: 1) Thermal priority (critical first), 2) Power consumption (highest first), 3) GPU usage
 machine_data.sort(key=lambda x: (-x['thermal_priority'], -x['avg_watts'], -x['avg_gpu']))
 
+# Build machine details data for modal
+import json as json_module
+machine_details = {}
+for hostname in machine_list:
+    machine_records = machines[hostname]
+    last_record = machine_records[-1] if machine_records else None
+    
+    if not last_record:
+        continue
+    
+    # Calculate averages
+    cpu_idle_list = [r.get('cpu_idle', 0) for r in machine_records if isinstance(r.get('cpu_idle'), (int, float))]
+    cpu_user_list = [r.get('cpu_user', 0) for r in machine_records if isinstance(r.get('cpu_user'), (int, float))]
+    cpu_sys_list = [r.get('cpu_sys', 0) for r in machine_records if isinstance(r.get('cpu_sys'), (int, float))]
+    load_avg_list = [r.get('load_avg', 0) for r in machine_records if isinstance(r.get('load_avg'), (int, float))]
+    watts_list = [r.get('package_watts', 0) for r in machine_records if isinstance(r.get('package_watts'), (int, float))]
+    gpu_list = [r.get('gpu_busy', 0) for r in machine_records if isinstance(r.get('gpu_busy'), (int, float))]
+    
+    machine_details[hostname] = {
+        'hostname': hostname,
+        'model': last_record.get('model', 'N/A'),
+        'memory': last_record.get('memory', 0),
+        'thermal_pressure': last_record.get('thermal_pressure', 'Unknown'),
+        'cpu_idle': sum(cpu_idle_list) / len(cpu_idle_list) if cpu_idle_list else 0,
+        'cpu_user': sum(cpu_user_list) / len(cpu_user_list) if cpu_user_list else 0,
+        'cpu_sys': sum(cpu_sys_list) / len(cpu_sys_list) if cpu_sys_list else 0,
+        'load_avg': sum(load_avg_list) / len(load_avg_list) if load_avg_list else 0,
+        'package_watts': sum(watts_list) / len(watts_list) if watts_list else 0,
+        'gpu_busy': sum(gpu_list) / len(gpu_list) if gpu_list else 0,
+        'disk_total': last_record.get('disk_total', 0),
+        'disk_free': last_record.get('disk_free', 0),
+    }
+
+machine_details_json = json_module.dumps(machine_details)
+
 for machine in machine_data:
     row_class = ''
     if machine['avg_watts'] > 8:
@@ -688,7 +756,7 @@ for machine in machine_data:
         row_class += ' high-gpu'
     
     html += f"""                <tr{' class="' + row_class.strip() + '"' if row_class else ''}>
-                    <td><div class="hostname-cell"><strong>{machine['hostname']}</strong><button class="copy-btn" onclick="copyToClipboard(\"{machine['hostname']}\", this)">Copy</button></div></td>
+                    <td><div class="hostname-cell"><span class="hostname-link" onclick="showMachineDetails('{machine['hostname']}')">{machine['hostname']}</span><button class="copy-btn" onclick="copyToClipboard(\"{machine['hostname']}\", this)">Copy</button></div></td>
                     <td class="{machine['status_class']}">{machine['thermal_status']}</td>
                     <td>{machine['avg_watts']:.2f}</td>
                     <td>{machine['avg_gpu']:.1f}%</td>
@@ -1441,6 +1509,99 @@ function copyToClipboard(text, button) {
         alert('Failed to copy: ' + text);
     });
 }
+
+// Machine Details Modal
+const machineModal = document.createElement('div');
+machineModal.className = 'modal';
+machineModal.innerHTML = `
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Machine Details</h2>
+            <button class="modal-close" onclick="closeMachineModal()">&times;</button>
+        </div>
+        <div id="modalBody"></div>
+    </div>
+`;
+document.body.appendChild(machineModal);
+
+const machineData = {machine_details_json};
+
+function showMachineDetails(hostname) {
+    const data = machineData[hostname];
+    if (!data) return;
+    
+    const statusClass = data.thermal_pressure === 'Critical' ? 'critical' 
+                      : data.thermal_pressure === 'Heavy' ? 'heavy'
+                      : data.thermal_pressure === 'Warning' || data.thermal_pressure === 'High' ? 'warning'
+                      : 'nominal';
+    
+    const diskFreeGb = (data.disk_free / (1024 ** 3)).toFixed(2);
+    const diskUsedGb = (data.disk_total / (1024 ** 3) - diskFreeGb).toFixed(2);
+    const diskTotal = (data.disk_total / (1024 ** 3)).toFixed(2);
+    
+    document.getElementById('modalTitle').textContent = 'Machine Details: ' + hostname;
+    document.getElementById('modalBody').innerHTML = `
+        <div class="detail-grid">
+            <div class="detail-item">
+                <div class="detail-label">Hostname</div>
+                <div class="detail-value">${data.hostname}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Model</div>
+                <div class="detail-value">${data.model || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Memory</div>
+                <div class="detail-value">${data.memory || 'N/A'} GB</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Thermal Pressure</div>
+                <div class="detail-value"><span class="detail-status ${statusClass}">${data.thermal_pressure}</span></div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">CPU Idle</div>
+                <div class="detail-value">${data.cpu_idle?.toFixed(2) || 'N/A'}%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">CPU User</div>
+                <div class="detail-value">${data.cpu_user?.toFixed(2) || 'N/A'}%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">CPU System</div>
+                <div class="detail-value">${data.cpu_sys?.toFixed(2) || 'N/A'}%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Load Average</div>
+                <div class="detail-value">${data.load_avg?.toFixed(2) || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Avg Power</div>
+                <div class="detail-value">${data.package_watts?.toFixed(2) || 'N/A'} W</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Avg GPU Usage</div>
+                <div class="detail-value">${(data.gpu_busy * 100)?.toFixed(1) || 'N/A'}%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Disk Used</div>
+                <div class="detail-value">${diskUsedGb} GB / ${diskTotal} GB</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Disk Free</div>
+                <div class="detail-value">${diskFreeGb} GB</div>
+            </div>
+        </div>
+    `;
+    machineModal.classList.add('active');
+}
+
+function closeMachineModal() {
+    machineModal.classList.remove('active');
+}
+
+machineModal.addEventListener('click', (e) => {
+    if (e.target === machineModal) closeMachineModal();
+});
 
 // Auto-refresh every 10 minutes
 setTimeout(() => {
