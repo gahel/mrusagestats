@@ -1413,15 +1413,16 @@ new Chart(cpuLoadCtx, {
                 callbacks: {
                     title: function(context) {
                         const label = context[0].dataset.label || '';
-                        // Extract hostname from label like "MBP-00106 (1-min)"
+                        // Extract hostname - label format: "MBP-00106 (1-min)" or "Top1 (1-min)"
                         const match = label.match(/^([A-Z0-9\-]+)\s*\(/);
                         if (match && match[1]) {
-                            return match[1];
+                            return 'Machine: ' + match[1];
                         }
                         return label;
                     },
                     label: function(context) {
-                        const interval = context.dataset.label.match(/\(([^)]+)\)/);
+                        const label = context.dataset.label || '';
+                        const interval = label.match(/\(([^)]+)\)/);
                         const intervalText = interval ? interval[1] : 'load';
                         return intervalText + ': ' + context.parsed.y.toFixed(2);
                     }
