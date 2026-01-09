@@ -331,6 +331,19 @@ for time_key in sorted(time_groups.keys()):
     avg_cpu_usage = (100 - sum(cpu_idle_vals) / len(cpu_idle_vals)) if cpu_idle_vals else 0
     thermal_issues = sum(1 for r in group if r.get('thermal_pressure') in ['Warning', 'Critical', 'High'])
     
+    # Build per-machine CPU usage for trend
+    machine_cpu_data = {}
+    for hostname in machines.keys():
+        machine_records_at_time = [r for r in group if r.get('hostname') == hostname]
+        if machine_records_at_time:
+            cpu_idle_for_machine = [r.get('cpu_idle', 0) for r in machine_records_at_time if isinstance(r.get('cpu_idle'), (int, float))]
+            if cpu_idle_for_machine:
+                machine_cpu_data[hostname] = 100 - (sum(cpu_idle_for_machine) / len(cpu_idle_for_machine))
+            else:
+                machine_cpu_data[hostname] = 0
+        else:
+            machine_cpu_data[hostname] = 0
+    
     # Get top 3 machines with highest load_short for this time period (only if seen in last 2 hours)
     current_time = time.time()
     two_hours_ago = current_time - (2 * 3600)
@@ -376,6 +389,7 @@ for time_key in sorted(time_groups.keys()):
         'avg_load_middle': avg_load_middle,
         'avg_load_long': avg_load_long,
         'avg_cpu_usage': avg_cpu_usage,
+        'machine_cpu_usage': machine_cpu_data,
         'thermal_issues': thermal_issues,
         'count': len(group),
         'top3_machines': top3_machines
@@ -1064,24 +1078,37 @@ new Chart(powerPerMachineCtx, {
     }
 });
 
-// CPU usage per machine - all machines with random colors
+// CPU usage per machine - all machines over time with trend
 const cpuPerMachineCtx = document.getElementById('cpuPerMachineChart').getContext('2d');
 
-const cpuDatasets = [];
+const cpuTrendDatasets = [];
+const machineNames = Object.keys(machines).sort();
+
+// Create a consistent color map for each machine
+const colorMap = {};
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 for (let hostname of machineNames) {
-    const machineRecords = machines[hostname] || [];
-    const cpuIdleValues = machineRecords.map(r => r.cpu_idle || 0);
-    const cpuUsageValues = cpuIdleValues.map(idle => 100 - idle);
-    
+    colorMap[hostname] = getRandomColor();
+}
+
+for (let hostname of machineNames) {
     const color = colorMap[hostname];
-    cpuDatasets.push({
+    cpuTrendDatasets.push({
         label: hostname,
-        data: cpuUsageValues,
+        data: timeSeriesData.map(d => d.machine_cpu_usage && d.machine_cpu_usage[hostname] !== undefined ? d.machine_cpu_usage[hostname] : 0),
         borderColor: color,
-        backgroundColor: color.replace(')', ', 0.1)').replace('#', 'rgba('),
-        tension: 0.2,
+        backgroundColor: color.replace(')', ', 0.05)').replace('#', 'rgba('),
+        tension: 0.3,
         fill: false,
-        borderWidth: 1,
+        borderWidth: 1.5,
         pointRadius: 0,
         pointHoverRadius: 4
     });
@@ -1090,8 +1117,8 @@ for (let hostname of machineNames) {
 new Chart(cpuPerMachineCtx, {
     type: 'line',
     data: {
-        labels: timeLabels,
-        datasets: cpuDatasets
+        labels: timeSeriesData.map(d => d.time),
+        datasets: cpuTrendDatasets
     },
     options: {
         responsive: true,
