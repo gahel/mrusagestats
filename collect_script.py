@@ -316,7 +316,7 @@ time_series_data = []
 for time_key in sorted(time_groups.keys()):
     group = time_groups[time_key]
     avg_watts = sum(r.get('package_watts', 0) for r in group if isinstance(r.get('package_watts'), (int, float))) / len(group)
-    avg_gpu = sum(r.get('gpu_busy', 0) for r in group if isinstance(r.get('gpu_busy'), (int, float))) / max(len([r for r in group if isinstance(r.get('gpu_busy'), (int, float))]), 1)
+    avg_gpu = (sum(r.get('gpu_busy', 0) for r in group if isinstance(r.get('gpu_busy'), (int, float))) / max(len([r for r in group if isinstance(r.get('gpu_busy'), (int, float))]), 1)) * 100
     
     # Calculate average for each load period (short, middle, long)
     load_short_vals = [r.get('load_short', 0) for r in group if isinstance(r.get('load_short'), (int, float))]
@@ -411,6 +411,13 @@ html += f"""
                     <div class="chart-title">⚙️ Load Average</div>
                     <div class="chart-canvas">
                         <canvas id="cpuLoadChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">⚡ Power Consumption per Machine</div>
+                    <div class="chart-canvas">
+                        <canvas id="powerPerMachineChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -963,6 +970,89 @@ new Chart(gpuCtx, {
         },
         plugins: {
             legend: { labels: { color: '#8b949e' } }
+        }
+    }
+});
+
+// Power consumption per machine - all machines with random colors
+const powerPerMachineCtx = document.getElementById('powerPerMachineChart').getContext('2d');
+const machines = """ + json.dumps(machines) + """;
+
+// Helper function to generate random color
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// Prepare datasets for all machines
+const powerDatasets = [];
+const machineNames = Object.keys(machines).sort();
+const maxDataPoints = Math.max(...machineNames.map(m => machines[m].length || 0));
+
+// Create a consistent color map for each machine
+const colorMap = {};
+for (let hostname of machineNames) {
+    colorMap[hostname] = getRandomColor();
+}
+
+for (let hostname of machineNames) {
+    const machineRecords = machines[hostname] || [];
+    const powerValues = machineRecords.map(r => r.package_watts || 0);
+    
+    const color = colorMap[hostname];
+    powerDatasets.push({
+        label: hostname,
+        data: powerValues,
+        borderColor: color,
+        backgroundColor: color.replace(')', ', 0.1)').replace('#', 'rgba('),
+        tension: 0.2,
+        fill: false,
+        borderWidth: 1,
+        pointRadius: 0,
+        pointHoverRadius: 4
+    });
+}
+
+// Generate time labels (reuse from power trend if available, or create generic ones)
+const timeLabels = machineNames.length > 0 && machines[machineNames[0]] 
+    ? machines[machineNames[0]].map((r, idx) => r.collected_at ? r.collected_at.substring(11, 16) : `${idx}`)
+    : Array.from({length: maxDataPoints}, (_, i) => i.toString());
+
+new Chart(powerPerMachineCtx, {
+    type: 'line',
+    data: {
+        labels: timeLabels,
+        datasets: powerDatasets
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { 
+                beginAtZero: true,
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
+                    color: '#8b949e',
+                    maxTicksLimit: 12
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { 
+                labels: { color: '#8b949e' },
+                display: true,
+                position: 'top',
+                maxHeight: 100,
+                fullSize: true
+            }
         }
     }
 });

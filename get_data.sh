@@ -40,6 +40,11 @@ CLIENT_COLUMNS=(
     "usage_stats.cpu_sys"
     "usage_stats.cpu_user"
     "usage_stats.load_avg"
+    "usage_stats.gpu_name"
+    "usage_stats.gpu_freq_hz"
+    "usage_stats.gpu_freq_mhz"
+    "usage_stats.gpu_freq_ratio"
+    "usage_stats.gpu_busy"
 )
 
 # Create query from columns
