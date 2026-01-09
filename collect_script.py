@@ -420,6 +420,13 @@ html += f"""
                         <canvas id="powerPerMachineChart"></canvas>
                     </div>
                 </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">💻 CPU Usage per Machine</div>
+                    <div class="chart-canvas">
+                        <canvas id="cpuPerMachineChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -1057,6 +1064,65 @@ new Chart(powerPerMachineCtx, {
     }
 });
 
+// CPU usage per machine - all machines with random colors
+const cpuPerMachineCtx = document.getElementById('cpuPerMachineChart').getContext('2d');
+
+const cpuDatasets = [];
+for (let hostname of machineNames) {
+    const machineRecords = machines[hostname] || [];
+    const cpuIdleValues = machineRecords.map(r => r.cpu_idle || 0);
+    const cpuUsageValues = cpuIdleValues.map(idle => 100 - idle);
+    
+    const color = colorMap[hostname];
+    cpuDatasets.push({
+        label: hostname,
+        data: cpuUsageValues,
+        borderColor: color,
+        backgroundColor: color.replace(')', ', 0.1)').replace('#', 'rgba('),
+        tension: 0.2,
+        fill: false,
+        borderWidth: 1,
+        pointRadius: 0,
+        pointHoverRadius: 4
+    });
+}
+
+new Chart(cpuPerMachineCtx, {
+    type: 'line',
+    data: {
+        labels: timeLabels,
+        datasets: cpuDatasets
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { 
+                beginAtZero: true,
+                max: 100,
+                ticks: { color: '#8b949e' },
+                grid: { color: '#30363d' }
+            },
+            x: { 
+                ticks: { 
+                    color: '#8b949e',
+                    maxTicksLimit: 12
+                },
+                grid: { color: '#30363d' }
+            }
+        },
+        plugins: {
+            legend: { 
+                labels: { color: '#8b949e' },
+                display: true,
+                position: 'top',
+                maxHeight: 100,
+                fullSize: true
+            }
+        }
+    }
+});
+
 // CPU Load chart with fleet average + top 3 machines
 const cpuLoadCtx = document.getElementById('cpuLoadChart').getContext('2d');
 
@@ -1076,7 +1142,7 @@ new Chart(cpuLoadCtx, {
         datasets: [
             // Fleet averages (solid lines)
             {
-                label: 'Avg Load (1-min)',
+                label: 'avg 1 min',
                 data: timeSeriesData.map(d => d.avg_load_short),
                 borderColor: '#3fb950',
                 backgroundColor: 'rgba(63, 185, 80, 0.1)',
@@ -1087,7 +1153,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: 'Avg Load (5-min)',
+                label: 'avg 5 min',
                 data: timeSeriesData.map(d => d.avg_load_middle),
                 borderColor: '#d29922',
                 backgroundColor: 'rgba(210, 153, 34, 0.05)',
@@ -1098,7 +1164,7 @@ new Chart(cpuLoadCtx, {
                 yAxisID: 'y'
             },
             {
-                label: 'Avg Load (15-min)',
+                label: 'avg 15 min',
                 data: timeSeriesData.map(d => d.avg_load_long),
                 borderColor: '#58a6ff',
                 backgroundColor: 'rgba(88, 166, 255, 0.05)',
