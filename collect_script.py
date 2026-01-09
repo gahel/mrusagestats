@@ -1069,11 +1069,23 @@ new Chart(powerPerMachineCtx, {
         },
         plugins: {
             legend: { 
-                labels: { color: '#8b949e' },
-                display: true,
-                position: 'top',
-                maxHeight: 100,
-                fullSize: true
+                display: false
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleColor: '#58a6ff',
+                bodyColor: '#c9d1d9',
+                borderColor: '#30363d',
+                borderWidth: 1,
+                callbacks: {
+                    title: function(context) {
+                        return context[0].dataset.label || context[0].label;
+                    },
+                    label: function(context) {
+                        return 'Power: ' + context.parsed.y.toFixed(1) + 'W';
+                    }
+                }
             }
         }
     }
@@ -1125,11 +1137,23 @@ new Chart(cpuPerMachineCtx, {
         },
         plugins: {
             legend: { 
-                labels: { color: '#8b949e' },
-                display: true,
-                position: 'top',
-                maxHeight: 100,
-                fullSize: true
+                display: false
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleColor: '#58a6ff',
+                bodyColor: '#c9d1d9',
+                borderColor: '#30363d',
+                borderWidth: 1,
+                callbacks: {
+                    title: function(context) {
+                        return context[0].dataset.label || context[0].label;
+                    },
+                    label: function(context) {
+                        return 'CPU: ' + context.parsed.y.toFixed(1) + '%';
+                    }
+                }
             }
         }
     }
