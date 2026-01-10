@@ -322,11 +322,9 @@ html += f"""            <div class="metric-card">
         </div>"""
 
 # Generate time-series data for charts
-# Currently: Keep ALL records for complete historical timeline
-# Future: Implement 7-day retention when data becomes too large
-# TODO: Uncomment line below and comment current line when needed:
-# recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-7*24*60:]  # Keep last 7 days
-recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))
+# Keep last 7 days of data (7 days * 24 hours * 60 minutes ~= 10080 data points)
+# Each time period is typically 1 minute aggregation
+recent_records = sorted(records, key=lambda x: x.get('collected_at', ''))[-7*24*60:]  # Keep last 7 days
 
 # Group by collection time for trends
 from collections import defaultdict
