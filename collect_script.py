@@ -3,17 +3,24 @@
 GitHub Actions script - collects and analyzes usage stats
 """
 import os
+import subprocess
 import requests
 import json
 import time
 from datetime import datetime
 from collections import defaultdict
 
-# Get password from env
+# Get password from env or keychain
 password = os.environ.get('MR_PASSWORD')
 if not password:
-    print("Error: MR_PASSWORD not set")
-    exit(1)
+    try:
+        password = subprocess.check_output(
+            ['security', 'find-generic-password', '-a', 'localuser', '-s', 'munkireport-api', '-w'],
+            text=True
+        ).strip()
+    except subprocess.CalledProcessError:
+        print("Error: MR_PASSWORD not set and keychain entry not found")
+        exit(1)
 
 base_url = "https://app-munkireport-prod-norwayeast-001.azurewebsites.net/index.php?"
 login = "localuser"
