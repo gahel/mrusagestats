@@ -75,7 +75,7 @@ for row in data:
 
 # Print report
 print("=" * 80)
-print("THERMAL PRESSURE REPORT")
+print("THERMAL STATUS - MASKINER MED ANNET ENN NOMINAL")
 print("=" * 80)
 print()
 
@@ -86,6 +86,8 @@ if thermal_status['Critical']:
     for m in thermal_status['Critical']:
         print(f"  {m['hostname']:<20} {m['serial']:<15} {m['machine']:<30} {m['timestamp']}")
     print()
+else:
+    print("🔴 CRITICAL: Ingen\n")
 
 # Warning machines
 if thermal_status['Warning']:
@@ -94,19 +96,26 @@ if thermal_status['Warning']:
     for m in thermal_status['Warning']:
         print(f"  {m['hostname']:<20} {m['serial']:<15} {m['machine']:<30} {m['timestamp']}")
     print()
-
-# Nominal machines
-print(f"🟢 NOMINAL ({len(thermal_status['Nominal'])} machines)")
+else:
+    print("🟡 WARNING: Ingen\n")
 
 # Unknown
 if thermal_status['Unknown']:
-    print(f"❓ UNKNOWN ({len(thermal_status['Unknown'])} machines)")
+    print(f"❓ UNKNOWN ({len(thermal_status['Unknown'])} machines):")
+    print("-" * 80)
+    for m in thermal_status['Unknown']:
+        print(f"  {m['hostname']:<20} {m['serial']:<15} {m['machine']:<30} {m['timestamp']}")
+    print()
 
-print()
-print(f"Total machines: {len(data)}")
-print(f"Critical: {len(thermal_status['Critical'])} ({len(thermal_status['Critical'])*100/len(data):.1f}%)")
-print(f"Warning: {len(thermal_status['Warning'])} ({len(thermal_status['Warning'])*100/len(data):.1f}%)")
-print(f"Nominal: {len(thermal_status['Nominal'])} ({len(thermal_status['Nominal'])*100/len(data):.1f}%)")
+print("-" * 80)
+non_nominal = len(thermal_status['Critical']) + len(thermal_status['Warning']) + len(thermal_status['Unknown'])
+print(f"✓ Maskiner med NOMINAL status: {len(thermal_status['Nominal'])} av {len(data)}")
+print(f"⚠ Maskiner med ANNET enn nominal: {non_nominal} av {len(data)}")
+if len(data) > 0:
+    print(f"  - Critical: {len(thermal_status['Critical'])} ({len(thermal_status['Critical'])*100/len(data):.1f}%)")
+    print(f"  - Warning: {len(thermal_status['Warning'])} ({len(thermal_status['Warning'])*100/len(data):.1f}%)")
+    if thermal_status['Unknown']:
+        print(f"  - Unknown: {len(thermal_status['Unknown'])} ({len(thermal_status['Unknown'])*100/len(data):.1f}%)")
 
 # Save detailed JSON report
 report = {
