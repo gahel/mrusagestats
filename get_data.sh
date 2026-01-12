@@ -28,6 +28,8 @@ CLIENT_COLUMNS=(
     "machine.os_version"
     "machine.physical_memory"
     "reportdata.remote_ip"
+    "reportdata.console_user"
+    "reportdata.long_username"
     "diskreport.totalsize"
     "diskreport.freespace"
     "diskreport.percentage"

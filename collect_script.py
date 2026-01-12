@@ -3,17 +3,24 @@
 GitHub Actions script - collects and analyzes usage stats
 """
 import os
+import subprocess
 import requests
 import json
 import time
 from datetime import datetime
 from collections import defaultdict
 
-# Get password from env
+# Get password from env or keychain
 password = os.environ.get('MR_PASSWORD')
 if not password:
-    print("Error: MR_PASSWORD not set")
-    exit(1)
+    try:
+        password = subprocess.check_output(
+            ['security', 'find-generic-password', '-a', 'localuser', '-s', 'munkireport-api', '-w'],
+            text=True
+        ).strip()
+    except subprocess.CalledProcessError:
+        print("Error: MR_PASSWORD not set and keychain entry not found")
+        exit(1)
 
 base_url = "https://app-munkireport-prod-norwayeast-001.azurewebsites.net/index.php?"
 login = "localuser"
@@ -21,6 +28,7 @@ login = "localuser"
 columns = [
     "machine.serial_number",
     "machine.hostname",
+    "reportdata.long_username",
     "usage_stats.timestamp",
     "usage_stats.thermal_pressure",
     "usage_stats.package_watts",
@@ -96,27 +104,27 @@ history_file = "usage_stats_history.jsonl"
 with open(history_file, 'a') as f:
     for row in result.get('data', []):
         # Calculate disk usage percentage - diskreport.percentage is already calculated
-        disk_used_pct = row[22] if len(row) > 22 else 0
+        disk_used_pct = row[23] if len(row) > 23 else 0
         
         # Parse CPU values (strings with %)
         cpu_idle_val = None
-        if len(row) > 15 and row[15]:
+        if len(row) > 16 and row[16]:
             try:
-                cpu_idle_val = float(str(row[15]).replace('%', '').strip())
+                cpu_idle_val = float(str(row[16]).replace('%', '').strip())
             except (ValueError, AttributeError):
                 cpu_idle_val = None
         
         cpu_sys_val = None
-        if len(row) > 16 and row[16]:
+        if len(row) > 17 and row[17]:
             try:
-                cpu_sys_val = float(str(row[16]).replace('%', '').strip())
+                cpu_sys_val = float(str(row[17]).replace('%', '').strip())
             except (ValueError, AttributeError):
                 cpu_sys_val = None
         
         cpu_user_val = None
-        if len(row) > 17 and row[17]:
+        if len(row) > 18 and row[18]:
             try:
-                cpu_user_val = float(str(row[17]).replace('%', '').strip())
+                cpu_user_val = float(str(row[18]).replace('%', '').strip())
             except (ValueError, AttributeError):
                 cpu_user_val = None
         
@@ -124,9 +132,9 @@ with open(history_file, 'a') as f:
         load_short = None
         load_middle = None
         load_long = None
-        if len(row) > 18 and row[18]:
+        if len(row) > 19 and row[19]:
             try:
-                load_parts = str(row[18]).split(',')
+                load_parts = str(row[19]).split(',')
                 if len(load_parts) >= 1:
                     load_short = float(load_parts[0].strip())
                 if len(load_parts) >= 2:
@@ -140,27 +148,28 @@ with open(history_file, 'a') as f:
             "collected_at": datetime.now().isoformat(),
             "serial_number": row[0],
             "hostname": row[1],
-            "timestamp": row[2],
-            "thermal_pressure": row[3],
-            "package_watts": row[4],
-            "gpu_busy": row[5],
-            "freq_hz": row[6],
-            "freq_ratio": row[7],
-            "gpu_freq_mhz": row[8],
-            "backlight": row[9],
-            "keyboard_backlight": row[10],
-            "ibyte_rate": row[11],
-            "obyte_rate": row[12],
-            "rbytes_per_s": row[13],
-            "wbytes_per_s": row[14],
+            "reportdata_long_username": row[2] if len(row) > 2 else None,
+            "timestamp": row[3],
+            "thermal_pressure": row[4],
+            "package_watts": row[5],
+            "gpu_busy": row[6],
+            "freq_hz": row[7],
+            "freq_ratio": row[8],
+            "gpu_freq_mhz": row[9],
+            "backlight": row[10],
+            "keyboard_backlight": row[11],
+            "ibyte_rate": row[12],
+            "obyte_rate": row[13],
+            "rbytes_per_s": row[14],
+            "wbytes_per_s": row[15],
             "cpu_idle": cpu_idle_val,
             "cpu_sys": cpu_sys_val,
             "cpu_user": cpu_user_val,
             "load_short": load_short,
             "load_middle": load_middle,
             "load_long": load_long,
-            "disk_total": row[19] if len(row) > 19 else None,
-            "disk_free": row[20] if len(row) > 20 else None,
+            "disk_total": row[20] if len(row) > 20 else None,
+            "disk_free": row[21] if len(row) > 21 else None,
             "disk_used_pct": disk_used_pct,
         }
         f.write(json.dumps(record) + '\n')
@@ -189,7 +198,15 @@ for record in records:
 machine_list = sorted(machines.keys())
 total_records = len(records)
 unique_machines = len(machine_list)
-max_watts = max((r.get('package_watts', 0) for r in records), default=0)
+
+# Safely convert package_watts to float
+def safe_float(val):
+    try:
+        return float(val) if val else 0
+    except (ValueError, TypeError):
+        return 0
+
+max_watts = max((safe_float(r.get('package_watts')) for r in records), default=0)
 
 html = f"""<!DOCTYPE html>
 <html>
@@ -750,7 +767,7 @@ for hostname in machine_list:
         'model': last_record.get('model', 'N/A'),
         'memory': last_record.get('memory', 0),
         'thermal_pressure': last_record.get('thermal_pressure', 'Unknown'),
-        'long_username': last_record.get('long_username', 'N/A'),
+        'long_username': last_record.get('reportdata_long_username', 'N/A'),
         'cpu_idle': sum(cpu_idle_list) / len(cpu_idle_list) if cpu_idle_list else 0,
         'cpu_user': sum(cpu_user_list) / len(cpu_user_list) if cpu_user_list else 0,
         'cpu_sys': sum(cpu_sys_list) / len(cpu_sys_list) if cpu_sys_list else 0,
