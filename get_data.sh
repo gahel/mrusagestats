@@ -24,7 +24,6 @@ CLIENT_COLUMNS=(
     "machine.hostname"
     "machine.machine_desc"
     "reportdata.timestamp"
-    "reportdata.console_user"
     "machine.os_version"
     "machine.physical_memory"
     "reportdata.remote_ip"
