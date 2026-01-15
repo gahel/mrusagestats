@@ -399,7 +399,7 @@ for time_key in sorted(time_groups.keys()):
     
     # Get top 3 from recently seen machines (if available) or use 'Unknown' from all machines
     machines_to_rank = recent_machines if recent_machines else group
-    sorted_by_load = sorted(machines_to_rank, key=lambda r: r.get('load_short', 0), reverse=True)
+    sorted_by_load = sorted(machines_to_rank, key=lambda r: r.get('load_short', 0) or 0, reverse=True)
     top3_machines = [
         {
             'hostname': sorted_by_load[0].get('hostname', 'Unknown') if len(sorted_by_load) > 0 else None,
