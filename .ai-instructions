@@ -1,0 +1,52 @@
+# AI Instructions for MunkiReport API Project
+
+## Quick Start
+Always activate the virtual environment before running Python scripts:
+```bash
+source .venv/bin/activate
+```
+
+## Project Structure
+- Python scripts for MunkiReport API interaction
+- Virtual environment at `.venv/`
+- Configuration uses macOS Keychain for credentials
+
+## Authentication
+- User: `localuser`
+- Password: Retrieved from Keychain (`munkireport-api`)
+- Base URL: `https://app-munkireport-prod-norwayeast-001.azurewebsites.net/index.php?`
+
+## Common Tasks
+
+### 1. Delete Machine
+```bash
+source .venv/bin/activate && python3 delete_machine.py <SERIAL_NUMBER>
+```
+
+### 2. Find Serial Number from Machine Name
+To convert machine name (e.g., MBP-17675) to serial number:
+```bash
+bash get_data.sh | python3 -c "import sys, json; data = json.load(sys.stdin); machines = [m for m in data.get('data', []) if 'MBP-17675' in str(m)]; print(machines[0][1] if machines else 'Not found')"
+```
+
+### 3. Get Data from API
+```bash
+bash get_data.sh
+```
+
+### 4. Analyze Machine
+```bash
+source .venv/bin/activate && python3 analyze_machine.py <MACHINE_NAME>
+```
+
+## Data Format Notes
+- Column 1 (index 0): Managed installs name
+- Column 2 (index 1): Serial number (needed for delete)
+- Column 3 (index 2): Hostname/Machine name
+- Column 4 (index 3): Machine description
+
+## Important
+- Always use `.venv/bin/python3` or activate venv first
+- Don't skip the virtual environment setup
+- API responses are JSON format
+- Keychain must be configured with munkireport-api entry

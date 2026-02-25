@@ -1,0 +1,41 @@
+{
+  "machine_info": {
+    "hostname": "MBP-15822",
+    "username": "Marius Breivik",
+    "serial": "CV0HC3YY2H"
+  },
+  "records": [
+    {
+      "serial_number": "CV0HC3YY2H",
+      "hostname": "MBP-15822",
+      "username": "Marius Breivik",
+      "timestamp": 1768555526,
+      "thermal_pressure": "Heavy",
+      "package_watts": 8.39301,
+      "gpu_busy": 0.347693,
+      "freq_hz": null,
+      "freq_ratio": null,
+      "gpu_freq_mhz": 536,
+      "backlight": 0,
+      "keyboard_backlight": 0,
+      "ibyte_rate": 158380,
+      "obyte_rate": 52346.4,
+      "rbytes_per_s": 1719840,
+      "wbytes_per_s": 1177940,
+      "cpu_idle": "74.58%",
+      "cpu_sys": "9.87%",
+      "cpu_user": "15.53%",
+      "load_avg": "3.28, 3.54, 3.34",
+      "disk_total": 493921239040,
+      "disk_free": 348429221888,
+      "disk_percentage": 29
+    }
+  ],
+  "summary": {
+    "total_records": 1,
+    "date_range": {
+      "oldest": 1768555526,
+      "newest": 1768555526
+    }
+  }
+}

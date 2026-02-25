@@ -1,0 +1,555 @@
+#!/bin/bash
+
+# analyze_machine.sh - Shell version of machine analyzer
+# Usage: ./analyze_machine.sh [serial_number|hostname] [serial_number|hostname] ...
+
+set -e  # Exit on error
+
+# Configuration
+BASE_URL="https://app-munkireport-prod-norwayeast-001.azurewebsites.net/index.php?"
+LOGIN="localuser"
+OUTPUT_DIR="/tmp/usage_stats"
+COPILOT_CLI="/opt/homebrew/bin/copilot"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Functions
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1" >&2
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1" >&2
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1" >&2
+}
+
+log_section() {
+    echo -e "${CYAN}[====]${NC} $1" >&2
+}
+
+usage() {
+    echo "Usage: $0 [serial_number|hostname] [serial_number|hostname] ..."
+    echo "Examples:"
+    echo "  $0 MBP-28552"
+    echo "  $0 MBP-28552 MBP-15822 CF6RFYQ03F"
+    exit 1
+}
+
+get_password() {
+    local password
+    password=$(security find-generic-password -a localuser -s munkireport-api -w 2>/dev/null)
+    if [ $? -ne 0 ]; then
+        log_error "Could not retrieve password from keychain"
+        exit 1
+    fi
+    echo "$password"
+}
+
+authenticate() {
+    local password="$1"
+    local cookie_jar="$2"
+    
+    log_info "Authenticating with MunkiReport..."
+    
+    curl -s -k -c "$cookie_jar" \
+        -X POST \
+        -d "login=$LOGIN" \
+        -d "password=$password" \
+        "${BASE_URL}/auth/login" >/dev/null
+    
+    if [ $? -ne 0 ]; then
+        log_error "Authentication failed"
+        return 1
+    fi
+    
+    # Check if authentication was successful by looking for CSRF token in cookies
+    if ! grep -q "CSRF-TOKEN" "$cookie_jar" 2>/dev/null; then
+        log_error "Authentication failed - no CSRF token received"
+        return 1
+    fi
+    
+    return 0
+}
+
+get_csrf_token() {
+    local cookie_jar="$1"
+    if [ ! -f "$cookie_jar" ]; then
+        log_error "Cookie jar not found"
+        return 1
+    fi
+    
+    local token
+    token=$(grep "CSRF-TOKEN" "$cookie_jar" 2>/dev/null | cut -f7 | tr -d '\n')
+    
+    if [ -z "$token" ]; then
+        log_error "CSRF token not found in cookies"
+        return 1
+    fi
+    
+    echo "$token"
+}
+
+query_machine_data() {
+    local machine_identifier="$1"
+    local cookie_jar="$2"
+    local csrf_token="$3"
+    
+    log_info "Querying usage stats for: $machine_identifier"
+    
+    # Build query data for all usage stats columns
+    local query_data=""
+    local columns=(
+        "machine.serial_number"
+        "machine.hostname" 
+        "usage_stats.timestamp"
+        "usage_stats.thermal_pressure"
+        "usage_stats.package_watts"
+        "usage_stats.gpu_busy"
+        "usage_stats.gpu_freq_mhz"
+        "usage_stats.backlight"
+        "usage_stats.keyboard_backlight"
+        "usage_stats.ibyte_rate"
+        "usage_stats.obyte_rate"
+        "usage_stats.rbytes_per_s"
+        "usage_stats.wbytes_per_s"
+        "usage_stats.rops_per_s"
+        "usage_stats.wops_per_s"
+        "usage_stats.freq_hz"
+        "usage_stats.freq_ratio"
+        "usage_stats.cpu_idle"
+        "usage_stats.cpu_sys"
+        "usage_stats.cpu_user"
+        "usage_stats.load_avg"
+    )
+    
+    for i in "${!columns[@]}"; do
+        query_data="${query_data}columns[$i][name]=${columns[$i]}&"
+    done
+    
+    # Remove trailing &
+    query_data="${query_data%&}"
+    
+    # Query the API
+    local response
+    response=$(curl -s -k -b "$cookie_jar" \
+        -X POST \
+        -H "x-csrf-token: $csrf_token" \
+        -d "$query_data" \
+        "${BASE_URL}/datatables/data")
+    
+    if [ $? -ne 0 ]; then
+        log_error "Failed to query machine data"
+        return 1
+    fi
+    
+    # Check if response contains error
+    local temp_response="/tmp/api_response.json"
+    echo "$response" > "$temp_response"
+    
+    if ! jq empty "$temp_response" 2>/dev/null; then
+        log_error "Invalid JSON response from API"
+        log_error "Response: $(head -200 "$temp_response")"
+        rm -f "$temp_response"
+        return 1
+    fi
+    
+    if echo "$response" | jq -e '.error' >/dev/null 2>&1; then
+        local error_msg
+        error_msg=$(echo "$response" | jq -r '.error')
+        log_error "API error: $error_msg"
+        rm -f "$temp_response"
+        return 1
+    fi
+    
+    # Find matching machine in the data
+    local machine_data
+    machine_data=$(echo "$response" | jq -r --arg identifier "$machine_identifier" '
+        .data[] | select(
+            (.[0] // "" | ascii_downcase) == ($identifier | ascii_downcase) or 
+            (.[1] // "" | ascii_downcase) == ($identifier | ascii_downcase)
+        ) | @json
+    ' 2>/dev/null)
+    
+    if [ -z "$machine_data" ] || [ "$machine_data" = "null" ]; then
+        log_error "Machine '$machine_identifier' not found"
+        return 1
+    fi
+    
+    rm -f "$temp_response"
+    echo "$machine_data"
+}
+
+parse_timestamp() {
+    local timestamp="$1"
+    if [ -n "$timestamp" ] && [ "$timestamp" != "null" ]; then
+        date -r "$timestamp" '+%Y-%m-%d %H:%M:%S' 2>/dev/null || echo "$timestamp"
+    else
+        echo "Unknown"
+    fi
+}
+
+parse_load_avg() {
+    local load_avg="$1"
+    if [ -n "$load_avg" ] && [ "$load_avg" != "null" ]; then
+        local load_1min load_5min load_15min
+        load_1min=$(echo "$load_avg" | cut -d',' -f1 | xargs)
+        load_5min=$(echo "$load_avg" | cut -d',' -f2 | xargs)
+        load_15min=$(echo "$load_avg" | cut -d',' -f3 | xargs)
+        echo "  Load Avg 1min:   $load_1min"
+        echo "  Load Avg 5min:   $load_5min"
+        echo "  Load Avg 15min:  $load_15min"
+    else
+        echo "  Load Avg:        N/A"
+    fi
+}
+
+parse_cpu_percent() {
+    local val="$1"
+    if [ -n "$val" ] && [ "$val" != "null" ]; then
+        echo "$val" | sed 's/%//g' | xargs
+    else
+        echo "N/A"
+    fi
+}
+
+safe_value() {
+    local val="$1"
+    if [ -n "$val" ] && [ "$val" != "null" ]; then
+        echo "$val"
+    else
+        echo "N/A"
+    fi
+}
+
+format_bytes_rate() {
+    local rate="$1"
+    if [ -z "$rate" ] || [ "$rate" = "null" ] || [ "$rate" = "N/A" ]; then
+        echo "N/A"
+        return
+    fi
+    
+    if (( $(echo "$rate >= 1073741824" | bc -l 2>/dev/null || echo 0) )); then
+        echo "$(echo "scale=2; $rate/1073741824" | bc -l) GB/s"
+    elif (( $(echo "$rate >= 1048576" | bc -l 2>/dev/null || echo 0) )); then
+        echo "$(echo "scale=2; $rate/1048576" | bc -l) MB/s"
+    elif (( $(echo "$rate >= 1024" | bc -l 2>/dev/null || echo 0) )); then
+        echo "$(echo "scale=2; $rate/1024" | bc -l) KB/s"
+    else
+        echo "$rate B/s"
+    fi
+}
+
+format_freq_mhz() {
+    local freq="$1"
+    if [ -z "$freq" ] || [ "$freq" = "null" ] || [ "$freq" = "N/A" ]; then
+        echo "N/A"
+        return
+    fi
+    if (( $(echo "$freq >= 1000" | bc -l 2>/dev/null || echo 0) )); then
+        echo "$(echo "scale=2; $freq/1000" | bc -l) GHz"
+    else
+        echo "${freq} MHz"
+    fi
+}
+
+format_for_ai() {
+    local machine_data="$1"
+    
+    # Parse all values
+    local serial=$(echo "$machine_data" | jq -r '.[0]')
+    local hostname=$(echo "$machine_data" | jq -r '.[1]')
+    local timestamp=$(echo "$machine_data" | jq -r '.[2]')
+    local thermal_pressure=$(echo "$machine_data" | jq -r '.[3]')
+    local package_watts=$(echo "$machine_data" | jq -r '.[4]')
+    local gpu_busy=$(echo "$machine_data" | jq -r '.[5]')
+    local gpu_freq=$(echo "$machine_data" | jq -r '.[6]')
+    local backlight=$(echo "$machine_data" | jq -r '.[7]')
+    local kb_backlight=$(echo "$machine_data" | jq -r '.[8]')
+    local ibyte_rate=$(echo "$machine_data" | jq -r '.[9]')
+    local obyte_rate=$(echo "$machine_data" | jq -r '.[10]')
+    local rbytes_rate=$(echo "$machine_data" | jq -r '.[11]')
+    local wbytes_rate=$(echo "$machine_data" | jq -r '.[12]')
+    local rops_rate=$(echo "$machine_data" | jq -r '.[13]')
+    local wops_rate=$(echo "$machine_data" | jq -r '.[14]')
+    local freq_hz=$(echo "$machine_data" | jq -r '.[15]')
+    local freq_ratio=$(echo "$machine_data" | jq -r '.[16]')
+    local cpu_idle=$(parse_cpu_percent "$(echo "$machine_data" | jq -r '.[17]')")
+    local cpu_sys=$(parse_cpu_percent "$(echo "$machine_data" | jq -r '.[18]')")
+    local cpu_user=$(parse_cpu_percent "$(echo "$machine_data" | jq -r '.[19]')")
+    local load_avg=$(echo "$machine_data" | jq -r '.[20]')
+    
+    # Calculate CPU total usage
+    local cpu_total="N/A"
+    if [ "$cpu_idle" != "N/A" ]; then
+        cpu_total=$(echo "100 - $cpu_idle" | bc -l 2>/dev/null | xargs printf "%.2f" 2>/dev/null || echo "N/A")
+    fi
+    
+    local formatted_timestamp
+    formatted_timestamp=$(parse_timestamp "$timestamp")
+    
+    # Vurder load average
+    local load_1min=$(echo "$load_avg" | cut -d',' -f1 | xargs 2>/dev/null || echo "0")
+    local load_assessment=""
+    if [ -n "$load_1min" ] && [ "$load_1min" != "null" ]; then
+        if (( $(echo "$load_1min > 10" | bc -l 2>/dev/null || echo 0) )); then
+            load_assessment=" [KRITISK - koer]"
+        elif (( $(echo "$load_1min > 6" | bc -l 2>/dev/null || echo 0) )); then
+            load_assessment=" [Hoey belastning]"
+        fi
+    fi
+    
+    echo "================================================================================"
+    echo "MASKIN-ANALYSE: $(safe_value "$hostname")"
+    echo "================================================================================"
+    echo ""
+    echo "IDENTIFIKASJON"
+    echo "  Hostname:         $(safe_value "$hostname")"
+    echo "  Serienummer:      $(safe_value "$serial")"
+    echo "  Hentet:           $(date '+%Y-%m-%dT%H:%M:%S')"
+    echo "  Data tidsstempel: $formatted_timestamp"
+    echo ""
+    echo "================================================================================"
+    echo "THERMAL STATUS"
+    echo "================================================================================"
+    echo "  Thermal Pressure: $(safe_value "$thermal_pressure")"
+    echo ""
+    echo "================================================================================"
+    echo "CPU BELASTNING"
+    echo "================================================================================"
+    echo "  CPU Idle:         $cpu_idle%"
+    echo "  CPU System:       $cpu_sys%"
+    echo "  CPU User:         $cpu_user%"
+    echo "  CPU Total:        $cpu_total%"
+    echo "  Package Watts:    $(safe_value "$package_watts") W"
+    echo "  CPU Frekvens:     $(format_freq_mhz "$freq_hz")"
+    echo "  Freq Ratio:       $(safe_value "$freq_ratio")%"
+    parse_load_avg "$load_avg"
+    [ -n "$load_assessment" ] && echo "  $load_assessment"
+    echo ""
+    echo "================================================================================"
+    echo "DISK AKTIVITET"
+    echo "================================================================================"
+    echo "  Lese hastighet:   $(format_bytes_rate "$rbytes_rate")"
+    echo "  Skrive hastighet: $(format_bytes_rate "$wbytes_rate")"
+    echo "  Lese ops/s:       $(safe_value "$rops_rate")"
+    echo "  Skrive ops/s:     $(safe_value "$wops_rate")"
+    echo ""
+    echo "================================================================================"
+    echo "NETTVERK AKTIVITET"
+    echo "================================================================================"
+    echo "  Inn hastighet:    $(format_bytes_rate "$ibyte_rate")"
+    echo "  Ut hastighet:     $(format_bytes_rate "$obyte_rate")"
+    echo ""
+    echo "================================================================================"
+    echo "GPU BELASTNING"
+    echo "================================================================================"
+    echo "  GPU Utnyttelse:   $(safe_value "$gpu_busy")%"
+    echo "  GPU Frekvens:     $(format_freq_mhz "$gpu_freq")"
+    echo ""
+    echo "================================================================================"
+    echo "SKJERM"
+    echo "================================================================================"
+    echo "  Hovedskjerm:      $(safe_value "$backlight")%"
+    echo "  Tastatur lys:     $(safe_value "$kb_backlight")%"
+    echo ""
+    echo "================================================================================"
+}
+
+analyze_with_copilot() {
+    local formatted_data="$1"
+    local machine_name="$2"
+    
+    log_info "Running Copilot analysis..."
+    
+    if [ ! -x "$COPILOT_CLI" ]; then
+        log_error "Copilot CLI not found at $COPILOT_CLI"
+        return 1
+    fi
+    
+    local prompt="Du er en erfaren Mac-systemadministrator. Analyser denne maskinen ($machine_name) som har termisk press-problemer.
+
+OPPGAVE:
+1. DIAGNOSE: Kort vurdering av alle verdiene (2-3 setninger)
+2. ARSAK: De 1-3 mest sannsynlige arsakene til det termiske presset
+3. TILTAK: Konkrete steg brukeren/IT kan gjore
+
+VIKTIG KONTEKST FOR TOLKNING:
+- Thermal Pressure: 'Nominal'=OK, 'Moderate'=begynner throttle, 'Heavy'=alvorlig throttling
+- Load Average: >8 er hoyt for M1/M2 (8 kjerner), >12 er kritisk (koer bygges opp)
+- CPU Idle <20% kombinert med hoey load = tung prosessering
+- Disk I/O >50 MB/s lese ELLER >20 MB/s skrive over tid = mye disk-aktivitet
+- GPU >80% = grafikkintensiv prosess (video, grafikk, maskinlaering)
+- Package Watts >15W pa M1/M2 er hoyt for vedvarende bruk
+
+$formatted_data"
+    
+    local analysis
+    analysis=$(echo "$prompt" | "$COPILOT_CLI" -s 2>/dev/null)
+    
+    if [ $? -eq 0 ] && [ -n "$analysis" ]; then
+        echo "$analysis"
+    else
+        log_error "Copilot CLI analysis failed"
+        return 1
+    fi
+}
+
+save_files() {
+    local hostname="$1"
+    local serial="$2"
+    local formatted_data="$3"
+    local analysis="$4"
+    local machine_json="$5"
+    
+    local timestamp
+    timestamp=$(date '+%Y%m%d_%H%M%S')
+    
+    mkdir -p "$OUTPUT_DIR"
+    
+    local ai_file="$OUTPUT_DIR/machine_${hostname}_${timestamp}_ai.txt"
+    echo "$formatted_data" > "$ai_file"
+    log_info "AI-formatted data saved to: $ai_file"
+    
+    if [ -n "$analysis" ]; then
+        local analysis_file="$OUTPUT_DIR/machine_${hostname}_${timestamp}_analysis.txt"
+        echo "MACHINE ANALYSIS" > "$analysis_file"
+        echo "Generated: $(date '+%Y-%m-%dT%H:%M:%S')" >> "$analysis_file"
+        echo "Host: $hostname" >> "$analysis_file"
+        echo "Serial: $serial" >> "$analysis_file"
+        echo "================================================================================" >> "$analysis_file"
+        echo "" >> "$analysis_file"
+        echo "COPILOT ANALYSE:" >> "$analysis_file"
+        echo "$analysis" >> "$analysis_file"
+        echo "" >> "$analysis_file"
+        echo "================================================================================" >> "$analysis_file"
+        echo "RAW DATA:" >> "$analysis_file"
+        echo "$formatted_data" >> "$analysis_file"
+        log_info "Full analysis saved to: $analysis_file"
+    fi
+    
+    local json_file="$OUTPUT_DIR/machine_${hostname}_${timestamp}.json"
+    echo "$machine_json" > "$json_file"
+    log_info "JSON data saved to: $json_file"
+}
+
+main() {
+    if [ $# -eq 0 ]; then
+        usage
+    fi
+    
+    if ! command -v jq >/dev/null 2>&1; then
+        log_error "jq is required but not installed. Install with: brew install jq"
+        exit 1
+    fi
+    
+    if ! command -v bc >/dev/null 2>&1; then
+        log_warn "bc not available, some calculations may not work"
+    fi
+    
+    local password
+    password=$(get_password)
+    
+    local cookie_jar
+    cookie_jar=$(mktemp)
+    trap "rm -f $cookie_jar" EXIT
+    
+    if ! authenticate "$password" "$cookie_jar"; then
+        exit 1
+    fi
+    
+    local csrf_token
+    csrf_token=$(get_csrf_token "$cookie_jar")
+    
+    for machine_identifier in "$@"; do
+        echo ""
+        echo "=================================================================================="
+        log_info "Analyzing machine: $machine_identifier"
+        echo "=================================================================================="
+    
+        local machine_data
+        machine_data=$(query_machine_data "$machine_identifier" "$cookie_jar" "$csrf_token")
+        if [ $? -ne 0 ]; then
+            log_error "Failed to analyze $machine_identifier, skipping..."
+            continue
+        fi
+        
+        local hostname serial
+        hostname=$(echo "$machine_data" | jq -r '.[1]')
+        serial=$(echo "$machine_data" | jq -r '.[0]')
+        
+        log_info "Found machine: $hostname"
+        
+        local formatted_data
+        formatted_data=$(format_for_ai "$machine_data")
+        
+        echo ""
+        log_section "MASKIN-DATA"
+        echo "$formatted_data"
+        
+        local analysis
+        analysis=$(analyze_with_copilot "$formatted_data" "$hostname")
+        
+        if [ -n "$analysis" ]; then
+            echo
+            echo "================================================================================"
+            log_section "COPILOT DIAGNOSE"
+            echo "================================================================================"
+            echo "$analysis"
+            echo "================================================================================"
+            echo
+        fi
+        
+        local machine_json
+        machine_json=$(jq -n \
+            --argjson raw_data "$machine_data" \
+            --arg hostname "$hostname" \
+            --arg serial "$serial" \
+            --arg collected_at "$(date '+%Y-%m-%dT%H:%M:%S')" \
+            '{
+                machine: {
+                    serial_number: $serial,
+                    hostname: $hostname
+                },
+                usage_stats: {
+                    timestamp: $raw_data[2],
+                    thermal_pressure: $raw_data[3],
+                    package_watts: $raw_data[4],
+                    gpu_busy: $raw_data[5],
+                    gpu_freq_mhz: $raw_data[6],
+                    backlight: $raw_data[7],
+                    keyboard_backlight: $raw_data[8],
+                    ibyte_rate: $raw_data[9],
+                    obyte_rate: $raw_data[10],
+                    rbytes_per_s: $raw_data[11],
+                    wbytes_per_s: $raw_data[12],
+                    rops_per_s: $raw_data[13],
+                    wops_per_s: $raw_data[14],
+                    freq_hz: $raw_data[15],
+                    freq_ratio: $raw_data[16],
+                    cpu_idle: $raw_data[17],
+                    cpu_sys: $raw_data[18],
+                    cpu_user: $raw_data[19],
+                    load_avg: $raw_data[20]
+                },
+                collected_at: $collected_at,
+                raw_data: $raw_data
+            }'
+        )
+        
+        save_files "$hostname" "$serial" "$formatted_data" "$analysis" "$machine_json"
+    done
+    
+    echo ""
+    echo "Analysis complete for all machines!"
+    echo "   Files saved to: $OUTPUT_DIR"
+}
+
+main "$@"

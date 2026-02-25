@@ -1,0 +1,41 @@
+{
+  "machine_info": {
+    "hostname": "MBP-15658",
+    "username": "Rune Ryen",
+    "serial": "V26XYWP739"
+  },
+  "records": [
+    {
+      "serial_number": "V26XYWP739",
+      "hostname": "MBP-15658",
+      "username": "Rune Ryen",
+      "timestamp": 1768546678,
+      "thermal_pressure": "Nominal",
+      "package_watts": 10.387,
+      "gpu_busy": 0.075418,
+      "freq_hz": null,
+      "freq_ratio": null,
+      "gpu_freq_mhz": 477,
+      "backlight": null,
+      "keyboard_backlight": 0,
+      "ibyte_rate": 6695070,
+      "obyte_rate": 131828,
+      "rbytes_per_s": 78952100,
+      "wbytes_per_s": 16741800,
+      "cpu_idle": "25.57%",
+      "cpu_sys": "25.57%",
+      "cpu_user": "48.85%",
+      "load_avg": "197.71, 75.13, 29.47",
+      "disk_total": 493921239040,
+      "disk_free": 371514671104,
+      "disk_percentage": 25
+    }
+  ],
+  "summary": {
+    "total_records": 1,
+    "date_range": {
+      "oldest": 1768546678,
+      "newest": 1768546678
+    }
+  }
+}

@@ -1,26 +1,19 @@
 #!/bin/sh
 #
-# Script to run automated queries against the munkireport datatables API
+# Script to find all machines with a specific app installed via munkireport datatables API
 #
-# Results are returned in JSON format
-# The actual entries are in the 'data' variable
-#
-# To make this work, set up a regular user in munkireport and adjust the 
-# proper values below
-#
-# Author: Arjen van Bochoven
-# Date: 2015-11-06
-# Modified: 2020-03-31 Added CSRF support
+# Usage: ./find_app.sh [appname]
+# Default app: Alfred5
 
-# Retrieve data from munkireport
-# DEBUG=1
 MR_BASE_URL='https://app-munkireport-prod-norwayeast-001.azurewebsites.net/index.php?'
 MR_DATA_QUERY='/datatables/data'
 MR_LOGIN='localuser'
 MR_PASSWORD=$(security find-generic-password -a localuser -s munkireport-api -w)
 
+APPNAME="${1:-Alfred5}"
+
 CLIENT_COLUMNS=(
-	"managedinstalls.name"
+    "managedinstalls.name"
     "machine.serial_number"
     "machine.hostname"
     "machine.machine_desc"
@@ -50,35 +43,27 @@ CLIENT_COLUMNS=(
     "usage_stats.gpu_busy"
 )
 
-# Create query from columns
-columns_to_query()
-{
-    # Pick up array as argument
+columns_to_query() {
     declare -a COLUMNS=("${!1}")
-    
     MR_QUERY=""
     COL=0
     for i in "${COLUMNS[@]}"; do
         MR_QUERY="${MR_QUERY}columns[${COL}][name]=${i}&"
         COL=$((COL+1))
     done
+    # Add search filter for appname on managedinstalls.name (column 0)
+    MR_QUERY="${MR_QUERY}columns[0][search][value]=${APPNAME}&"
 }
 
-# Authenticate and capture cookie
-if [ $DEBUG ]; then echo 'Authenticating to munkireport..'; fi
 COOKIE_JAR=$(curl -s --cookie-jar - --data "login=${MR_LOGIN}&password=${MR_PASSWORD}" ${MR_BASE_URL}/auth/login)
 SESSION_COOKIE=$(echo $COOKIE_JAR | sed -n 's/.*PHPSESSID[[:space:]]/PHPSESSID=/p')
 CSRF_TOKEN=$(echo "$COOKIE_JAR" | sed -n 's/.*CSRF-TOKEN[[:space:]]/X-CSRF-TOKEN: /p')
 
-# Retrieve data with session cookie
 columns_to_query CLIENT_COLUMNS[@]
-if [ $DEBUG ]; then echo 'Retrieving client data..'; fi
 OUTPUT=$(curl -s -H "$CSRF_TOKEN" --cookie "$SESSION_COOKIE" --data $MR_QUERY ${MR_BASE_URL}${MR_DATA_QUERY})
 
-# Save JSON to file with timestamp
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-FILENAME="get_data_${TIMESTAMP}.json"
+FILENAME="find_app_${APPNAME}_${TIMESTAMP}.json"
 echo "$OUTPUT" > "$FILENAME"
 
 echo $OUTPUT
-
