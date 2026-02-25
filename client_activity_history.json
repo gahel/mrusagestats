@@ -1,0 +1,277 @@
+{
+  "measurements": [
+    {
+      "timestamp": 1771417286,
+      "datetime": "2026-02-18T13:21:26.346580",
+      "total_clients": 105,
+      "active_clients": 90,
+      "clients_per_hour": 47
+    },
+    {
+      "timestamp": 1771417410,
+      "datetime": "2026-02-18T13:23:30.754037",
+      "total_clients": 105,
+      "active_clients": 90,
+      "clients_per_hour": 47
+    },
+    {
+      "timestamp": 1771492940,
+      "datetime": "2026-02-19T10:22:20.614261",
+      "total_clients": 105,
+      "active_clients": 86,
+      "clients_per_hour": 43
+    },
+    {
+      "timestamp": 1771496543,
+      "datetime": "2026-02-19T11:22:23.466276",
+      "total_clients": 105,
+      "active_clients": 87,
+      "clients_per_hour": 31
+    },
+    {
+      "timestamp": 1771511487,
+      "datetime": "2026-02-19T15:31:27.118570",
+      "total_clients": 105,
+      "active_clients": 82,
+      "clients_per_hour": 26
+    },
+    {
+      "timestamp": 1771515131,
+      "datetime": "2026-02-19T16:32:11.745327",
+      "total_clients": 105,
+      "active_clients": 82,
+      "clients_per_hour": 18
+    },
+    {
+      "timestamp": 1771518734,
+      "datetime": "2026-02-19T17:32:14.275573",
+      "total_clients": 105,
+      "active_clients": 82,
+      "clients_per_hour": 17
+    },
+    {
+      "timestamp": 1771587208,
+      "datetime": "2026-02-20T12:33:28.141222",
+      "total_clients": 105,
+      "active_clients": 82,
+      "clients_per_hour": 32
+    },
+    {
+      "timestamp": 1771666913,
+      "datetime": "2026-02-21T10:41:53.450451",
+      "total_clients": 105,
+      "active_clients": 74,
+      "clients_per_hour": 6
+    },
+    {
+      "timestamp": 1771682066,
+      "datetime": "2026-02-21T14:54:26.132088",
+      "total_clients": 105,
+      "active_clients": 47,
+      "clients_per_hour": 7
+    },
+    {
+      "timestamp": 1771704156,
+      "datetime": "2026-02-21T21:02:36.494434",
+      "total_clients": 105,
+      "active_clients": 28,
+      "clients_per_hour": 5
+    },
+    {
+      "timestamp": 1771750520,
+      "datetime": "2026-02-22T09:55:20.393532",
+      "total_clients": 105,
+      "active_clients": 29,
+      "clients_per_hour": 4
+    },
+    {
+      "timestamp": 1771754122,
+      "datetime": "2026-02-22T10:55:22.621590",
+      "total_clients": 105,
+      "active_clients": 29,
+      "clients_per_hour": 6
+    },
+    {
+      "timestamp": 1771764553,
+      "datetime": "2026-02-22T13:49:14.001246",
+      "total_clients": 105,
+      "active_clients": 28,
+      "clients_per_hour": 9
+    },
+    {
+      "timestamp": 1771770589,
+      "datetime": "2026-02-22T15:29:49.047375",
+      "total_clients": 105,
+      "active_clients": 28,
+      "clients_per_hour": 8
+    },
+    {
+      "timestamp": 1771775085,
+      "datetime": "2026-02-22T16:44:45.115282",
+      "total_clients": 105,
+      "active_clients": 29,
+      "clients_per_hour": 7
+    },
+    {
+      "timestamp": 1771778687,
+      "datetime": "2026-02-22T17:44:47.501900",
+      "total_clients": 105,
+      "active_clients": 28,
+      "clients_per_hour": 7
+    },
+    {
+      "timestamp": 1771782289,
+      "datetime": "2026-02-22T18:44:49.597450",
+      "total_clients": 105,
+      "active_clients": 29,
+      "clients_per_hour": 10
+    },
+    {
+      "timestamp": 1771785891,
+      "datetime": "2026-02-22T19:44:51.821762",
+      "total_clients": 105,
+      "active_clients": 31,
+      "clients_per_hour": 6
+    },
+    {
+      "timestamp": 1771789494,
+      "datetime": "2026-02-22T20:44:54.176629",
+      "total_clients": 105,
+      "active_clients": 32,
+      "clients_per_hour": 11
+    },
+    {
+      "timestamp": 1771793096,
+      "datetime": "2026-02-22T21:44:56.100252",
+      "total_clients": 105,
+      "active_clients": 31,
+      "clients_per_hour": 7
+    },
+    {
+      "timestamp": 1771797294,
+      "datetime": "2026-02-22T22:54:54.104502",
+      "total_clients": 105,
+      "active_clients": 34,
+      "clients_per_hour": 9
+    },
+    {
+      "timestamp": 1771820693,
+      "datetime": "2026-02-23T05:24:53.841475",
+      "total_clients": 105,
+      "active_clients": 36,
+      "clients_per_hour": 5
+    },
+    {
+      "timestamp": 1771833828,
+      "datetime": "2026-02-23T09:03:48.124617",
+      "total_clients": 105,
+      "active_clients": 57,
+      "clients_per_hour": 32
+    },
+    {
+      "timestamp": 1771838284,
+      "datetime": "2026-02-23T10:18:04.435550",
+      "total_clients": 105,
+      "active_clients": 81,
+      "clients_per_hour": 54
+    },
+    {
+      "timestamp": 1771845541,
+      "datetime": "2026-02-23T12:19:01.208309",
+      "total_clients": 105,
+      "active_clients": 87,
+      "clients_per_hour": 41
+    },
+    {
+      "timestamp": 1771849213,
+      "datetime": "2026-02-23T13:20:13.267473",
+      "total_clients": 105,
+      "active_clients": 88,
+      "clients_per_hour": 53
+    },
+    {
+      "timestamp": 1771852814,
+      "datetime": "2026-02-23T14:20:14.955250",
+      "total_clients": 105,
+      "active_clients": 89,
+      "clients_per_hour": 47
+    },
+    {
+      "timestamp": 1771856416,
+      "datetime": "2026-02-23T15:20:16.838669",
+      "total_clients": 105,
+      "active_clients": 90,
+      "clients_per_hour": 44
+    },
+    {
+      "timestamp": 1771871683,
+      "datetime": "2026-02-23T19:34:43.199896",
+      "total_clients": 105,
+      "active_clients": 91,
+      "clients_per_hour": 11
+    },
+    {
+      "timestamp": 1771871975,
+      "datetime": "2026-02-23T19:39:35.982477",
+      "total_clients": 105,
+      "active_clients": 91,
+      "clients_per_hour": 9
+    },
+    {
+      "timestamp": 1771893844,
+      "datetime": "2026-02-24T01:44:04.013554",
+      "total_clients": 105,
+      "active_clients": 91,
+      "clients_per_hour": 4
+    },
+    {
+      "timestamp": 1771919856,
+      "datetime": "2026-02-24T08:57:36.492281",
+      "total_clients": 105,
+      "active_clients": 92,
+      "clients_per_hour": 23
+    },
+    {
+      "timestamp": 1771923458,
+      "datetime": "2026-02-24T09:57:38.607738",
+      "total_clients": 105,
+      "active_clients": 93,
+      "clients_per_hour": 44
+    },
+    {
+      "timestamp": 1771927060,
+      "datetime": "2026-02-24T10:57:40.407733",
+      "total_clients": 105,
+      "active_clients": 94,
+      "clients_per_hour": 57
+    },
+    {
+      "timestamp": 1771930742,
+      "datetime": "2026-02-24T11:59:02.557146",
+      "total_clients": 105,
+      "active_clients": 92,
+      "clients_per_hour": 32
+    },
+    {
+      "timestamp": 1771934343,
+      "datetime": "2026-02-24T12:59:03.719635",
+      "total_clients": 105,
+      "active_clients": 93,
+      "clients_per_hour": 49
+    },
+    {
+      "timestamp": 1771937944,
+      "datetime": "2026-02-24T13:59:04.817576",
+      "total_clients": 105,
+      "active_clients": 93,
+      "clients_per_hour": 49
+    },
+    {
+      "timestamp": 1771942743,
+      "datetime": "2026-02-24T15:19:03.036674",
+      "total_clients": 105,
+      "active_clients": 92,
+      "clients_per_hour": 49
+    }
+  ]
+}

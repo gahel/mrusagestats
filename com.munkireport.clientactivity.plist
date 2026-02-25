@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.munkireport.clientactivity</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/gaute/scripts/mr_api2/.venv/bin/python3</string>
+        <string>/Users/gaute/scripts/mr_api2/client_activity_collector.py</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Users/gaute/scripts/mr_api2</string>
+    
+    <key>StartInterval</key>
+    <integer>3600</integer>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>StandardOutPath</key>
+    <string>/tmp/client_activity.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/tmp/client_activity_error.log</string>
+</dict>
+</plist>
